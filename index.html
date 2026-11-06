@@ -1,44 +1,145 @@
 <!doctype html>
 <html lang="pt-BR">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>O contador do Ainos</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitoramento do Ainos</title>
 
-<style>
-  body {
-    min-height: 100vh;
-    margin: 0;
-    display: grid;
-    place-items: center;
-    background: #171923;
-    color: white;
-    font-family: system-ui, sans-serif;
-    text-align: center;
-  }
-  main { padding: 24px; }
-  h1 { font-size: clamp(2rem, 8vw, 5rem); margin: 0; }
-  p { color: #cbd0df; font-size: 1.2rem; }
-</style>
+  <style>
+    * { box-sizing: border-box; }
 
-<main>
-  <p>Já faz</p>
-  <h1><span id="dias">…</span> dias</h1>
-  <p>desde que o Ainos teve um dia bom.</p>
-</main>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: #f5f1e8;
+      font-family: system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse at 50% 0%, #44252d 0%, transparent 55%),
+        #111116;
+    }
 
-<script>
-  // Troquem pela data do último dia bom: ano, mês (0 = janeiro), dia.
-  const ultimoDiaBom = new Date(2026, 10, 5);
+    .card {
+      width: min(100%, 620px);
+      padding: 32px;
+      border: 1px solid #58363a;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #211b20, #17161b);
+      box-shadow: 0 24px 80px #0009;
+      text-align: center;
+    }
 
-  const hoje = new Date();
-  const hojeUTC = Date.UTC(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-  const diaBomUTC = Date.UTC(
-    ultimoDiaBom.getFullYear(),
-    ultimoDiaBom.getMonth(),
-    ultimoDiaBom.getDate()
-  );
+    .label {
+      color: #e99b68;
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
 
-  document.getElementById("dias").textContent =
-    Math.max(0, Math.floor((hojeUTC - diaBomUTC) / 86400000));
-</script>
+    .icon {
+      margin: 28px 0 8px;
+      font-size: 2.5rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 5vw, 2.3rem);
+    }
+
+    .counter {
+      margin: 8px 0;
+      color: #ffb36d;
+      font-size: clamp(5rem, 22vw, 9rem);
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 0 35px #ff8c4260;
+    }
+
+    .caption {
+      margin: 0;
+      color: #d0c6c3;
+      font-size: 1.15rem;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 28px;
+      padding: 9px 14px;
+      border: 1px solid #60454a;
+      border-radius: 999px;
+      color: #e7c3a9;
+      font-size: .9rem;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #ff795e;
+      box-shadow: 0 0 12px #ff795e;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: #827b80;
+      font-size: .8rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="label">Central de monitoramento • Ainos</div>
+    <div class="icon" aria-hidden="true">🫡</div>
+    <h1>Relatório de dias bons</h1>
+
+    <div class="counter" id="dias">—</div>
+    <p class="caption">dias desde que o Ainos teve um dia bom</p>
+
+    <div class="status">
+      <span class="dot"></span>
+      Situação: seguimos acompanhando
+    </div>
+
+    <div class="footer">Os dados são atualizados automaticamente.</div>
+  </main>
+
+  <script>
+    // Troque pela data do último dia bom.
+    // Formato: ano, mês (janeiro = 0; novembro = 10), dia.
+    const ultimoDiaBom = new Date(2026, 10, 5);
+
+    function atualizarContador() {
+      const agora = new Date();
+      const hoje = Date.UTC(
+        agora.getFullYear(),
+        agora.getMonth(),
+        agora.getDate()
+      );
+      const diaBom = Date.UTC(
+        ultimoDiaBom.getFullYear(),
+        ultimoDiaBom.getMonth(),
+        ultimoDiaBom.getDate()
+      );
+
+      const dias = Math.max(0, Math.floor((hoje - diaBom) / 86400000));
+      document.getElementById("dias").textContent = dias;
+
+      // Agenda a próxima atualização para a meia-noite local.
+      const amanha = new Date(
+        agora.getFullYear(),
+        agora.getMonth(),
+        agora.getDate() + 1
+      );
+      setTimeout(atualizarContador, amanha.getTime() - agora.getTime() + 50);
+    }
+
+    atualizarContador();
+  </script>
+</body>
 </html>
