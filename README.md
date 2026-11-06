@@ -50,17 +50,6 @@ const ultimoDiaBom = new Date(2026, 10, 5);
 
 O formato é `new Date(ano, mês, dia)`. **Janeiro é mês `0`, fevereiro é `1`… novembro é `10`.**
 
-## 🚀 Publicação
-
-O site pode ser publicado gratuitamente pelo GitHub Pages:
-
-1. Deixe `index.html`, `notas.js` e `README.md` na raiz do repositório.
-2. No repositório, abra **Settings → Pages**.
-3. Escolha a branch usada pelo projeto e a pasta `/ (root)` como origem.
-4. Salve. O GitHub vai mostrar o endereço do site nessa mesma página.
-
-Depois de commitar uma mudança em `notas.js`, o GitHub Pages publica a nova versão do site.
-
 ## ⚠️ Aviso da auditoria
 
 Este projeto é público: qualquer pessoa com o link pode ler as anotações. Mantenha as reclamações no espírito da brincadeira e evite publicar informações pessoais que o Ainos não gostaria de ver por aí.
