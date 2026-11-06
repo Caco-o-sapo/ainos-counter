@@ -1,62 +1,34 @@
 # 🫡 Central Oficial de Monitoramento do Ainos
 
-> Um projeto de utilidade pública duvidosa para acompanhar os dias bons — e registrar as reclamações do nosso querido Ainos.
-
-## 📡 O que é isso?
-
-Um site estático de zoeira que mostra há quantos dias o Ainos não tem um dia bom e mantém um registro das reclamações mais recentes.
-
-O contador atualiza sozinho. As reclamações ficam no arquivo `notas.js`, separado do HTML para ninguém precisar mexer na estrutura do site toda vez que surgir um novo episódio.
-
-## 🗂️ Arquivos do projeto
-
-```text
-.
-├── index.html   # Página, visual e contador
-├── notas.js     # Reclamações registradas
-└── README.md    # Este manual importantíssimo
-```
-
-## 📝 Como adicionar uma reclamação
-
-1. Abra o arquivo `notas.js` no GitHub.
-2. Adicione uma nova linha **no começo da lista**:
-
-   ```js
-   { data: "06/11/2026", texto: "A reclamação mais recente do Ainos." },
-   ```
-
-3. Salve/commite a alteração no GitHub.
-4. Atualize o site e confira o registro histórico. 📋
-
-A lista deve ficar neste formato:
-
-```js
-window.notas = [
-  { data: "06/11/2026", texto: "A reclamação mais recente do Ainos." },
-  { data: "05/11/2026", texto: "Uma reclamação anterior." }
-];
-```
-
-Use a data no formato `DD/MM/AAAA` e mantenha as reclamações mais novas no topo. Não esqueça a vírgula entre os registros. Se a frase tiver aspas duplas, escreva `\"` dentro do texto.
-
-## 🔄 Como zerar o contador
-
-Quando acontecer um dia bom — evento raro, mas não impossível — atualize a data no `index.html`:
-
-```js
-const ultimoDiaBom = new Date(2026, 10, 5);
-```
-
-O formato é `new Date(ano, mês, dia)`. **Janeiro é mês `0`, fevereiro é `1`… novembro é `10`.**
-
-## ⚠️ Aviso da auditoria
-
-Este projeto é público: qualquer pessoa com o link pode ler as anotações. Mantenha as reclamações no espírito da brincadeira e evite publicar informações pessoais que o Ainos não gostaria de ver por aí.
+### Uma iniciativa independente para acompanhar os dias bons — e documentar os episódios de azar, perrengue e reclamação.
 
 ---
 
-**Status:** monitoramento ativo  
-**Equipe responsável:** o grupo do Discord  
-**Orçamento:** R$ 0,00  
-**Perspectiva de um dia bom:** sob análise
+## 📡 Sobre o projeto
+
+A Central acompanha uma pergunta que intriga a comunidade:
+
+> **Há quantos dias o Ainos não tem um dia bom?**
+
+Além do contador, este site mantém um registro das reclamações recentes para consulta pública, análise da equipe e futuras reuniões do Departamento de Azar.
+
+## 📊 Indicadores oficiais
+
+- **Dias sem um dia bom:** contador atualizado automaticamente.
+- **Reclamações recentes:** relatos registrados pela equipe de monitoramento.
+- **Previsão de melhora:** ainda sem dados suficientes.
+
+## 🗃️ Relatório de transparência
+
+A Central é uma brincadeira feita entre amigos. Os relatos são apresentados com humor e não representam um diagnóstico, uma avaliação profissional ou um relatório oficial sobre a vida do Ainos.
+
+Se algum registro passar do ponto, a equipe aceita pedidos de revisão. O departamento responsável promete analisar a solicitação assim que terminar de rir — ou seja, em breve.
+
+---
+
+**Situação do monitoramento:** ativo  
+**Responsáveis:** a turma do Discord  
+**Verba disponível:** R$ 0,00  
+**Confiança de que amanhã será melhor:** cautelosamente baixa
+
+<sub>Este projeto não é afiliado a nenhuma instituição oficial. É só uma piada interna com domínio público de zoeira.</sub>
