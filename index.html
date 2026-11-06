@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O contador do Ainos</title>
+
+<style>
+  body {
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    background: #171923;
+    color: white;
+    font-family: system-ui, sans-serif;
+    text-align: center;
+  }
+  main { padding: 24px; }
+  h1 { font-size: clamp(2rem, 8vw, 5rem); margin: 0; }
+  p { color: #cbd0df; font-size: 1.2rem; }
+</style>
+
+<main>
+  <p>Já faz</p>
+  <h1><span id="dias">…</span> dias</h1>
+  <p>desde que o Ainos teve um dia bom.</p>
+</main>
+
+<script>
+  // Troquem pela data do último dia bom: ano, mês (0 = janeiro), dia.
+  const ultimoDiaBom = new Date(2026, 10, 5);
+
+  const hoje = new Date();
+  const hojeUTC = Date.UTC(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+  const diaBomUTC = Date.UTC(
+    ultimoDiaBom.getFullYear(),
+    ultimoDiaBom.getMonth(),
+    ultimoDiaBom.getDate()
+  );
+
+  document.getElementById("dias").textContent =
+    Math.max(0, Math.floor((hojeUTC - diaBomUTC) / 86400000));
+</script>
+</html>
