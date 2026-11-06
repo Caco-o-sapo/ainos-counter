@@ -144,10 +144,16 @@
       Situação: seguimos acompanhando
     </div>
 
+    <section class="notes">
+  <h2>📋 Últimas reclamações do Ainos</h2>
+  <div id="listaNotas" class="note-list"></div>
+</section>
+
     <div class="footer">Os dados são atualizados automaticamente.</div>
   </main>
 
-  <>
+  <script src="notas.js"></script>
+  <script>
     // Troque pela data do último dia bom.
     // Formato: ano, mês (janeiro = 0; novembro = 10), dia.
     const ultimoDiaBom = new Date(2026, 10, 5);
@@ -178,6 +184,24 @@
     }
 
     atualizarContador();
+
+    const lista = document.getElementById("listaNotas");
+
+window.notas.forEach(nota => {
+  const item = document.createElement("article");
+  item.className = "note";
+
+  const data = document.createElement("div");
+  data.className = "note-date";
+  data.textContent = nota.data;
+
+  const texto = document.createElement("p");
+  texto.className = "note-text";
+  texto.textContent = `“${nota.texto}”`;
+
+  item.append(data, texto);
+  lista.appendChild(item);
+});
   </script>
 </body>
 </html>
