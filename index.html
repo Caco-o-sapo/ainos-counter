@@ -417,6 +417,17 @@
       border-top: 1px solid rgba(255,255,255,.075);
     }
 
+    .note-good-day {
+      border-top-color: rgba(162,201,164,.28);
+      background: linear-gradient(90deg, rgba(162,201,164,.07), transparent 84%);
+    }
+
+    .note-good-day .note-index {
+      border-color: rgba(162,201,164,.3);
+      color: #b9d7bb;
+      background: rgba(162,201,164,.09);
+    }
+
     .note-index {
       display: grid;
       width: 42px;
@@ -435,12 +446,35 @@
       min-width: 0;
     }
 
+    .note-date-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
     .note-date {
-      margin: 1px 0 6px;
+      margin: 0;
       color: var(--soft);
       font-size: .72rem;
       font-weight: 750;
       letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .good-day-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border: 1px solid rgba(162,201,164,.26);
+      border-radius: 999px;
+      color: #c0d9c1;
+      background: rgba(76,117,79,.13);
+      font-size: .67rem;
+      font-weight: 750;
+      letter-spacing: .04em;
       text-transform: uppercase;
     }
 
@@ -587,25 +621,41 @@
   <script type="module">
     import { notas, ultimoDiaBom } from "./notas.js";
 
-    const [anoBom, mesBom, diaBom] = ultimoDiaBom.split("-").map(Number);
-    const dataUltimoDiaBom = new Date(anoBom, mesBom - 1, diaBom);
+    const dataUltimoDiaBom = ultimoDiaBom
+      ? new Date(...ultimoDiaBom.split("-").map(Number).map((valor, indice) => indice === 1 ? valor - 1 : valor))
+      : null;
 
     function atualizarContador() {
+      const diasElemento = document.getElementById("dias");
+      const unidadeElemento = document.getElementById("unidade-dias");
+      const legendaElemento = document.getElementById("legenda-contador");
+      const dataElemento = document.getElementById("ultima-data");
+
+      if (!dataUltimoDiaBom) {
+        diasElemento.textContent = "—";
+        unidadeElemento.textContent = "";
+        legendaElemento.textContent = "nenhum dia bom foi marcado ainda.";
+        dataElemento.textContent = "sem registro";
+        return;
+      }
+
       const agora = new Date();
       const hoje = Date.UTC(agora.getFullYear(), agora.getMonth(), agora.getDate());
-      const diaBomUTC = Date.UTC(anoBom, mesBom - 1, diaBom);
+      const diaBomUTC = Date.UTC(
+        dataUltimoDiaBom.getFullYear(),
+        dataUltimoDiaBom.getMonth(),
+        dataUltimoDiaBom.getDate()
+      );
       const dias = Math.max(0, Math.floor((hoje - diaBomUTC) / 86400000));
 
-      document.getElementById("dias").textContent = dias;
-      document.getElementById("unidade-dias").textContent = dias === 1 ? "dia" : "dias";
-      document.getElementById("legenda-contador").textContent =
-        dias === 1 ? "sem um dia bom para o Ainos." : "sem um dia bom para o Ainos.";
-      document.getElementById("ultima-data").textContent =
-        new Intl.DateTimeFormat("pt-BR", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric"
-        }).format(dataUltimoDiaBom);
+      diasElemento.textContent = dias;
+      unidadeElemento.textContent = dias === 1 ? "dia" : "dias";
+      legendaElemento.textContent = "sem um dia bom para o Ainos.";
+      dataElemento.textContent = new Intl.DateTimeFormat("pt-BR", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).format(dataUltimoDiaBom);
 
       const amanha = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate() + 1);
       setTimeout(atualizarContador, amanha.getTime() - agora.getTime() + 50);
@@ -625,7 +675,7 @@
 
     notas.forEach((nota, indice) => {
       const item = document.createElement("article");
-      item.className = "note";
+      item.className = nota.diaBom ? "note note-good-day" : "note";
 
       const numero = document.createElement("div");
       numero.className = "note-index";
@@ -639,11 +689,22 @@
       data.className = "note-date";
       data.textContent = nota.data || "Data não informada";
 
+      const linhaData = document.createElement("div");
+      linhaData.className = "note-date-row";
+      linhaData.appendChild(data);
+
+      if (nota.diaBom === true) {
+        const seloDiaBom = document.createElement("span");
+        seloDiaBom.className = "good-day-badge";
+        seloDiaBom.textContent = "☀ Dia bom";
+        linhaData.appendChild(seloDiaBom);
+      }
+
       const texto = document.createElement("p");
       texto.className = "note-text";
       texto.textContent = "“" + (nota.texto || "") + "”";
 
-      conteudo.append(data, texto);
+      conteudo.append(linhaData, texto);
       item.append(numero, conteudo);
       lista.appendChild(item);
     });
