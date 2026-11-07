@@ -1,0 +1,7 @@
+{
+  "name": "ainos-counter-preview",
+  "private": true,
+  "dependencies": {
+    "@vercel/og": "^0.8.5"
+  }
+}
