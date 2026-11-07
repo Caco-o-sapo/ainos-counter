@@ -1,4 +1,8 @@
-window.notas = [
+// Edite este arquivo para atualizar o último dia bom e adicionar reclamações.
+// A primeira nota da lista aparece na prévia do link.
+export const ultimoDiaBom = "2026-11-06";
+
+export const notas = [
   { data: "07/11/2026", texto: "Moranguete, Abacatudo, 67, 42 sigma farmando aura no passinho do sabor" },
   { data: "07/11/2026", texto: "Sticker elsa bunduda bunda grande andando" },
   { data: "06/11/2026", texto: "Dia Bom: 'AQUELA AMIGA Q GANHOU O SEGUNDO DIA DE FOLGA, DEUS É BOM'" },
