@@ -12,6 +12,7 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 
 - **Contador de dias bons:** calcula o tempo desde o último dia bom registrado e atualiza automaticamente.
 - **Arquivo de ocorrências:** reúne as reclamações, os perrengues e os relatos enviados pela equipe.
+- **Dias bons em destaque:** os registros positivos recebem um selo, e o contador considera automaticamente o dia bom mais recente.
 - **Prévia dinâmica:** ao compartilhar o link, o cartão mostra a contagem atual e a ocorrência mais recente.
 
 ## 🔬 Metodologia (quase) científica
