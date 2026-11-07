@@ -11,7 +11,7 @@
   <meta property="og:description" content="Confira há quantos dias o Ainos está sem um dia bom — e leia as últimas atualizações.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://caco-o-sapo.github.io/ainos-counter/">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
 
   <style>
     :root {
@@ -577,19 +577,16 @@
     </footer>
   </div>
 
-  <script src="notas.js"></script>
-  <script>
-    // Troque pela data do último dia bom: ano, mês (janeiro = 0), dia.
-    const ultimoDiaBom = new Date(2026, 10, 6);
+  <script type="module">
+    import { notas, ultimoDiaBom } from "./notas.js";
+
+    const [anoBom, mesBom, diaBom] = ultimoDiaBom.split("-").map(Number);
+    const dataUltimoDiaBom = new Date(anoBom, mesBom - 1, diaBom);
 
     function atualizarContador() {
       const agora = new Date();
       const hoje = Date.UTC(agora.getFullYear(), agora.getMonth(), agora.getDate());
-      const diaBom = Date.UTC(
-        ultimoDiaBom.getFullYear(),
-        ultimoDiaBom.getMonth(),
-        ultimoDiaBom.getDate()
-      );
+      const diaBom = Date.UTC(anoBom, mesBom - 1, diaBom);
       const dias = Math.max(0, Math.floor((hoje - diaBom) / 86400000));
 
       document.getElementById("dias").textContent = dias;
@@ -601,7 +598,7 @@
           day: "2-digit",
           month: "short",
           year: "numeric"
-        }).format(ultimoDiaBom);
+        }).format(dataUltimoDiaBom);
 
       const amanha = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate() + 1);
       setTimeout(atualizarContador, amanha.getTime() - agora.getTime() + 50);
@@ -610,7 +607,6 @@
     atualizarContador();
 
     const lista = document.getElementById("listaNotas");
-    const notas = Array.isArray(window.notas) ? window.notas : [];
     document.getElementById("total-notas").textContent = notas.length;
 
     if (notas.length === 0) {
