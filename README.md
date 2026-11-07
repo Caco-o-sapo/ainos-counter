@@ -1,34 +1,36 @@
-# 🫡 Central Oficial de Monitoramento do Ainos
+# 🫡 AINOS WATCH
 
-### Uma iniciativa independente para acompanhar os dias bons — e documentar os episódios de azar, perrengue e reclamação.
+### Central comunitária de monitoramento de dias bons, perrengues e ocorrências inexplicáveis.
+
+[![Abrir a Central de Monitoramento](https://ainos-counter.vercel.app/api/og?v=2)](https://ainos-counter.vercel.app/)
+
+> **A pergunta que mobiliza a equipe:** há quantos dias o Ainos não tem um dia bom?
+
+A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a comunidade informada. O monitoramento é contínuo; a esperança, intermitente.
+
+## 📡 O que a Central acompanha
+
+- **Contador de dias bons:** calcula o tempo desde o último dia bom registrado e atualiza automaticamente.
+- **Arquivo de ocorrências:** reúne as reclamações, os perrengues e os relatos enviados pela equipe.
+- **Prévia dinâmica:** ao compartilhar o link, o cartão mostra a contagem atual e a ocorrência mais recente.
+
+## 🔬 Metodologia (quase) científica
+
+A equipe considera os relatos recebidos, registra os acontecimentos e aguarda novas evidências de melhora. Os dados são atualizados com seriedade administrativa e rigor estatístico altamente discutível.
+
+## 📋 Boletim atual
+
+| Indicador | Situação |
+| --- | --- |
+| Monitoramento | Ativo |
+| Previsão de melhora | Em análise |
+| Orçamento | R$ 0,00 |
+| Confiança no próximo dia | Cautelosamente baixa |
+
+## 🛡️ Transparência da Central
+
+Este é um projeto de humor entre amigos. Os registros são relatos informais, não são verificados e não representam diagnóstico, avaliação profissional ou retrato completo da vida do Ainos. Se alguma anotação passar do ponto, ela pode ser revista pela equipe — após uma reunião extraordinária do Departamento de Azar.
 
 ---
 
-## 📡 Sobre o projeto
-
-A Central acompanha uma pergunta que intriga a comunidade:
-
-> **Há quantos dias o Ainos não tem um dia bom?**
-
-Além do contador, este site mantém um registro das reclamações recentes para consulta pública, análise da equipe e futuras reuniões do Departamento de Azar.
-
-## 📊 Indicadores oficiais
-
-- **Dias sem um dia bom:** contador atualizado automaticamente.
-- **Reclamações recentes:** relatos registrados pela equipe de monitoramento.
-- **Previsão de melhora:** ainda sem dados suficientes.
-
-## 🗃️ Relatório de transparência
-
-A Central é uma brincadeira feita entre amigos. Os relatos são apresentados com humor e não representam um diagnóstico, uma avaliação profissional ou um relatório oficial sobre a vida do Ainos.
-
-Se algum registro passar do ponto, a equipe aceita pedidos de revisão. O departamento responsável promete analisar a solicitação assim que terminar de rir — ou seja, em breve.
-
----
-
-**Situação do monitoramento:** ativo  
-**Responsáveis:** a turma do Discord  
-**Verba disponível:** R$ 0,00  
-**Confiança de que amanhã será melhor:** cautelosamente baixa
-
-<sub>Este projeto não é afiliado a nenhuma instituição oficial. É só uma piada interna com domínio público de zoeira.</sub>
+<sub>Iniciativa independente, sem vínculo com instituições oficiais. Qualquer semelhança com um sistema de monitoramento competente é mera coincidência.</sub>
