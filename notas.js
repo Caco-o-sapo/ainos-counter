@@ -1,4 +1,5 @@
 window.notas = [
+  { data: "07/11/2026", texto: "Moranguete, Abacatudo, 67, 42 sigma farmando aura no passinho do sabor" },
   { data: "07/11/2026", texto: "Sticker elsa bunduda bunda grande andando" },
   { data: "06/11/2026", texto: "Dia Bom: 'AQUELA AMIGA Q GANHOU O SEGUNDO DIA DE FOLGA, DEUS É BOM'" },
   { data: "06/11/2026", texto: "Quase mandei minhas horas extras aqui." },
