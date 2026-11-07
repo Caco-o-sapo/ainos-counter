@@ -23,10 +23,12 @@ function bloco(style, ...children) {
 }
 
 export function GET() {
-  const dias = Math.max(
-    0,
-    Math.floor((paraUtc(dataDeHojeEmSaoPaulo()) - paraUtc(ultimoDiaBom)) / 86400000)
-  );
+  const dias = ultimoDiaBom
+    ? Math.max(
+        0,
+        Math.floor((paraUtc(dataDeHojeEmSaoPaulo()) - paraUtc(ultimoDiaBom)) / 86400000)
+      )
+    : null;
   const ultimaNota = notas[0];
   const textoNota = ultimaNota?.texto
     ? (ultimaNota.texto.length > 132 ? ultimaNota.texto.slice(0, 129) + "…" : ultimaNota.texto)
@@ -58,13 +60,13 @@ export function GET() {
       bloco({ display: "flex", flexDirection: "column", flex: 1 },
         bloco({ color: "#f4ad69", fontSize: 17, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }, "Relatório de acompanhamento"),
         bloco({ display: "flex", alignItems: "baseline", gap: 18, marginTop: 12 },
-          bloco({ color: "#ffc887", fontSize: 154, lineHeight: 1, fontWeight: 800, letterSpacing: -10 }, String(dias)),
+          bloco({ color: "#ffc887", fontSize: 154, lineHeight: 1, fontWeight: 800, letterSpacing: -10 }, dias === null ? "—" : String(dias)),
           bloco({ color: "#d0c6bd", fontSize: 31, fontWeight: 600 }, dias === 1 ? "dia" : "dias")
         ),
-        bloco({ color: "#d0c6bd", fontSize: 25 }, "desde o último dia bom do Ainos")
+        bloco({ color: "#d0c6bd", fontSize: 25 }, ultimoDiaBom ? "desde o último dia bom do Ainos" : "aguardando o primeiro dia bom registrado")
       ),
       bloco({ display: "flex", flexDirection: "column", width: 410, padding: 25, border: "1px solid #403941", borderRadius: 18, background: "#17171d" },
-        bloco({ color: "#f4ad69", fontSize: 14, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase" }, "Última ocorrência · " + (ultimaNota?.data || "sem data")),
+        bloco({ color: "#f4ad69", fontSize: 14, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase" }, (ultimaNota?.diaBom === true ? "☀ DIA BOM · " : "ÚLTIMA OCORRÊNCIA · ") + (ultimaNota?.data || "sem data")),
         bloco({ marginTop: 13, color: "#e4ded8", fontSize: 22, lineHeight: 1.4 }, "“" + textoNota + "”")
       )
     ),
