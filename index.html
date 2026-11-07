@@ -586,8 +586,8 @@
     function atualizarContador() {
       const agora = new Date();
       const hoje = Date.UTC(agora.getFullYear(), agora.getMonth(), agora.getDate());
-      const diaBom = Date.UTC(anoBom, mesBom - 1, diaBom);
-      const dias = Math.max(0, Math.floor((hoje - diaBom) / 86400000));
+      const diaBomUTC = Date.UTC(anoBom, mesBom - 1, diaBom);
+      const dias = Math.max(0, Math.floor((hoje - diaBomUTC) / 86400000));
 
       document.getElementById("dias").textContent = dias;
       document.getElementById("unidade-dias").textContent = dias === 1 ? "dia" : "dias";
