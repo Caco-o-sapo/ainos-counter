@@ -1,7 +1,9 @@
 {
   "name": "ainos-counter-preview",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "@vercel/og": "^0.8.5"
+    "@vercel/og": "^0.8.5",
+    "react": "^18.2.0"
   }
 }
