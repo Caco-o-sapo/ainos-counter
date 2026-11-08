@@ -626,6 +626,14 @@
     @media(max-width:900px){.fun-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:620px){.fun-grid{grid-template-columns:1fr}.fun-card{min-height:0}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bingo-square{min-height:82px;padding:8px;font-size:.72rem}.bingo-panel .extra-heading{align-items:start;flex-direction:column}}
     @media(max-width:420px){.category-filter{width:100%;margin-left:0}.category-select{width:100%;max-width:none}.stats-grid{grid-template-columns:1fr}.bingo-grid{gap:6px}.bingo-square{min-height:75px;font-size:.68rem}}
+    .achievements{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .achievement{display:flex;min-height:208px;flex-direction:column;align-items:stretch;gap:10px;padding:16px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,rgba(32,33,39,.82),rgba(23,24,30,.95));transition:transform .18s ease,border-color .18s ease}
+    .achievement:hover{transform:translateY(-2px);border-color:rgba(244,173,105,.28)}.achievement.locked{opacity:.75}.achievement.unlocked{border-color:rgba(162,201,164,.38);background:linear-gradient(145deg,rgba(65,93,66,.2),rgba(23,24,30,.95))}
+    .achievement-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.achievement-icon{width:40px;height:40px;border-radius:12px;font-size:1.15rem}
+    .achievement-title{margin:0;color:var(--text);font-size:.9rem;font-weight:800}.achievement-copy{flex:1;margin:0;color:var(--muted);font-size:.76rem;line-height:1.45}
+    .achievement-state{border:1px solid rgba(255,255,255,.09);border-radius:999px;padding:4px 8px;color:var(--soft);background:rgba(255,255,255,.03);font-size:.63rem;font-weight:750;white-space:nowrap}.achievement.unlocked .achievement-state{border-color:rgba(162,201,164,.26);color:var(--green);background:rgba(91,130,93,.1)}
+    .achievement-meter{height:6px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.08)}.achievement-meter-fill{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--amber),var(--green));transition:width .25s ease}.achievement-progress-label{color:var(--soft);font-size:.66rem;text-align:right}
+    @media(max-width:900px){.achievements{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.achievements{grid-template-columns:1fr}.achievement{min-height:175px}}
   </style>
 </head>
 
@@ -825,7 +833,8 @@
         noMatches: "Nenhuma ocorrência combina com esses filtros.", noComplaints: "Ainda não há reclamações para sortear. Um raríssimo momento de paz.", randomLabel: "Reclamação sorteada", randomKicker: "Arquivo embaralhado", randomTitle: "Roleta de reclamações", randomCopy: "Uma reclamação escolhida pelo destino. O destino não aceita recurso.", oracleKicker: "Consulta sem garantia", oracleTitle: "Oráculo do azar", oracleButton: "🔮 Consultar o oráculo", oraclePlaceholder: "O oráculo aguarda uma consulta.", oraclePredictions: ["O próximo problema virá acompanhado de: “mas era só uma coisinha”.","Uma tarefa de cinco minutos encontrará um jeito de durar a tarde inteira.","Você vai abrir uma aba nova e esquecer o que estava procurando.","O universo recomenda conferir se o microfone está mutado antes de falar sozinho.","Uma mensagem começando com “rapidinho” pode exigir uma reunião de emergência.","Hoje, o botão certo será o terceiro que você apertar.","Uma atualização está a caminho. O que ela atualiza permanece um mistério.","O destino prevê que alguém perguntará “deu certo?” antes de dar tempo de tentar."],
         calendarKicker: "Linha do tempo", calendarTitle: "Calendário de ocorrências", previousMonth: "Mês anterior", nextMonth: "Próximo mês", legendNote: "Ocorrência", legendGood: "Dia bom", clearDate: "Mostrar todas as datas", noOccurrence: "sem ocorrência", selectedDatePrefix: "Data selecionada:", pageCount: (a,b) => "Página " + a + " de " + b, previousPage: "← Anterior", nextPage: "Próxima →",
         achievementsKicker: "Troféus de procedência duvidosa", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
-        achievementList: [["☀️","Primeiro dia bom","Um raro sinal de esperança."],["🗃️","Arquivo ativo","10 ocorrências registradas."],["🕵️","Uma semana sob observação","7 dias desde o último dia bom."],["🏆","Mês histórico","30 dias desde o último dia bom."]],
+        achievementList: [["☀️","Primeiro dia bom","Marque um registro positivo.","goodDays",1],["🗃️","Arquivo inaugurado","Registre 10 ocorrências.","notes",10],["📚","Arquivista","Chegue a 25 registros.","notes",25],["🏛️","Memória institucional","Chegue a 50 registros.","notes",50],["🎭","Mente aberta","Registre 3 categorias diferentes.","categories",3],["🧭","Dossiê completo","Registre notas em 5 categorias.","categories",5],["🔍","Uma semana sob observação","7 dias desde o último dia bom.","days",7],["⏳","Mês histórico","30 dias desde o último dia bom.","days",30],["🛰️","Missão de longa duração","100 dias desde o último dia bom.","days",100],["🎯","Bingo!","Complete uma linha na cartela.","bingo",1]],
+        achievementProgress: (a,b) => a + " / " + b + " " + (idiomaAtual === "en" ? "progress" : "progresso"),
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento",
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente",
@@ -873,7 +882,8 @@
         noMatches: "No reports match these filters.", noComplaints: "There are no complaints to draw yet. A rare moment of peace.", randomLabel: "Drawn complaint", randomKicker: "Shuffled archive", randomTitle: "Complaint roulette", randomCopy: "A complaint chosen by fate. Fate does not accept appeals.", oracleKicker: "No guarantees", oracleTitle: "Bad Luck Oracle", oracleButton: "🔮 Consult the oracle", oraclePlaceholder: "The oracle awaits your question.", oraclePredictions: ["The next problem will come with: “it was just a little thing.”","A five-minute task will find a way to last all afternoon.","You will open a new tab and forget what you were looking for.","The universe recommends checking your mic before talking to yourself.","A message starting with “real quick” may require an emergency meeting.","Today, the right button will be the third one you press.","An update is coming. What it updates remains a mystery.","Fate predicts someone will ask “did it work?” before you can try."],
         calendarKicker: "Timeline", calendarTitle: "Incident calendar", previousMonth: "Previous month", nextMonth: "Next month", legendNote: "Report", legendGood: "Good day", clearDate: "Show all dates", noOccurrence: "no report", selectedDatePrefix: "Selected date:", pageCount: (a,b) => "Page " + a + " of " + b, previousPage: "← Previous", nextPage: "Next →",
         achievementsKicker: "Questionable trophies", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
-        achievementList: [["☀️","First good day","A rare sign of hope."],["🗃️","Active archive","10 reports recorded."],["🕵️","One week under watch","7 days since the last good day."],["🏆","Historic month","30 days since the last good day."]],
+        achievementList: [["☀️","First good day","Mark a positive report.","goodDays",1],["🗃️","Archive opened","Record 10 reports.","notes",10],["📚","Archivist","Reach 25 reports.","notes",25],["🏛️","Institutional memory","Reach 50 reports.","notes",50],["🎭","Open-minded","Record 3 different categories.","categories",3],["🧭","Complete case file","Record notes in 5 categories.","categories",5],["🔍","One week under watch","7 days since the last good day.","days",7],["⏳","Historic month","30 days since the last good day.","days",30],["🛰️","Long-haul mission","100 days since the last good day.","days",100],["🎯","Bingo!","Complete a line on the card.","bingo",1]],
+        achievementProgress: (a,b) => a + " / " + b + " progress",
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
         tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment",
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category",
@@ -1027,11 +1037,20 @@
     function renderizarConquistas(){
       const t=texto(),container=document.getElementById("achievements");container.replaceChildren();
       const hoje=new Date(),dias=dataUltimoDiaBom?Math.max(0,Math.floor((Date.UTC(hoje.getFullYear(),hoje.getMonth(),hoje.getDate())-Date.UTC(dataUltimoDiaBom.getFullYear(),dataUltimoDiaBom.getMonth(),dataUltimoDiaBom.getDate()))/86400000)):0;
-      const unlocked=[notas.some(n=>n.diaBom===true),notas.length>=10,dias>=7,dias>=30];
-      t.achievementList.forEach((a,i)=>{const item=document.createElement("article");item.className="achievement"+(unlocked[i]?"":" locked");
-        const icon=document.createElement("span");icon.className="achievement-icon";icon.textContent=a[0];const content=document.createElement("div");
-        const title=document.createElement("p");title.className="achievement-title";title.textContent=a[1];const copy=document.createElement("p");copy.className="achievement-copy";copy.textContent=a[2];content.append(title,copy);
-        const state=document.createElement("span");state.className="achievement-state";state.textContent=unlocked[i]?t.earned:t.locked;item.append(icon,content,state);container.appendChild(item);
+      const categorias=new Set(notas.map(n=>categoriaDaNota(n)));
+      const valores={goodDays:new Set(notas.filter(n=>n.diaBom===true).map(n=>chaveData(n.data)).filter(Boolean)).size,notes:notas.length,categories:categorias.size,days,bingo:existeBingo()?1:0};
+      t.achievementList.forEach(a=>{
+        const alvo=a[4],atual=Math.min(alvo,valores[a[3]]||0),desbloqueada=atual>=alvo,percentual=Math.round((atual/alvo)*100);
+        const item=document.createElement("article");item.className="achievement "+(desbloqueada?"unlocked":"locked");
+        const cabecalho=document.createElement("div");cabecalho.className="achievement-head";
+        const icon=document.createElement("span");icon.className="achievement-icon";icon.textContent=a[0];
+        const state=document.createElement("span");state.className="achievement-state";state.textContent=desbloqueada?t.earned:t.locked;cabecalho.append(icon,state);
+        const title=document.createElement("p");title.className="achievement-title";title.textContent=a[1];
+        const copy=document.createElement("p");copy.className="achievement-copy";copy.textContent=a[2];
+        const meter=document.createElement("div");meter.className="achievement-meter";meter.setAttribute("role","progressbar");meter.setAttribute("aria-valuemin","0");meter.setAttribute("aria-valuemax",String(alvo));meter.setAttribute("aria-valuenow",String(atual));meter.setAttribute("aria-valuetext",t.achievementProgress(atual,alvo));
+        const fill=document.createElement("span");fill.className="achievement-meter-fill";fill.style.width=percentual+"%";meter.appendChild(fill);
+        const progress=document.createElement("span");progress.className="achievement-progress-label";progress.textContent=t.achievementProgress(atual,alvo);
+        item.append(cabecalho,title,copy,meter,progress);container.appendChild(item);
       });
     }
     function obterEstatisticas(){
@@ -1123,10 +1142,10 @@
     function renderizarBingo(){
       const t=texto(),grid=document.getElementById("bingoGrid");grid.replaceChildren();grid.setAttribute("aria-label",t.bingoLabel);
       t.bingoSquares.forEach((rotulo,indice)=>{const botao=document.createElement("button");botao.type="button";botao.className="bingo-square"+(bingoMarcado[indice]?" marked":"")+(indice===4?" free":"");botao.textContent=rotulo;botao.setAttribute("aria-pressed",String(bingoMarcado[indice]));botao.disabled=indice===4;
-        botao.addEventListener("click",()=>{bingoMarcado[indice]=!bingoMarcado[indice];salvarBingo();renderizarBingo();});grid.appendChild(botao);});
+        botao.addEventListener("click",()=>{bingoMarcado[indice]=!bingoMarcado[indice];salvarBingo();renderizarBingo();renderizarConquistas();});grid.appendChild(botao);});
       document.getElementById("bingoStatus").textContent=existeBingo()?t.bingoComplete:t.bingoProgress;
     }
-    document.getElementById("resetBingo").addEventListener("click",()=>{bingoMarcado=Array(9).fill(false);bingoMarcado[4]=true;salvarBingo();renderizarBingo();});
+    document.getElementById("resetBingo").addEventListener("click",()=>{bingoMarcado=Array(9).fill(false);bingoMarcado[4]=true;salvarBingo();renderizarBingo();renderizarConquistas();});
     function gerarManchete(){
       const t=texto(),items=notas.filter(n=>n.diaBom!==true),saida=document.getElementById("headlineText");
       if(!items.length){saida.textContent=t.noComplaints;return;}
