@@ -616,6 +616,16 @@
     @media(max-width:520px){.note-list{grid-template-columns:1fr}.note{min-height:0;padding:14px}.note-share-row{padding-top:12px}.pagination{gap:8px}.page-button{padding:0 10px}}
     .fun-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:18px}.fun-card{min-height:255px;display:flex;flex-direction:column}.fun-copy{margin:0 0 18px;color:var(--muted);font-size:.88rem;line-height:1.55}.fun-action{align-self:flex-start}.fun-card .random-report{margin-top:auto;margin-bottom:0}.oracle-output{display:flex;flex:1;align-items:center;min-height:84px;margin:0 0 17px;padding:16px;border:1px solid rgba(244,173,105,.16);border-radius:13px;color:var(--text);background:rgba(244,173,105,.045);font-size:.92rem;line-height:1.55}.achievement-panel{margin-top:0}
     @media(max-width:620px){.fun-grid{grid-template-columns:1fr}.fun-card{min-height:0}.fun-card .random-report{margin-top:18px}}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .category-filter{margin-left:auto}.category-select{min-height:36px;max-width:190px;border:1px solid var(--line);border-radius:10px;padding:0 10px;color:var(--muted);background:var(--panel-raised);font:inherit;font-size:.78rem}
+    .category-badge{display:inline-flex;align-items:center;padding:4px 8px;border:1px solid rgba(244,173,105,.18);border-radius:999px;color:var(--amber-bright);background:rgba(244,173,105,.06);font-size:.65rem;font-weight:700;letter-spacing:.03em}
+    .stats-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.stat-value.category-stat{font-size:1.05rem;line-height:1.2}
+    .fun-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.fun-card{min-height:270px}
+    .headline-output{min-height:100px}
+    .bingo-panel{margin-bottom:18px}.bingo-panel .extra-heading{align-items:center}.bingo-panel .fun-copy{margin:6px 0 0}.bingo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;max-width:760px;margin:0 auto}.bingo-square{display:grid;min-height:96px;place-items:center;border:1px solid var(--line);border-radius:13px;padding:12px;color:var(--muted);background:var(--panel-raised);font:inherit;font-size:.8rem;line-height:1.35;text-align:center;cursor:pointer;transition:.18s ease}.bingo-square:hover{border-color:var(--amber);color:var(--text)}.bingo-square.marked{border-color:rgba(162,201,164,.55);color:#d1e5d2;background:rgba(91,130,93,.18);box-shadow:inset 0 0 0 1px rgba(162,201,164,.12)}.bingo-square.free{color:var(--amber-bright);background:rgba(244,173,105,.1);cursor:default}.bingo-status{min-height:1.3em;margin:13px 0 0;color:var(--green);font-size:.85rem;font-weight:750;text-align:center}
+    @media(max-width:900px){.fun-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.fun-grid{grid-template-columns:1fr}.fun-card{min-height:0}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bingo-square{min-height:82px;padding:8px;font-size:.72rem}.bingo-panel .extra-heading{align-items:start;flex-direction:column}}
+    @media(max-width:420px){.category-filter{width:100%;margin-left:0}.category-select{width:100%;max-width:none}.stats-grid{grid-template-columns:1fr}.bingo-grid{gap:6px}.bingo-square{min-height:75px;font-size:.68rem}}
   </style>
 </head>
 
@@ -694,6 +704,7 @@
           <article class="stat-card"><p id="statComplaintsLabel" class="stat-label">Reclamações registradas</p><p id="statComplaints" class="stat-value">0</p></article>
           <article class="stat-card"><p id="statGoodDaysLabel" class="stat-label">Dias bons registrados</p><p id="statGoodDays" class="stat-value">0</p></article>
           <article class="stat-card"><p id="statDaysLabel" class="stat-label">Dias desde o último dia bom</p><p id="statDays" class="stat-value">—</p></article>
+          <article class="stat-card"><p id="statCategoryLabel" class="stat-label">Tema mais comum</p><p id="statCategory" class="stat-value category-stat">—</p></article>
         </div><p id="shareMessage" class="share-message" aria-live="polite"></p>
       </section>
 
@@ -725,6 +736,7 @@
         </div>
         <div class="filters" role="group" aria-label="Filtrar ocorrências">
           <button class="filter-button active" type="button" data-filter="all">Todas</button><button class="filter-button" type="button" data-filter="complaints">Reclamações</button><button class="filter-button" type="button" data-filter="good">Dias bons</button>
+          <label class="category-filter"><span class="sr-only" data-i18n="categoryLabel">Categoria</span><select id="categoryFilter" class="category-select" aria-label="Filtrar por categoria"></select></label>
         </div>
         <p id="resultsLabel" class="results-label" aria-live="polite"></p>
         <div id="listaNotas" class="note-list" aria-live="polite"></div>
@@ -750,7 +762,17 @@
             <p id="oracleText" class="oracle-output" data-i18n="oraclePlaceholder">O oráculo aguarda uma consulta.</p>
             <button id="oracleButton" class="tool-button fun-action" type="button" data-i18n="oracleButton">🔮 Consultar o oráculo</button>
           </section>
+          <section class="panel extra-panel fun-card" aria-labelledby="headlineTitle">
+            <div class="extra-heading"><div><p class="extra-kicker" data-i18n="headlineKicker">Imprensa do caos</p><h2 id="headlineTitle" data-i18n="headlineTitle">Gerador de manchetes</h2></div></div>
+            <p id="headlineText" class="oracle-output headline-output" data-i18n="headlinePlaceholder">Uma manchete aguarda a próxima ocorrência.</p>
+            <button id="headlineButton" class="tool-button fun-action" type="button" data-i18n="headlineButton">📰 Gerar manchete</button>
+          </section>
         </div>
+        <section class="panel extra-panel bingo-panel" aria-labelledby="bingoTitle">
+          <div class="extra-heading"><div><p class="extra-kicker" data-i18n="bingoKicker">Cartela individual</p><h2 id="bingoTitle" data-i18n="bingoTitle">Bingo do Ainos</h2><p class="fun-copy" data-i18n="bingoCopy">Marque os acontecimentos; a cartela fica salva neste navegador.</p></div><button id="resetBingo" class="tool-button" type="button" data-i18n="bingoReset">Limpar cartela</button></div>
+          <div id="bingoGrid" class="bingo-grid" role="group" aria-label="Cartela do Bingo do Ainos"></div>
+          <p id="bingoStatus" class="bingo-status" aria-live="polite"></p>
+        </section>
         <section class="panel extra-panel achievement-panel" aria-labelledby="achievementsTitle">
           <div class="extra-heading"><div><p class="extra-kicker" data-i18n="achievementsKicker">Reconhecimentos oficiais</p><h2 id="achievementsTitle" data-i18n="achievementsTitle">Conquistas duvidosas</h2></div></div>
           <div id="achievements" class="achievements"></div>
@@ -806,6 +828,13 @@
         achievementList: [["☀️","Primeiro dia bom","Um raro sinal de esperança."],["🗃️","Arquivo ativo","10 ocorrências registradas."],["🕵️","Uma semana sob observação","7 dias desde o último dia bom."],["🏆","Mês histórico","30 dias desde o último dia bom."]],
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento",
+        categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente",
+        categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
+        headlineKicker: "Imprensa do caos", headlineTitle: "Gerador de manchetes", headlineButton: "📰 Gerar manchete", headlinePlaceholder: "Uma manchete aguarda a próxima ocorrência.", headlinePrefixes: ["PLANTÃO DO AZAR:", "AINOS EM CRISE:", "ÚLTIMA HORA:", "DOSSIÊ ESPECIAL:"],
+        bingoKicker: "Cartela individual", bingoTitle: "Bingo do Ainos", bingoCopy: "Marque os acontecimentos; a cartela fica salva neste navegador.", bingoReset: "Limpar cartela", bingoProgress: "Marque o que já aconteceu.", bingoComplete: "BINGO! O departamento de azar confirma a sequência.", bingoSquares: ["Reclamação do trabalho","Azar no jogo/gacha","Disse que está cansado","Uma coisa simples virou problema","ESPAÇO LIVRE","Chegou uma notícia inesperada","Se arrependeu de uma escolha","Mandou print do caos","Disse “depois eu resolvo”"],
+        categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente", categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
+        headlineKicker: "Imprensa do caos", headlineTitle: "Gerador de manchetes", headlineButton: "📰 Gerar manchete", headlinePlaceholder: "Uma manchete aguarda a próxima ocorrência.", headlinePrefixes: ["PLANTÃO DO AZAR:", "AINOS EM CRISE:", "ÚLTIMA HORA:", "DOSSIÊ ESPECIAL:"],
+        bingoKicker: "Cartela individual", bingoTitle: "Bingo do Ainos", bingoCopy: "Marque os acontecimentos; a cartela fica salva neste navegador.", bingoReset: "Limpar cartela", bingoProgress: "Marque o que já aconteceu.", bingoComplete: "BINGO! O departamento de azar confirma a sequência.", bingoLabel: "Cartela do Bingo do Ainos", bingoSquares: ["Reclamação do trabalho","Azar no jogo/gacha","Disse que está cansado","Uma coisa simples virou problema","ESPAÇO LIVRE","Chegou uma notícia inesperada","Se arrependeu de uma escolha","Mandou print do caos","Disse “depois eu resolvo”"], statCategory: "Tema mais frequente",
         switchLabel: "Mudar para inglês",
         locale: "pt-BR"
       },
@@ -847,6 +876,13 @@
         achievementList: [["☀️","First good day","A rare sign of hope."],["🗃️","Active archive","10 reports recorded."],["🕵️","One week under watch","7 days since the last good day."],["🏆","Historic month","30 days since the last good day."]],
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
         tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment",
+        categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category",
+        categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
+        headlineKicker: "Chaos newsroom", headlineTitle: "Headline generator", headlineButton: "📰 Generate headline", headlinePlaceholder: "A headline awaits the next incident.", headlinePrefixes: ["BAD LUCK BULLETIN:", "AINOS IN CRISIS:", "BREAKING:", "SPECIAL REPORT:"],
+        bingoKicker: "Personal card", bingoTitle: "Ainos Bingo", bingoCopy: "Mark what happens; this card is saved in this browser.", bingoReset: "Reset card", bingoProgress: "Mark the things that have happened.", bingoComplete: "BINGO! The Department of Bad Luck confirms the streak.", bingoSquares: ["Work complaint","Bad luck in a game/gacha","Said he is tired","A simple thing became a problem","FREE SPACE","Unexpected news arrived","Regretted a choice","Sent a screenshot of the chaos","Said “I will deal with it later”"],
+        categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category", categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
+        headlineKicker: "Chaos newsroom", headlineTitle: "Headline generator", headlineButton: "📰 Generate headline", headlinePlaceholder: "A headline awaits the next incident.", headlinePrefixes: ["BAD LUCK BULLETIN:", "AINOS IN CRISIS:", "BREAKING:", "SPECIAL REPORT:"],
+        bingoKicker: "Personal card", bingoTitle: "Ainos Bingo", bingoCopy: "Mark what happens; this card is saved in this browser.", bingoReset: "Reset card", bingoProgress: "Mark the things that have happened.", bingoComplete: "BINGO! The Department of Bad Luck confirms the streak.", bingoLabel: "Ainos Bingo card", bingoSquares: ["Work complaint","Bad luck in a game/gacha","Said he is tired","A simple thing became a problem","FREE SPACE","Unexpected news arrived","Regretted a choice","Sent a screenshot of the chaos","Said “I will deal with it later”"], statCategory: "Top category",
         switchLabel: "Switch to Portuguese",
         locale: "en"
       }
@@ -913,18 +949,44 @@
     }
 
     let filtroAtual = "all";
+    let categoriaAtual = "all";
     let dataSelecionada = "";
     let paginaAtual = 1;
     const notasPorPagina = 6;
     let mesCalendario = new Date();
     const busca = document.getElementById("notesSearch");
+    const filtroCategoria = document.getElementById("categoryFilter");
     function chaveData(valor) { const p=(valor||"").split("/"); return p.length===3 ? p[2]+"-"+p[1].padStart(2,"0")+"-"+p[0].padStart(2,"0") : ""; }
+    function normalizarCategoria(valor){return String(valor||"").toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().replace(/\s+/g,"_");}
+    const aliasesCategoria={trabalho:"work",emprego:"work",jogos:"games",jogo:"games",game:"games",saude:"health",social:"social",vida_social:"social",cotidiano:"daily",dia_a_dia:"daily",outros:"other",outro:"other"};
+    const regrasCategoria={
+      work:["trabalho","chefe","cliente","emprego","horas extras","hora extra","reuniao","salario","patrao","atendimento","expediente","colega de trabalho"],
+      games:["gacha","jogo","jogos","game","rank","partida","pick","nerf","buff","seraphine","lux","steam","videogame"],
+      health:["dor","doenca","doente","medico","remedio","hospital","saude","gripe","cabeca","enxaqueca","febre","sintoma"],
+      social:["amigo","amiga","discord","familia","mae","pai","namorado","namorada","relacionamento","conversa","visita"],
+      daily:["comida","fome","janta","jantando","almoco","beber","vodka","sono","casa","onibus","chuva","tedio","mercado"]
+    };
+    function contemTermo(textoNormalizado,termo){const textoSeparado=" "+normalizarCategoria(textoNormalizado).replace(/_/g," ").replace(/[^a-z0-9]+/g," ")+" ";const termoSeparado=normalizarCategoria(termo).replace(/_/g," ");return textoSeparado.includes(" "+termoSeparado+" ");}
+    function categoriaDaNota(nota){
+      const manual=normalizarCategoria(nota.categoria),canonica=aliasesCategoria[manual]||manual;
+      if(["work","games","health","social","daily","other"].includes(canonica))return canonica;
+      const textoNota=normalizarCategoria(nota.texto);
+      for(const categoria of ["work","games","health","social","daily"]){if(regrasCategoria[categoria].some(palavra=>contemTermo(textoNota,palavra)))return categoria;}
+      return "other";
+    }
+    function rotuloCategoria(categoria,t=texto()){return t.categories[categoria]||t.categories.other;}
+    function renderizarFiltroCategoria(){
+      const t=texto(),valorAtual=categoriaAtual;filtroCategoria.replaceChildren();
+      const todas=document.createElement("option");todas.value="all";todas.textContent=t.allCategories;filtroCategoria.appendChild(todas);
+      ["work","games","health","social","daily","other"].forEach(categoria=>{const option=document.createElement("option");option.value=categoria;option.textContent=rotuloCategoria(categoria,t);filtroCategoria.appendChild(option);});
+      filtroCategoria.value=valorAtual;filtroCategoria.setAttribute("aria-label",t.categoryLabel);
+    }
     function renderizarNotas() {
       const t=texto(),termo=busca.value.trim().toLocaleLowerCase();
       const filtradas=notas.map((nota,indice)=>({nota,indice})).filter(({nota})=>{
-        const boa=nota.diaBom===true,okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa);
+        const boa=nota.diaBom===true,okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa),okCategoria=categoriaAtual==="all"||categoriaDaNota(nota)===categoriaAtual;
         const okBusca=!termo||(nota.texto||"").toLocaleLowerCase().includes(termo)||(nota.data||"").toLocaleLowerCase().includes(termo);
-        return okFiltro&&okBusca&&(!dataSelecionada||chaveData(nota.data)===dataSelecionada);
+        return okFiltro&&okCategoria&&okBusca&&(!dataSelecionada||chaveData(nota.data)===dataSelecionada);
       });
       const paginas=Math.max(1,Math.ceil(filtradas.length/notasPorPagina));paginaAtual=Math.min(paginaAtual,paginas);
       const paginacao=document.getElementById("pagination");
@@ -940,6 +1002,7 @@
         const conteudo=document.createElement("div");conteudo.className="note-content";const linha=document.createElement("div");linha.className="note-date-row";
         const data=document.createElement("div");data.className="note-date";data.textContent=nota.data||t.missingDate;linha.appendChild(data);
         if(nota.diaBom===true){const badge=document.createElement("span");badge.className="good-day-badge";badge.textContent=t.goodDay;linha.appendChild(badge);}
+        const categoryBadge=document.createElement("span");categoryBadge.className="category-badge";categoryBadge.textContent=rotuloCategoria(categoriaDaNota(nota),t);linha.appendChild(categoryBadge);
         const p=document.createElement("p");p.className="note-text";p.textContent="“"+(nota.texto||"")+"”";conteudo.append(linha,p);
         const shareRow=document.createElement("div");shareRow.className="note-share-row";const share=document.createElement("button");share.type="button";share.className="share-note-button";share.textContent=t.shareImage;
         share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);conteudo.append(shareRow);item.append(numero,conteudo);lista.appendChild(item);
@@ -974,16 +1037,20 @@
     function obterEstatisticas(){
       const bons=notas.filter(n=>n.diaBom===true),diasBons=new Set(bons.map(n=>chaveData(n.data)).filter(Boolean)).size;
       const hoje=new Date(),dias=dataUltimoDiaBom?Math.max(0,Math.floor((Date.UTC(hoje.getFullYear(),hoje.getMonth(),hoje.getDate())-Date.UTC(dataUltimoDiaBom.getFullYear(),dataUltimoDiaBom.getMonth(),dataUltimoDiaBom.getDate()))/86400000)):null;
-      return {reclamacoes:notas.filter(n=>n.diaBom!==true).length,diasBons,dias};
+      const contagem={};notas.filter(n=>n.diaBom!==true).forEach(n=>{const categoria=categoriaDaNota(n);contagem[categoria]=(contagem[categoria]||0)+1;});
+      const categoriaMaisFrequente=Object.keys(contagem).sort((a,b)=>contagem[b]-contagem[a])[0]||"";
+      return {reclamacoes:notas.filter(n=>n.diaBom!==true).length,diasBons,dias,categoriaMaisFrequente};
     }
     function renderizarEstatisticas(){
       const t=texto(),dados=obterEstatisticas();
       document.getElementById("statComplaintsLabel").textContent=t.statComplaints;
       document.getElementById("statGoodDaysLabel").textContent=t.statGoodDays;
       document.getElementById("statDaysLabel").textContent=t.statDays;
+      document.getElementById("statCategoryLabel").textContent=t.statCategory;
       document.getElementById("statComplaints").textContent=dados.reclamacoes;
       document.getElementById("statGoodDays").textContent=dados.diasBons;
       document.getElementById("statDays").textContent=dados.dias===null?"—":dados.dias;
+      document.getElementById("statCategory").textContent=dados.categoriaMaisFrequente?rotuloCategoria(dados.categoriaMaisFrequente,t):"—";
     }
     function desenharQuebraTexto(ctx,texto,maxWidth,maxLinhas){
       const palavras=String(texto||"").split(/\s+/),linhas=[];let linha="";
@@ -1038,15 +1105,36 @@
       ctx.fillStyle="#ffc887";ctx.font="800 26px system-ui, sans-serif";ctx.fillText("AINOS WATCH",82,94);
       ctx.fillStyle="#aaa6a3";ctx.font="600 16px system-ui, sans-serif";ctx.fillText(t.cardFooter,82,122);
       ctx.fillStyle="#f3eee7";ctx.font="800 42px system-ui, sans-serif";ctx.fillText(t.statsTitle,82,210);
-      const cards=[{label:t.statComplaints,value:String(d.reclamacoes)},{label:t.statGoodDays,value:String(d.diasBons)},{label:t.statDays,value:d.dias===null?"—":String(d.dias)}];
-      cards.forEach((card,i)=>{const x=82+i*352;ctx.fillStyle="#202127";ctx.beginPath();ctx.roundRect(x,260,320,190,18);ctx.fill();ctx.strokeStyle="#34343b";ctx.stroke();
-        ctx.fillStyle="#aaa6a3";ctx.font="600 18px system-ui, sans-serif";desenharQuebraTexto(ctx,card.label,260,2).forEach((line,j)=>ctx.fillText(line,x+24,302+j*25));
-        ctx.fillStyle="#ffc887";ctx.font="800 58px system-ui, sans-serif";ctx.fillText(card.value,x+24,414);
+      const cards=[{label:t.statComplaints,value:String(d.reclamacoes)},{label:t.statGoodDays,value:String(d.diasBons)},{label:t.statDays,value:d.dias===null?"—":String(d.dias)},{label:t.statCategory,value:d.categoriaMaisFrequente?rotuloCategoria(d.categoriaMaisFrequente,t):"—"}];
+      cards.forEach((card,i)=>{const x=65+i*270;ctx.fillStyle="#202127";ctx.beginPath();ctx.roundRect(x,260,245,190,18);ctx.fill();ctx.strokeStyle="#34343b";ctx.stroke();
+        ctx.fillStyle="#aaa6a3";ctx.font="600 16px system-ui, sans-serif";desenharQuebraTexto(ctx,card.label,205,2).forEach((line,j)=>ctx.fillText(line,x+20,302+j*24));
+        ctx.fillStyle="#ffc887";ctx.font=i===3?"800 30px system-ui, sans-serif":"800 54px system-ui, sans-serif";ctx.fillText(card.value,x+20,414);
       });
       ctx.fillStyle="#77757a";ctx.font="500 15px system-ui, sans-serif";ctx.fillText("https://ainos-counter.vercel.app/",84,558);
       compartilharImagem(canvas,"ainos-estatisticas.png",t.shareSummaryText);
     }
     document.getElementById("shareStats").addEventListener("click",gerarImagemEstatisticas);
+
+    let bingoMarcado=Array(9).fill(false);bingoMarcado[4]=true;
+    try{const salvo=JSON.parse(localStorage.getItem("ainos-bingo")||"null");if(Array.isArray(salvo)&&salvo.length===9)bingoMarcado=salvo.map(Boolean);}catch(erro){}
+    bingoMarcado[4]=true;
+    function existeBingo(){const linhas=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];return linhas.some(linha=>linha.every(i=>bingoMarcado[i]));}
+    function salvarBingo(){try{localStorage.setItem("ainos-bingo",JSON.stringify(bingoMarcado));}catch(erro){}}
+    function renderizarBingo(){
+      const t=texto(),grid=document.getElementById("bingoGrid");grid.replaceChildren();grid.setAttribute("aria-label",t.bingoLabel);
+      t.bingoSquares.forEach((rotulo,indice)=>{const botao=document.createElement("button");botao.type="button";botao.className="bingo-square"+(bingoMarcado[indice]?" marked":"")+(indice===4?" free":"");botao.textContent=rotulo;botao.setAttribute("aria-pressed",String(bingoMarcado[indice]));botao.disabled=indice===4;
+        botao.addEventListener("click",()=>{bingoMarcado[indice]=!bingoMarcado[indice];salvarBingo();renderizarBingo();});grid.appendChild(botao);});
+      document.getElementById("bingoStatus").textContent=existeBingo()?t.bingoComplete:t.bingoProgress;
+    }
+    document.getElementById("resetBingo").addEventListener("click",()=>{bingoMarcado=Array(9).fill(false);bingoMarcado[4]=true;salvarBingo();renderizarBingo();});
+    function gerarManchete(){
+      const t=texto(),items=notas.filter(n=>n.diaBom!==true),saida=document.getElementById("headlineText");
+      if(!items.length){saida.textContent=t.noComplaints;return;}
+      const nota=items[Math.floor(Math.random()*items.length)],prefixo=t.headlinePrefixes[Math.floor(Math.random()*t.headlinePrefixes.length)],categoria=rotuloCategoria(categoriaDaNota(nota),t);
+      let relato=(nota.texto||"").replace(/\s+/g," ").trim();if(relato.length>135)relato=relato.slice(0,132).trimEnd()+"…";
+      saida.textContent=prefixo+" "+categoria.toUpperCase()+": “"+relato+"”";
+    }
+    document.getElementById("headlineButton").addEventListener("click",gerarManchete);
 
     let previsaoAnterior=-1;
     function consultarOraculo(){
@@ -1062,8 +1150,8 @@
       document.getElementById("randomText").textContent=items.length?(()=>{const n=items[Math.floor(Math.random()*items.length)];return(n.data?n.data+" — ":"")+"“"+(n.texto||"")+"”";})():t.noComplaints;panel.hidden=false;
     }
     document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{filtroAtual=b.dataset.filter;paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderizarNotas();}));
-    busca.addEventListener("input",()=>{paginaAtual=1;renderizarNotas();});document.getElementById("randomButton").addEventListener("click",sortearReclamacao);
-    document.getElementById("clearFilters").addEventListener("click",()=>{filtroAtual="all";busca.value="";dataSelecionada="";paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="all"));renderizarCalendario();renderizarNotas();});
+    busca.addEventListener("input",()=>{paginaAtual=1;renderizarNotas();});filtroCategoria.addEventListener("change",()=>{categoriaAtual=filtroCategoria.value;paginaAtual=1;renderizarNotas();});document.getElementById("randomButton").addEventListener("click",sortearReclamacao);
+    document.getElementById("clearFilters").addEventListener("click",()=>{filtroAtual="all";categoriaAtual="all";filtroCategoria.value="all";busca.value="";dataSelecionada="";paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="all"));renderizarCalendario();renderizarNotas();});
     document.getElementById("prevMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()-1);renderizarCalendario();});
     document.getElementById("nextMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()+1);renderizarCalendario();});
     document.getElementById("clearDate").addEventListener("click",()=>{dataSelecionada="";paginaAtual=1;renderizarCalendario();renderizarNotas();});
@@ -1104,7 +1192,7 @@
       document.getElementById("prevMonth").setAttribute("aria-label",t.previousMonth);
       document.getElementById("nextMonth").setAttribute("aria-label",t.nextMonth);
       document.getElementById("randomReport").querySelector(".random-label").textContent=t.randomLabel;
-      renderizarNotas(); renderizarCalendario(); renderizarConquistas(); renderizarEstatisticas();
+      renderizarFiltroCategoria(); renderizarNotas(); renderizarCalendario(); renderizarConquistas(); renderizarEstatisticas(); renderizarBingo();
     }
 
     botaoIdioma.addEventListener("click", () => {
