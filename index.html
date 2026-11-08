@@ -634,6 +634,12 @@
     .achievement-state{border:1px solid rgba(255,255,255,.09);border-radius:999px;padding:4px 8px;color:var(--soft);background:rgba(255,255,255,.03);font-size:.63rem;font-weight:750;white-space:nowrap}.achievement.unlocked .achievement-state{border-color:rgba(162,201,164,.26);color:var(--green);background:rgba(91,130,93,.1)}
     .achievement-meter{height:6px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.08)}.achievement-meter-fill{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--amber),var(--green));transition:width .25s ease}.achievement-progress-label{color:var(--soft);font-size:.66rem;text-align:right}
     @media(max-width:900px){.achievements{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.achievements{grid-template-columns:1fr}.achievement{min-height:175px}}
+    .mascot-row{display:flex;align-items:center;gap:12px;margin-top:13px;padding:9px 11px;border:1px solid rgba(244,173,105,.13);border-radius:14px;background:rgba(244,173,105,.035)}
+    .ainos-mascot{width:58px;height:70px;flex:0 0 auto;overflow:visible;animation:mascotFloat 3.2s ease-in-out infinite}
+    .mascot-face{display:none}.ainos-mascot[data-mood="idle"] .face-idle,.ainos-mascot[data-mood="complaint"] .face-complaint,.ainos-mascot[data-mood="oracle"] .face-oracle,.ainos-mascot[data-mood="headline"] .face-complaint,.ainos-mascot[data-mood="happy"] .face-happy{display:inline}
+    .mascot-speech strong{color:var(--amber-bright);font-size:.76rem}.mascot-speech p{margin:4px 0 0;color:var(--muted);font-size:.75rem;line-height:1.4}
+    @keyframes mascotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+    @media(prefers-reduced-motion:reduce){.ainos-mascot{animation:none}}
   </style>
 </head>
 
@@ -698,6 +704,22 @@
             </div>
             <h2 data-i18n="statusTitle">Seguimos observando.</h2>
             <p class="status-copy" data-i18n="statusCopy">Nenhuma evidência conclusiva de estabilidade foi apresentada até o momento.</p>
+            <div class="mascot-row">
+              <svg id="ainosMascot" class="ainos-mascot" data-mood="idle" viewBox="0 0 100 120" role="img" aria-label="Mascote genérico do Ainos">
+                <path d="M20 112c2-22 13-34 30-34s28 12 30 34v4H20z" fill="#5c4652"/>
+                <path d="M25 95c-8 1-13 8-12 17l12 4 7-17zM75 95c8 1 13 8 12 17l-12 4-7-17z" fill="#5c4652"/>
+                <path d="M33 78h34v17H33z" fill="#d9aa86"/>
+                <circle cx="50" cy="43" r="29" fill="#edc4a2"/>
+                <path d="M21 43c-2-24 10-37 30-37 19 0 30 12 28 35-5-6-8-12-10-19-8 8-24 12-46 9z" fill="#30262d"/>
+                <path d="M28 23c5-12 15-17 27-16-4 7-13 11-27 16z" fill="#45343d"/>
+                <g class="mascot-face face-idle"><circle cx="40" cy="44" r="2.6" fill="#30262d"/><circle cx="60" cy="44" r="2.6" fill="#30262d"/><path d="M43 57q7 5 14 0" fill="none" stroke="#8a514b" stroke-width="2.6" stroke-linecap="round"/></g>
+                <g class="mascot-face face-complaint"><path d="m36 43 8 2m12-2 8 2" stroke="#30262d" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="48" r="2.4" fill="#30262d"/><circle cx="60" cy="48" r="2.4" fill="#30262d"/><path d="M44 60q6-7 12 0" fill="none" stroke="#8a514b" stroke-width="2.6" stroke-linecap="round"/><path d="M21 31q-9-4-12 4" fill="none" stroke="#f4ad69" stroke-width="3" stroke-linecap="round"/></g>
+                <g class="mascot-face face-oracle"><path d="M36 42q4-4 8 0m12 0q4-4 8 0" fill="none" stroke="#30262d" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="46" r="2.3" fill="#30262d"/><circle cx="60" cy="46" r="2.3" fill="#30262d"/><path d="M47 58q3-3 6 0" fill="none" stroke="#8a514b" stroke-width="2.5" stroke-linecap="round"/></g>
+                <g class="mascot-face face-happy"><path d="M35 45q5-7 10 0m10 0q5-7 10 0" fill="none" stroke="#30262d" stroke-width="2.7" stroke-linecap="round"/><path d="M41 54q9 12 18 0" fill="none" stroke="#8a514b" stroke-width="3" stroke-linecap="round"/><path d="m14 34 3-6m66 6 3-6" stroke="#ffc887" stroke-width="3" stroke-linecap="round"/></g>
+                <path d="M42 94h16l-3 19H45z" fill="#ed7967"/><text x="50" y="107" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" font-weight="800" fill="#fff">A</text>
+              </svg>
+              <div class="mascot-speech"><strong data-i18n="mascotName">Agente Ainos</strong><p id="mascotMessage" data-i18n="mascotIdle">Tudo sob controle. (Mais ou menos.)</p></div>
+            </div>
           </div>
           <div>
             <div class="status-rule"></div>
@@ -844,6 +866,7 @@
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente", categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
         headlineKicker: "Imprensa do caos", headlineTitle: "Gerador de manchetes", headlineButton: "📰 Gerar manchete", headlinePlaceholder: "Uma manchete aguarda a próxima ocorrência.", headlinePrefixes: ["PLANTÃO DO AZAR:", "AINOS EM CRISE:", "ÚLTIMA HORA:", "DOSSIÊ ESPECIAL:"],
         bingoKicker: "Cartela individual", bingoTitle: "Bingo do Ainos", bingoCopy: "Marque os acontecimentos; a cartela fica salva neste navegador.", bingoReset: "Limpar cartela", bingoProgress: "Marque o que já aconteceu.", bingoComplete: "BINGO! O departamento de azar confirma a sequência.", bingoLabel: "Cartela do Bingo do Ainos", bingoSquares: ["Reclamação do trabalho","Azar no jogo/gacha","Disse que está cansado","Uma coisa simples virou problema","ESPAÇO LIVRE","Chegou uma notícia inesperada","Se arrependeu de uma escolha","Mandou print do caos","Disse “depois eu resolvo”"], statCategory: "Tema mais frequente",
+        mascotName: "Agente Ainos", mascotIdle: "Tudo sob controle. (Mais ou menos.)", mascotComplaint: "Confirmado: caos em andamento.", mascotOracle: "O oráculo disse. Não nos responsabilizamos.", mascotHeadline: "Plantão do azar no ar!", mascotBingo: "BINGO! Até o mascote se surpreendeu.", mascotBingoMark: "Anotado. O caos segue acumulando pontos.", mascotShare: "Relatório pronto para circular.",
         switchLabel: "Mudar para inglês",
         locale: "pt-BR"
       },
@@ -893,6 +916,7 @@
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category", categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
         headlineKicker: "Chaos newsroom", headlineTitle: "Headline generator", headlineButton: "📰 Generate headline", headlinePlaceholder: "A headline awaits the next incident.", headlinePrefixes: ["BAD LUCK BULLETIN:", "AINOS IN CRISIS:", "BREAKING:", "SPECIAL REPORT:"],
         bingoKicker: "Personal card", bingoTitle: "Ainos Bingo", bingoCopy: "Mark what happens; this card is saved in this browser.", bingoReset: "Reset card", bingoProgress: "Mark the things that have happened.", bingoComplete: "BINGO! The Department of Bad Luck confirms the streak.", bingoLabel: "Ainos Bingo card", bingoSquares: ["Work complaint","Bad luck in a game/gacha","Said he is tired","A simple thing became a problem","FREE SPACE","Unexpected news arrived","Regretted a choice","Sent a screenshot of the chaos","Said “I will deal with it later”"], statCategory: "Top category",
+        mascotName: "Ainos Field Agent", mascotIdle: "Everything is under control. (Sort of.)", mascotComplaint: "Confirmed: chaos is ongoing.", mascotOracle: "The oracle has spoken. No refunds.", mascotHeadline: "Bad luck bulletin is live!", mascotBingo: "BINGO! Even the mascot is surprised.", mascotBingoMark: "Noted. Chaos keeps scoring.", mascotShare: "Report ready for circulation.",
         switchLabel: "Switch to Portuguese",
         locale: "en"
       }
@@ -915,6 +939,14 @@
 
     function texto() {
       return idiomas[idiomaAtual];
+    }
+    let humorMascote="idle",chaveMensagemMascote="mascotIdle";
+    function atualizarMascote(humor,chave){
+      humorMascote=humor;chaveMensagemMascote=chave;
+      const mascote=document.getElementById("ainosMascot");
+      mascote.setAttribute("data-mood",humor);
+      mascote.setAttribute("aria-label",texto().mascotName);
+      document.getElementById("mascotMessage").textContent=texto()[chave]||texto().mascotIdle;
     }
 
     function atualizarContador(agendar = true) {
@@ -1086,7 +1118,7 @@
       return {canvas,ctx};
     }
     function compartilharImagem(canvas,nome,textoCompartilhar){
-      const status=document.getElementById("shareMessage");
+      const status=document.getElementById("shareMessage");atualizarMascote("happy","mascotShare");
       try{
         if(navigator.share&&navigator.canShare){
           const data=canvas.toDataURL("image/png"),bytes=atob(data.split(",")[1]),array=new Uint8Array(bytes.length);
@@ -1107,6 +1139,21 @@
       const link=document.createElement("a");link.download=nome;link.href=canvas.toDataURL("image/png");document.body.appendChild(link);link.click();link.remove();
       document.getElementById("shareMessage").textContent=fallback?texto().shareFallback:texto().shareStatus;
     }
+    function desenharMascoteCanvas(ctx,humor="idle"){
+      ctx.save();ctx.translate(1080,470);
+      ctx.fillStyle="rgba(0,0,0,.28)";ctx.beginPath();ctx.ellipse(46,101,34,5,0,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle="#5c4652";ctx.beginPath();ctx.roundRect(10,47,72,52,20);ctx.fill();
+      ctx.fillStyle="#d9aa86";ctx.fillRect(39,44,15,13);
+      ctx.fillStyle="#edc4a2";ctx.beginPath();ctx.arc(46,30,25,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle="#30262d";ctx.beginPath();ctx.moveTo(21,32);ctx.quadraticCurveTo(17,3,45,3);ctx.quadraticCurveTo(73,3,70,31);ctx.quadraticCurveTo(60,19,57,14);ctx.quadraticCurveTo(43,25,21,22);ctx.closePath();ctx.fill();
+      ctx.fillStyle="#30262d";ctx.beginPath();ctx.arc(37,31,2.2,0,Math.PI*2);ctx.arc(55,31,2.2,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle="#8a514b";ctx.lineWidth=2.5;ctx.lineCap="round";ctx.beginPath();
+      if(humor==="happy"){ctx.moveTo(38,41);ctx.quadraticCurveTo(46,50,55,41);}else if(humor==="oracle"){ctx.arc(46,42,3,0,Math.PI*2);}else if(humor==="complaint"){ctx.moveTo(39,45);ctx.quadraticCurveTo(46,38,54,45);}else{ctx.moveTo(41,42);ctx.lineTo(52,42);}ctx.stroke();
+      if(humor==="complaint"){ctx.strokeStyle="#30262d";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(33,25);ctx.lineTo(41,27);ctx.moveTo(51,27);ctx.lineTo(59,25);ctx.stroke();ctx.fillStyle="#73bfd0";ctx.beginPath();ctx.ellipse(70,35,3,5,.3,0,Math.PI*2);ctx.fill();}
+      ctx.fillStyle="#ed7967";ctx.beginPath();ctx.moveTo(38,58);ctx.lineTo(54,58);ctx.lineTo(51,77);ctx.lineTo(42,77);ctx.closePath();ctx.fill();
+      ctx.fillStyle="#fff";ctx.font="800 9px system-ui,sans-serif";ctx.textAlign="center";ctx.fillText("A",46,71);ctx.restore();
+    }
+
     function gerarImagemNota(nota,indice){
       const {canvas,ctx}=criarCanvasBase(),t=texto();
       ctx.fillStyle="#ffc887";ctx.font="800 26px system-ui, sans-serif";ctx.fillText("AINOS WATCH",82,94);
@@ -1116,6 +1163,7 @@
       if(nota.diaBom===true){ctx.fillStyle="#a2c9a4";ctx.font="800 16px system-ui, sans-serif";ctx.fillText(t.goodDay.toUpperCase(),84,232);}
       ctx.fillStyle="#f3eee7";ctx.font="500 40px system-ui, sans-serif";const linhas=desenharQuebraTexto(ctx,"“"+(nota.texto||"")+"”",1020,4);
       linhas.forEach((linha,i)=>ctx.fillText(linha,84,nota.diaBom===true?300+i*57:280+i*57));
+      desenharMascoteCanvas(ctx,nota.diaBom===true?"happy":"complaint");
       ctx.fillStyle="#77757a";ctx.font="500 15px system-ui, sans-serif";ctx.fillText("https://ainos-counter.vercel.app/",84,558);
       compartilharImagem(canvas,"ainos-nota-"+String(indice+1).padStart(2,"0")+".png",t.shareNoteText+" "+(nota.data?nota.data+" — ":"")+"“"+(nota.texto||"")+"”");
     }
@@ -1129,6 +1177,7 @@
         ctx.fillStyle="#aaa6a3";ctx.font="600 16px system-ui, sans-serif";desenharQuebraTexto(ctx,card.label,205,2).forEach((line,j)=>ctx.fillText(line,x+20,302+j*24));
         ctx.fillStyle="#ffc887";ctx.font=i===3?"800 30px system-ui, sans-serif":"800 54px system-ui, sans-serif";ctx.fillText(card.value,x+20,414);
       });
+      desenharMascoteCanvas(ctx,"idle");
       ctx.fillStyle="#77757a";ctx.font="500 15px system-ui, sans-serif";ctx.fillText("https://ainos-counter.vercel.app/",84,558);
       compartilharImagem(canvas,"ainos-estatisticas.png",t.shareSummaryText);
     }
@@ -1142,16 +1191,16 @@
     function renderizarBingo(){
       const t=texto(),grid=document.getElementById("bingoGrid");grid.replaceChildren();grid.setAttribute("aria-label",t.bingoLabel);
       t.bingoSquares.forEach((rotulo,indice)=>{const botao=document.createElement("button");botao.type="button";botao.className="bingo-square"+(bingoMarcado[indice]?" marked":"")+(indice===4?" free":"");botao.textContent=rotulo;botao.setAttribute("aria-pressed",String(bingoMarcado[indice]));botao.disabled=indice===4;
-        botao.addEventListener("click",()=>{bingoMarcado[indice]=!bingoMarcado[indice];salvarBingo();renderizarBingo();renderizarConquistas();});grid.appendChild(botao);});
+        botao.addEventListener("click",()=>{bingoMarcado[indice]=!bingoMarcado[indice];salvarBingo();renderizarBingo();renderizarConquistas();atualizarMascote(existeBingo()?"happy":"idle",existeBingo()?"mascotBingo":"mascotBingoMark");});grid.appendChild(botao);});
       document.getElementById("bingoStatus").textContent=existeBingo()?t.bingoComplete:t.bingoProgress;
     }
-    document.getElementById("resetBingo").addEventListener("click",()=>{bingoMarcado=Array(9).fill(false);bingoMarcado[4]=true;salvarBingo();renderizarBingo();renderizarConquistas();});
+    document.getElementById("resetBingo").addEventListener("click",()=>{bingoMarcado=Array(9).fill(false);bingoMarcado[4]=true;salvarBingo();renderizarBingo();renderizarConquistas();atualizarMascote("idle","mascotIdle");});
     function gerarManchete(){
       const t=texto(),items=notas.filter(n=>n.diaBom!==true),saida=document.getElementById("headlineText");
-      if(!items.length){saida.textContent=t.noComplaints;return;}
+      if(!items.length){saida.textContent=t.noComplaints;atualizarMascote("complaint","mascotComplaint");return;}
       const nota=items[Math.floor(Math.random()*items.length)],prefixo=t.headlinePrefixes[Math.floor(Math.random()*t.headlinePrefixes.length)],categoria=rotuloCategoria(categoriaDaNota(nota),t);
       let relato=(nota.texto||"").replace(/\s+/g," ").trim();if(relato.length>135)relato=relato.slice(0,132).trimEnd()+"…";
-      saida.textContent=prefixo+" "+categoria.toUpperCase()+": “"+relato+"”";
+      saida.textContent=prefixo+" "+categoria.toUpperCase()+": “"+relato+"”";atualizarMascote("headline","mascotHeadline");
     }
     document.getElementById("headlineButton").addEventListener("click",gerarManchete);
 
@@ -1161,12 +1210,12 @@
       if(previsoes.length<2){document.getElementById("oracleText").textContent=previsoes[0]||"";return;}
       let indice=Math.floor(Math.random()*previsoes.length);
       while(indice===previsaoAnterior)indice=Math.floor(Math.random()*previsoes.length);
-      previsaoAnterior=indice;document.getElementById("oracleText").textContent=previsoes[indice];
+      previsaoAnterior=indice;document.getElementById("oracleText").textContent=previsoes[indice];atualizarMascote("oracle","mascotOracle");
     }
     document.getElementById("oracleButton").addEventListener("click",consultarOraculo);
 
     function sortearReclamacao(){const t=texto(),items=notas.filter(n=>n.diaBom!==true),panel=document.getElementById("randomReport");
-      document.getElementById("randomText").textContent=items.length?(()=>{const n=items[Math.floor(Math.random()*items.length)];return(n.data?n.data+" — ":"")+"“"+(n.texto||"")+"”";})():t.noComplaints;panel.hidden=false;
+      document.getElementById("randomText").textContent=items.length?(()=>{const n=items[Math.floor(Math.random()*items.length)];return(n.data?n.data+" — ":"")+"“"+(n.texto||"")+"”";})():t.noComplaints;panel.hidden=false;atualizarMascote("complaint","mascotComplaint");
     }
     document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{filtroAtual=b.dataset.filter;paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderizarNotas();}));
     busca.addEventListener("input",()=>{paginaAtual=1;renderizarNotas();});filtroCategoria.addEventListener("change",()=>{categoriaAtual=filtroCategoria.value;paginaAtual=1;renderizarNotas();});document.getElementById("randomButton").addEventListener("click",sortearReclamacao);
@@ -1197,6 +1246,7 @@
       botaoIdioma.setAttribute("aria-label", t.switchLabel);
       botaoIdioma.querySelector('[data-language-option="pt"]').classList.toggle("active", idiomaAtual === "pt-BR");
       botaoIdioma.querySelector('[data-language-option="en"]').classList.toggle("active", idiomaAtual === "en");
+      atualizarMascote(humorMascote,chaveMensagemMascote);
 
       atualizarContador(false);
       document.querySelector(".section-tabs").setAttribute("aria-label",t.tablistLabel);
