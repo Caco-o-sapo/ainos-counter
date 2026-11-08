@@ -127,6 +127,40 @@
       white-space: nowrap;
     }
 
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .language-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--soft);
+      background: rgba(255,255,255,.025);
+      font: inherit;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      cursor: pointer;
+    }
+
+    .language-toggle [data-language-option] {
+      transition: color .2s ease;
+    }
+
+    .language-toggle [data-language-option].active {
+      color: var(--amber-bright);
+    }
+
+    .language-divider {
+      color: #55535a;
+    }
+
     .live-dot {
       width: 7px;
       height: 7px;
@@ -518,7 +552,9 @@
     }
 
     @media (max-width: 420px) {
-      .brand-caption { max-width: 190px; }
+      .topbar { flex-wrap: wrap; }
+      .topbar-actions { margin-left: auto; }
+      .brand-caption { max-width: 170px; }
       .live-label { padding: 7px 9px; font-size: .62rem; }
       .counter { font-size: 5.5rem; }
       .counter-line { gap: 10px; }
@@ -549,27 +585,27 @@
         <div class="brand-mark" aria-hidden="true">A</div>
         <div>
           <p class="brand-name">AINOS WATCH</p>
-          <p class="brand-caption">Central comunitária de monitoramento</p>
+          <p class="brand-caption" data-i18n="brandCaption">Central comunitária de monitoramento</p>
         </div>
       </div>
-      <div class="live-label"><span class="live-dot" aria-hidden="true"></span> MONITORAMENTO ATIVO</div>
+      <div class="topbar-actions"><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
     </header>
 
     <main>
       <section class="intro" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">Relatório de acompanhamento · 001</p>
-          <h1 id="page-title">Um dia bom para o Ainos?</h1>
-          <p class="intro-copy">A equipe acompanha os acontecimentos recentes e aguarda sinais concretos de que a maré virou.</p>
+          <p class="eyebrow" data-i18n="report">Relatório de acompanhamento · 001</p>
+          <h1 id="page-title" data-i18n="pageTitle">Um dia bom para o Ainos?</h1>
+          <p class="intro-copy" data-i18n="introCopy">A equipe acompanha os acontecimentos recentes e aguarda sinais concretos de que a maré virou.</p>
         </div>
-        <div class="case-id">DOSSIÊ Nº 000-A</div>
+        <div class="case-id" data-i18n="caseId">DOSSIÊ Nº 000-A</div>
       </section>
 
       <section class="dashboard" aria-label="Painel de monitoramento">
         <article class="panel counter-panel">
           <div class="metric-label">
             <span class="metric-icon" aria-hidden="true">◷</span>
-            <span>Tempo desde o último dia bom</span>
+            <span data-i18n="metricLabel">Tempo desde o último dia bom</span>
           </div>
           <div class="counter-line">
             <span class="counter" id="dias" aria-live="polite">—</span>
@@ -578,7 +614,7 @@
           <p class="counter-caption" id="legenda-contador">sem um dia bom para o Ainos.</p>
           <div class="counter-foot">
             <span class="live-dot" aria-hidden="true"></span>
-            <span>Último registro positivo:</span>
+            <span data-i18n="lastPositive">Último registro positivo:</span>
             <strong id="ultima-data">—</strong>
           </div>
         </article>
@@ -586,15 +622,15 @@
         <aside class="panel status-panel" aria-label="Situação atual">
           <div>
             <div class="status-top">
-              <p class="status-kicker">Boletim de situação</p>
+              <p class="status-kicker" data-i18n="statusKicker">Boletim de situação</p>
               <span class="status-icon" aria-hidden="true">!</span>
             </div>
-            <h2>Seguimos observando.</h2>
-            <p class="status-copy">Nenhuma evidência conclusiva de estabilidade foi apresentada até o momento.</p>
+            <h2 data-i18n="statusTitle">Seguimos observando.</h2>
+            <p class="status-copy" data-i18n="statusCopy">Nenhuma evidência conclusiva de estabilidade foi apresentada até o momento.</p>
           </div>
           <div>
             <div class="status-rule"></div>
-            <div class="status-meta"><span>Próxima revisão</span><strong>à meia-noite</strong></div>
+            <div class="status-meta"><span data-i18n="nextReviewLabel">Próxima revisão</span><strong data-i18n="nextReviewTime">à meia-noite</strong></div>
           </div>
         </aside>
       </section>
@@ -602,30 +638,115 @@
       <section class="panel notes-panel" aria-labelledby="notes-title">
         <div class="notes-heading">
           <div>
-            <p class="notes-kicker">Arquivo de ocorrências</p>
-            <h2 id="notes-title">Últimas atualizações</h2>
-            <p class="notes-subtitle">Relatos recebidos diretamente da linha de frente.</p>
+            <p class="notes-kicker" data-i18n="notesKicker">Arquivo de ocorrências</p>
+            <h2 id="notes-title" data-i18n="notesTitle">Últimas atualizações</h2>
+            <p class="notes-subtitle" data-i18n="notesSubtitle">Relatos recebidos diretamente da linha de frente.</p>
           </div>
-          <div class="record-count"><strong id="total-notas">0</strong><span>registros</span></div>
+          <div class="record-count"><strong id="total-notas">0</strong><span id="total-notas-label" data-i18n="records">registros</span></div>
         </div>
         <div id="listaNotas" class="note-list" aria-live="polite"></div>
       </section>
     </main>
 
     <footer class="page-footer">
-      <span>Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.</span>
-      <span>Departamento de Azar · Verba: R$ 0,00</span>
+      <span data-i18n="footerProject">Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.</span>
+      <span data-i18n="footerBudget">Departamento de Azar · Verba: R$ 0,00</span>
     </footer>
   </div>
 
   <script type="module">
     import { notas, ultimoDiaBom } from "./notas.js";
 
+    const idiomas = {
+      "pt-BR": {
+        title: "Central de Monitoramento do Ainos",
+        metaDescription: "Confira há quantos dias o Ainos está sem um dia bom e leia as últimas atualizações do monitoramento.",
+        brandCaption: "Central comunitária de monitoramento",
+        liveStatus: "MONITORAMENTO ATIVO",
+        report: "Relatório de acompanhamento · 001",
+        pageTitle: "Um dia bom para o Ainos?",
+        introCopy: "A equipe acompanha os acontecimentos recentes e aguarda sinais concretos de que a maré virou.",
+        caseId: "DOSSIÊ Nº 000-A",
+        dashboardAria: "Painel de monitoramento",
+        metricLabel: "Tempo desde o último dia bom",
+        counterCaption: "sem um dia bom para o Ainos.",
+        lastPositive: "Último registro positivo:",
+        statusAria: "Situação atual",
+        statusKicker: "Boletim de situação",
+        statusTitle: "Seguimos observando.",
+        statusCopy: "Nenhuma evidência conclusiva de estabilidade foi apresentada até o momento.",
+        nextReviewLabel: "Próxima revisão",
+        nextReviewTime: "à meia-noite",
+        notesKicker: "Arquivo de ocorrências",
+        notesTitle: "Últimas atualizações",
+        notesSubtitle: "Relatos recebidos diretamente da linha de frente.",
+        records: "registros",
+        emptyNotes: "Nenhuma ocorrência registrada. O silêncio está sendo investigado.",
+        missingDate: "Data não informada",
+        goodDay: "☀ Dia bom",
+        noGoodDay: "nenhum dia bom foi marcado ainda.",
+        noRecord: "sem registro",
+        footerProject: "Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.",
+        footerBudget: "Departamento de Azar · Verba: R$ 0,00",
+        switchLabel: "Mudar para inglês",
+        locale: "pt-BR"
+      },
+      en: {
+        title: "Ainos Monitoring Center",
+        metaDescription: "See how many days it has been since Ainos last had a good day, and read the latest reports.",
+        brandCaption: "Community monitoring center",
+        liveStatus: "MONITORING ACTIVE",
+        report: "Monitoring report · 001",
+        pageTitle: "A good day for Ainos?",
+        introCopy: "The team is tracking recent events and waiting for clear signs that things have turned around.",
+        caseId: "CASE FILE NO. 000-A",
+        dashboardAria: "Monitoring dashboard",
+        metricLabel: "Time since the last good day",
+        counterCaption: "since Ainos last had a good day.",
+        lastPositive: "Last positive report:",
+        statusAria: "Current status",
+        statusKicker: "Situation report",
+        statusTitle: "We are still monitoring.",
+        statusCopy: "No conclusive evidence of stability has been presented so far.",
+        nextReviewLabel: "Next review",
+        nextReviewTime: "at midnight",
+        notesKicker: "Incident archive",
+        notesTitle: "Latest updates",
+        notesSubtitle: "Reports received directly from the front line.",
+        records: "records",
+        emptyNotes: "No incidents recorded. The silence is under investigation.",
+        missingDate: "Date not provided",
+        goodDay: "☀ Good day",
+        noGoodDay: "No good day has been marked yet.",
+        noRecord: "no record",
+        footerProject: "Unofficial project · An inside joke among friends · Reports may be disputed.",
+        footerBudget: "Department of Bad Luck · Budget: R$ 0.00",
+        switchLabel: "Switch to Portuguese",
+        locale: "en"
+      }
+    };
+
+    function idiomaSalvo() {
+      try {
+        return localStorage.getItem("ainos-language") === "en" ? "en" : "pt-BR";
+      } catch {
+        return "pt-BR";
+      }
+    }
+
+    let idiomaAtual = idiomaSalvo();
     const dataUltimoDiaBom = ultimoDiaBom
       ? new Date(...ultimoDiaBom.split("-").map(Number).map((valor, indice) => indice === 1 ? valor - 1 : valor))
       : null;
+    const lista = document.getElementById("listaNotas");
+    const botaoIdioma = document.getElementById("languageToggle");
 
-    function atualizarContador() {
+    function texto() {
+      return idiomas[idiomaAtual];
+    }
+
+    function atualizarContador(agendar = true) {
+      const t = texto();
       const diasElemento = document.getElementById("dias");
       const unidadeElemento = document.getElementById("unidade-dias");
       const legendaElemento = document.getElementById("legenda-contador");
@@ -634,8 +755,8 @@
       if (!dataUltimoDiaBom) {
         diasElemento.textContent = "—";
         unidadeElemento.textContent = "";
-        legendaElemento.textContent = "nenhum dia bom foi marcado ainda.";
-        dataElemento.textContent = "sem registro";
+        legendaElemento.textContent = t.noGoodDay;
+        dataElemento.textContent = t.noRecord;
         return;
       }
 
@@ -649,65 +770,110 @@
       const dias = Math.max(0, Math.floor((hoje - diaBomUTC) / 86400000));
 
       diasElemento.textContent = dias;
-      unidadeElemento.textContent = dias === 1 ? "dia" : "dias";
-      legendaElemento.textContent = "sem um dia bom para o Ainos.";
-      dataElemento.textContent = new Intl.DateTimeFormat("pt-BR", {
+      unidadeElemento.textContent = idiomaAtual === "en"
+        ? (dias === 1 ? "day" : "days")
+        : (dias === 1 ? "dia" : "dias");
+      legendaElemento.textContent = t.counterCaption;
+      dataElemento.textContent = new Intl.DateTimeFormat(t.locale, {
         day: "2-digit",
         month: "short",
         year: "numeric"
       }).format(dataUltimoDiaBom);
 
-      const amanha = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate() + 1);
-      setTimeout(atualizarContador, amanha.getTime() - agora.getTime() + 50);
+      if (agendar) {
+        const amanha = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate() + 1);
+        setTimeout(() => atualizarContador(true), amanha.getTime() - agora.getTime() + 50);
+      }
     }
 
-    atualizarContador();
+    function renderizarNotas() {
+      const t = texto();
+      lista.replaceChildren();
+      document.getElementById("total-notas").textContent = notas.length;
 
-    const lista = document.getElementById("listaNotas");
-    document.getElementById("total-notas").textContent = notas.length;
-
-    if (notas.length === 0) {
-      const vazio = document.createElement("p");
-      vazio.className = "empty-state";
-      vazio.textContent = "Nenhuma ocorrência registrada. O silêncio está sendo investigado.";
-      lista.appendChild(vazio);
-    }
-
-    notas.forEach((nota, indice) => {
-      const item = document.createElement("article");
-      item.className = nota.diaBom ? "note note-good-day" : "note";
-
-      const numero = document.createElement("div");
-      numero.className = "note-index";
-      numero.textContent = String(indice + 1).padStart(2, "0");
-      numero.setAttribute("aria-hidden", "true");
-
-      const conteudo = document.createElement("div");
-      conteudo.className = "note-content";
-
-      const data = document.createElement("div");
-      data.className = "note-date";
-      data.textContent = nota.data || "Data não informada";
-
-      const linhaData = document.createElement("div");
-      linhaData.className = "note-date-row";
-      linhaData.appendChild(data);
-
-      if (nota.diaBom === true) {
-        const seloDiaBom = document.createElement("span");
-        seloDiaBom.className = "good-day-badge";
-        seloDiaBom.textContent = "☀ Dia bom";
-        linhaData.appendChild(seloDiaBom);
+      if (notas.length === 0) {
+        const vazio = document.createElement("p");
+        vazio.className = "empty-state";
+        vazio.textContent = t.emptyNotes;
+        lista.appendChild(vazio);
+        return;
       }
 
-      const texto = document.createElement("p");
-      texto.className = "note-text";
-      texto.textContent = "“" + (nota.texto || "") + "”";
+      notas.forEach((nota, indice) => {
+        const item = document.createElement("article");
+        item.className = nota.diaBom === true ? "note note-good-day" : "note";
 
-      conteudo.append(linhaData, texto);
-      item.append(numero, conteudo);
-      lista.appendChild(item);
+        const numero = document.createElement("div");
+        numero.className = "note-index";
+        numero.textContent = String(indice + 1).padStart(2, "0");
+        numero.setAttribute("aria-hidden", "true");
+
+        const conteudo = document.createElement("div");
+        conteudo.className = "note-content";
+
+        const linhaData = document.createElement("div");
+        linhaData.className = "note-date-row";
+
+        const data = document.createElement("div");
+        data.className = "note-date";
+        data.textContent = nota.data || t.missingDate;
+        linhaData.appendChild(data);
+
+        if (nota.diaBom === true) {
+          const seloDiaBom = document.createElement("span");
+          seloDiaBom.className = "good-day-badge";
+          seloDiaBom.textContent = t.goodDay;
+          linhaData.appendChild(seloDiaBom);
+        }
+
+        const textoNota = document.createElement("p");
+        textoNota.className = "note-text";
+        textoNota.textContent = "“" + (nota.texto || "") + "”";
+
+        conteudo.append(linhaData, textoNota);
+        item.append(numero, conteudo);
+        lista.appendChild(item);
+      });
+    }
+
+    function aplicarIdioma() {
+      const t = texto();
+      document.documentElement.lang = t.locale;
+      document.title = t.title;
+      document.querySelector('meta[name="description"]').content = t.metaDescription;
+      document.querySelector('meta[property="og:title"]').content = t.title;
+      document.querySelector('meta[property="og:description"]').content = t.metaDescription;
+      document.querySelector('meta[property="og:image:alt"]').content = t.pageTitle;
+
+      document.querySelectorAll("[data-i18n]").forEach((elemento) => {
+        const chave = elemento.dataset.i18n;
+        if (t[chave]) elemento.textContent = t[chave];
+      });
+
+      document.querySelector('[aria-label="Painel de monitoramento"]')
+        ?.setAttribute("aria-label", t.dashboardAria);
+      document.querySelector(".status-panel")
+        ?.setAttribute("aria-label", t.statusAria);
+      botaoIdioma.setAttribute("aria-label", t.switchLabel);
+      botaoIdioma.querySelector('[data-language-option="pt"]').classList.toggle("active", idiomaAtual === "pt-BR");
+      botaoIdioma.querySelector('[data-language-option="en"]').classList.toggle("active", idiomaAtual === "en");
+
+      atualizarContador(false);
+      renderizarNotas();
+    }
+
+    botaoIdioma.addEventListener("click", () => {
+      idiomaAtual = idiomaAtual === "pt-BR" ? "en" : "pt-BR";
+      try {
+        localStorage.setItem("ainos-language", idiomaAtual);
+      } catch {
+        // O idioma ainda muda na página, mesmo se o navegador não permitir salvar a preferência.
+      }
+      aplicarIdioma();
     });
-  </script>
+
+    aplicarIdioma();
+    atualizarContador(true);
+  </script>t>
 </body>
 </html>
