@@ -14,6 +14,7 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 - **Arquivo de ocorrências:** reúne as reclamações, os perrengues e os relatos enviados pela equipe.
 - **Dias bons em destaque:** os registros positivos recebem um selo, e o contador considera automaticamente o dia bom mais recente.
 - **Prévia dinâmica:** ao compartilhar o link, o cartão mostra a contagem atual e a ocorrência mais recente.
+- **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
 
 ## 🔬 Metodologia (quase) científica
 
