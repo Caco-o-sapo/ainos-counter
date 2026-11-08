@@ -20,6 +20,7 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 - **Conquistas duvidosas:** medalhas desbloqueadas conforme os registros e os dias desde o último dia bom.
 - **Prévia dinâmica:** ao compartilhar o link, o cartão mostra a contagem atual e a ocorrência mais recente.
 - **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
+- **Navegação por abas:** separa o painel, o arquivo de ocorrências e as conquistas para deixar a página mais fácil de percorrer.
 
 ## 🔬 Metodologia (quase) científica
 
