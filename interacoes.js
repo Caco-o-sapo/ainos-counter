@@ -99,12 +99,14 @@ export async function renderizarInteracoesNota(destino, noteId, t) {
         const escolhido = minhas.has(emoji);
         const item = botao("reaction-button" + (escolhido ? " selected" : ""), emoji + " " + contagem[emoji], t.reactWith + " " + emoji);
         item.setAttribute("aria-pressed", String(escolhido));
+        item.disabled = escolhido;
         item.addEventListener("click", async () => {
           item.disabled = true;
           status.textContent = "";
-          const resultado = escolhido
-            ? await supabase.from("ainos_reactions").delete().eq("note_id", noteId).eq("visitor_id", meuVisitanteId).eq("emoji", emoji)
-            : await supabase.from("ainos_reactions").insert({ note_id: noteId, visitor_id: meuVisitanteId, emoji });
+          if (escolhido) return;
+          const resultado = await supabase
+            .from("ainos_reactions")
+            .insert({ note_id: noteId, visitor_id: meuVisitanteId, emoji });
           if (resultado.error) {
             status.textContent = t.interactionError;
           }
