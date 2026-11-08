@@ -602,6 +602,18 @@
     .section-tab:hover{color:var(--text);background:rgba(255,255,255,.04)}.section-tab.active{border-color:rgba(244,173,105,.25);color:var(--amber-bright);background:rgba(244,173,105,.1)}
     .tab-panel[hidden]{display:none}
     @media(max-width:420px){.section-tabs{gap:4px;margin-top:18px;padding:4px}.section-tab{min-height:40px;padding:0 4px;font-size:.76rem}}
+    .note-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:12px}
+    .note{display:grid;grid-template-columns:38px minmax(0,1fr);align-content:start;gap:12px;min-height:190px;padding:16px;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:linear-gradient(145deg,rgba(32,33,39,.86),rgba(23,24,30,.94));transition:border-color .18s ease,transform .18s ease}
+    .note:hover{transform:translateY(-2px);border-color:rgba(244,173,105,.3)}
+    .note.note-good-day{border-color:rgba(162,201,164,.34);background:linear-gradient(145deg,rgba(55,78,56,.22),rgba(23,24,30,.94))}
+    .note-index{width:34px;height:34px;border-radius:10px;font-size:.7rem}
+    .note-content{display:flex;flex-direction:column;min-height:100%}.note-text{white-space:pre-wrap;line-height:1.55}
+    .note-share-row{margin-top:auto;padding-top:16px}
+    .pagination{display:flex;align-items:center;justify-content:center;gap:13px;margin:19px 0 4px}.pagination[hidden]{display:none}
+    .page-button{min-height:38px;border:1px solid var(--line);border-radius:10px;padding:0 13px;color:var(--text);background:var(--panel-raised);font:inherit;font-size:.8rem;cursor:pointer}.page-button:hover:not(:disabled){border-color:var(--amber);color:var(--amber-bright)}.page-button:disabled{opacity:.4;cursor:not-allowed}.page-label{min-width:88px;color:var(--soft);text-align:center;font-size:.78rem}
+    .calendar-day:disabled{cursor:default;opacity:.38}.calendar-day:disabled:hover{border-color:transparent;background:transparent}
+    @media(max-width:720px){.note-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.note{grid-template-columns:32px minmax(0,1fr);gap:9px;padding:13px;min-height:180px}.note-index{width:30px;height:30px}}
+    @media(max-width:520px){.note-list{grid-template-columns:1fr}.note{min-height:0;padding:14px}.note-share-row{padding-top:12px}.pagination{gap:8px}.page-button{padding:0 10px}}
   </style>
 </head>
 
@@ -687,6 +699,14 @@
 
       <section class="tab-panel" role="tabpanel" tabindex="0" id="panel-archive" aria-labelledby="tab-archive" hidden>
 
+<section class="panel extra-panel" aria-labelledby="calendarTitle">
+          <div class="extra-heading"><div><p class="extra-kicker" data-i18n="calendarKicker">Linha do tempo</p><h2 id="calendarTitle" data-i18n="calendarTitle">Calendário de ocorrências</h2></div>
+            <div class="calendar-nav"><button id="prevMonth" type="button" aria-label="Mês anterior">‹</button><span id="calendarMonth" class="calendar-month"></span><button id="nextMonth" type="button" aria-label="Próximo mês">›</button></div></div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+          <div class="calendar-legend"><span><i class="legend-dot"></i><span data-i18n="legendNote">Ocorrência</span></span><span><i class="legend-dot good"></i><span data-i18n="legendGood">Dia bom</span></span></div>
+          <button id="clearDate" class="clear-date" type="button" hidden data-i18n="clearDate">Mostrar todas as datas</button>
+        </section>
+
 <section class="panel notes-panel" aria-labelledby="notes-title">
         <div class="notes-heading">
           <div>
@@ -707,16 +727,12 @@
         <p id="resultsLabel" class="results-label" aria-live="polite"></p>
         <aside class="random-report" id="randomReport" hidden><span class="random-icon" aria-hidden="true">🎲</span><div><p class="random-label">Arquivo aleatório</p><p id="randomText" class="random-text"></p></div></aside>
         <div id="listaNotas" class="note-list" aria-live="polite"></div>
+        <nav id="pagination" class="pagination" aria-label="Paginação das ocorrências" hidden>
+          <button id="prevPage" class="page-button" type="button" data-i18n="previousPage">← Anterior</button>
+          <span id="pageLabel" class="page-label" aria-live="polite"></span>
+          <button id="nextPage" class="page-button" type="button" data-i18n="nextPage">Próxima →</button>
+        </nav>
       </section>
-
-<section class="panel extra-panel" aria-labelledby="calendarTitle">
-          <div class="extra-heading"><div><p class="extra-kicker" data-i18n="calendarKicker">Linha do tempo</p><h2 id="calendarTitle" data-i18n="calendarTitle">Calendário de ocorrências</h2></div>
-            <div class="calendar-nav"><button id="prevMonth" type="button" aria-label="Mês anterior">‹</button><span id="calendarMonth" class="calendar-month"></span><button id="nextMonth" type="button" aria-label="Próximo mês">›</button></div></div>
-          <div id="calendarGrid" class="calendar-grid"></div>
-          <div class="calendar-legend"><span><i class="legend-dot"></i><span data-i18n="legendNote">Ocorrência</span></span><span><i class="legend-dot good"></i><span data-i18n="legendGood">Dia bom</span></span></div>
-          <button id="clearDate" class="clear-date" type="button" hidden data-i18n="clearDate">Mostrar todas as datas</button>
-        </section>
-
       </section>
 
       <section class="tab-panel" role="tabpanel" tabindex="0" id="panel-achievements" aria-labelledby="tab-achievements" hidden>
@@ -766,9 +782,9 @@
         footerProject: "Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.",
         footerBudget: "Departamento de Azar · Verba: R$ 0,00",
         searchPlaceholder: "Buscar nas notas...", searchLabel: "Buscar nas notas", randomButton: "🎲 Reclamação aleatória", clearFilters: "Limpar filtros", filterLabel: "Filtrar ocorrências",
-        filterAll: "Todas", filterComplaints: "Reclamações", filterGood: "Dias bons", resultsCount: (a,b) => "Exibindo " + a + " de " + b + " registros",
+        filterAll: "Todas", filterComplaints: "Reclamações", filterGood: "Dias bons", resultsCount: (a,b) => a + (a === 1 ? " ocorrência encontrada" : " ocorrências encontradas"),
         noMatches: "Nenhuma ocorrência combina com esses filtros.", noComplaints: "Ainda não há reclamações para sortear. Um raríssimo momento de paz.", randomLabel: "Arquivo aleatório",
-        calendarKicker: "Linha do tempo", calendarTitle: "Calendário de ocorrências", previousMonth: "Mês anterior", nextMonth: "Próximo mês", legendNote: "Ocorrência", legendGood: "Dia bom", clearDate: "Mostrar todas as datas",
+        calendarKicker: "Linha do tempo", calendarTitle: "Calendário de ocorrências", previousMonth: "Mês anterior", nextMonth: "Próximo mês", legendNote: "Ocorrência", legendGood: "Dia bom", clearDate: "Mostrar todas as datas", noOccurrence: "sem ocorrência", selectedDatePrefix: "Data selecionada:", pageCount: (a,b) => "Página " + a + " de " + b, previousPage: "← Anterior", nextPage: "Próxima →",
         achievementsKicker: "Reconhecimentos oficiais", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
         achievementList: [["☀️","Primeiro dia bom","Um raro sinal de esperança."],["🗃️","Arquivo ativo","10 ocorrências registradas."],["🕵️","Uma semana sob observação","7 dias desde o último dia bom."],["🏆","Mês histórico","30 dias desde o último dia bom."]],
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
@@ -807,9 +823,9 @@
         footerProject: "Unofficial project · An inside joke among friends · Reports may be disputed.",
         footerBudget: "Department of Bad Luck · Budget: R$ 0.00",
         searchPlaceholder: "Search the notes...", searchLabel: "Search the notes", randomButton: "🎲 Random complaint", clearFilters: "Clear filters", filterLabel: "Filter reports",
-        filterAll: "All", filterComplaints: "Complaints", filterGood: "Good days", resultsCount: (a,b) => "Showing " + a + " of " + b + " reports",
+        filterAll: "All", filterComplaints: "Complaints", filterGood: "Good days", resultsCount: (a,b) => a + (a === 1 ? " report found" : " reports found"),
         noMatches: "No reports match these filters.", noComplaints: "There are no complaints to draw yet. A rare moment of peace.", randomLabel: "Random file",
-        calendarKicker: "Timeline", calendarTitle: "Incident calendar", previousMonth: "Previous month", nextMonth: "Next month", legendNote: "Report", legendGood: "Good day", clearDate: "Show all dates",
+        calendarKicker: "Timeline", calendarTitle: "Incident calendar", previousMonth: "Previous month", nextMonth: "Next month", legendNote: "Report", legendGood: "Good day", clearDate: "Show all dates", noOccurrence: "no report", selectedDatePrefix: "Selected date:", pageCount: (a,b) => "Page " + a + " of " + b, previousPage: "← Previous", nextPage: "Next →",
         achievementsKicker: "Official recognition", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
         achievementList: [["☀️","First good day","A rare sign of hope."],["🗃️","Active archive","10 reports recorded."],["🕵️","One week under watch","7 days since the last good day."],["🏆","Historic month","30 days since the last good day."]],
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
@@ -881,30 +897,38 @@
 
     let filtroAtual = "all";
     let dataSelecionada = "";
+    let paginaAtual = 1;
+    const notasPorPagina = 6;
     let mesCalendario = new Date();
     const busca = document.getElementById("notesSearch");
     function chaveData(valor) { const p=(valor||"").split("/"); return p.length===3 ? p[2]+"-"+p[1].padStart(2,"0")+"-"+p[0].padStart(2,"0") : ""; }
     function renderizarNotas() {
-      const t=texto(), termo=busca.value.trim().toLocaleLowerCase();
+      const t=texto(),termo=busca.value.trim().toLocaleLowerCase();
       const filtradas=notas.map((nota,indice)=>({nota,indice})).filter(({nota})=>{
-        const boa=nota.diaBom===true, okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa);
+        const boa=nota.diaBom===true,okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa);
         const okBusca=!termo||(nota.texto||"").toLocaleLowerCase().includes(termo)||(nota.data||"").toLocaleLowerCase().includes(termo);
         return okFiltro&&okBusca&&(!dataSelecionada||chaveData(nota.data)===dataSelecionada);
       });
-      lista.replaceChildren(); document.getElementById("total-notas").textContent=notas.length;
-      document.getElementById("resultsLabel").textContent=t.resultsCount(filtradas.length,notas.length);
-      if(!filtradas.length){const e=document.createElement("p");e.className="empty-state";e.textContent=notas.length?t.noMatches:t.emptyNotes;lista.appendChild(e);return;}
-      filtradas.forEach(({nota,indice})=>{
+      const paginas=Math.max(1,Math.ceil(filtradas.length/notasPorPagina));paginaAtual=Math.min(paginaAtual,paginas);
+      const paginacao=document.getElementById("pagination");
+      const dataFormatada=dataSelecionada?new Intl.DateTimeFormat(t.locale).format(new Date(Number(dataSelecionada.slice(0,4)),Number(dataSelecionada.slice(5,7))-1,Number(dataSelecionada.slice(8,10)))):"";
+      document.getElementById("total-notas").textContent=notas.length;
+      document.getElementById("resultsLabel").textContent=t.resultsCount(filtradas.length,notas.length)+(dataSelecionada?" · "+t.selectedDatePrefix+" "+dataFormatada:"");
+      lista.replaceChildren();
+      if(!filtradas.length){const e=document.createElement("p");e.className="empty-state";e.textContent=notas.length?t.noMatches:t.emptyNotes;lista.appendChild(e);paginacao.hidden=true;return;}
+      const inicio=(paginaAtual-1)*notasPorPagina,visiveis=filtradas.slice(inicio,inicio+notasPorPagina);
+      visiveis.forEach(({nota,indice})=>{
         const item=document.createElement("article");item.className=nota.diaBom===true?"note note-good-day":"note";
         const numero=document.createElement("div");numero.className="note-index";numero.textContent=String(indice+1).padStart(2,"0");numero.setAttribute("aria-hidden","true");
         const conteudo=document.createElement("div");conteudo.className="note-content";const linha=document.createElement("div");linha.className="note-date-row";
         const data=document.createElement("div");data.className="note-date";data.textContent=nota.data||t.missingDate;linha.appendChild(data);
         if(nota.diaBom===true){const badge=document.createElement("span");badge.className="good-day-badge";badge.textContent=t.goodDay;linha.appendChild(badge);}
         const p=document.createElement("p");p.className="note-text";p.textContent="“"+(nota.texto||"")+"”";conteudo.append(linha,p);
-                const shareRow=document.createElement("div");shareRow.className="note-share-row";
-                const share=document.createElement("button");share.type="button";share.className="share-note-button";share.textContent=t.shareImage;
-                share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);conteudo.append(shareRow);item.append(numero,conteudo);lista.appendChild(item);
+        const shareRow=document.createElement("div");shareRow.className="note-share-row";const share=document.createElement("button");share.type="button";share.className="share-note-button";share.textContent=t.shareImage;
+        share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);conteudo.append(shareRow);item.append(numero,conteudo);lista.appendChild(item);
       });
+      paginacao.hidden=paginas<=1;document.getElementById("pageLabel").textContent=t.pageCount(paginaAtual,paginas);
+      document.getElementById("prevPage").disabled=paginaAtual<=1;document.getElementById("nextPage").disabled=paginaAtual>=paginas;
     }
     function renderizarCalendario(){
       const t=texto(),grid=document.getElementById("calendarGrid");grid.replaceChildren();
@@ -916,8 +940,8 @@
       const cells=Math.ceil((offset+total)/7)*7;
       for(let i=0;i<cells;i++){const d=new Date(begin.getFullYear(),begin.getMonth(),begin.getDate()+i),k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"),has=map.has(k),good=map.get(k)===true;
         const b=document.createElement("button");b.type="button";b.className="calendar-day"+(d.getMonth()!==mesCalendario.getMonth()?" other-month":"")+(has?" has-note":"")+(good?" has-good":"")+(k===dataSelecionada?" selected":"");b.textContent=d.getDate();
-        b.setAttribute("aria-label",new Intl.DateTimeFormat(t.locale,{dateStyle:"full"}).format(d)+(has?" · "+(good?t.goodDay:t.legendNote):""));
-        b.addEventListener("click",()=>{dataSelecionada=dataSelecionada===k?"":k;document.getElementById("clearDate").hidden=!dataSelecionada;renderizarCalendario();renderizarNotas();});grid.appendChild(b);
+        b.disabled=!has;b.setAttribute("aria-label",new Intl.DateTimeFormat(t.locale,{dateStyle:"full"}).format(d)+(has?" · "+(good?t.goodDay:t.legendNote):" · "+t.noOccurrence));
+        b.addEventListener("click",()=>{if(!has)return;dataSelecionada=dataSelecionada===k?"":k;paginaAtual=1;document.getElementById("clearDate").hidden=!dataSelecionada;renderizarCalendario();renderizarNotas();});grid.appendChild(b);
       }document.getElementById("clearDate").hidden=!dataSelecionada;
     }
     function renderizarConquistas(){
@@ -1010,12 +1034,14 @@
     function sortearReclamacao(){const t=texto(),items=notas.filter(n=>n.diaBom!==true),panel=document.getElementById("randomReport");
       document.getElementById("randomText").textContent=items.length?(()=>{const n=items[Math.floor(Math.random()*items.length)];return(n.data?n.data+" — ":"")+"“"+(n.texto||"")+"”";})():t.noComplaints;panel.hidden=false;
     }
-    document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{filtroAtual=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderizarNotas();}));
-    busca.addEventListener("input",renderizarNotas);document.getElementById("randomButton").addEventListener("click",sortearReclamacao);
-    document.getElementById("clearFilters").addEventListener("click",()=>{filtroAtual="all";busca.value="";dataSelecionada="";document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="all"));renderizarCalendario();renderizarNotas();});
+    document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{filtroAtual=b.dataset.filter;paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderizarNotas();}));
+    busca.addEventListener("input",()=>{paginaAtual=1;renderizarNotas();});document.getElementById("randomButton").addEventListener("click",sortearReclamacao);
+    document.getElementById("clearFilters").addEventListener("click",()=>{filtroAtual="all";busca.value="";dataSelecionada="";paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="all"));renderizarCalendario();renderizarNotas();});
     document.getElementById("prevMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()-1);renderizarCalendario();});
     document.getElementById("nextMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()+1);renderizarCalendario();});
-    document.getElementById("clearDate").addEventListener("click",()=>{dataSelecionada="";renderizarCalendario();renderizarNotas();});
+    document.getElementById("clearDate").addEventListener("click",()=>{dataSelecionada="";paginaAtual=1;renderizarCalendario();renderizarNotas();});
+    document.getElementById("prevPage").addEventListener("click",()=>{if(paginaAtual>1){paginaAtual--;renderizarNotas();}});
+    document.getElementById("nextPage").addEventListener("click",()=>{paginaAtual++;renderizarNotas();});
     function aplicarIdioma() {
       const t = texto();
       document.documentElement.lang = t.locale;
