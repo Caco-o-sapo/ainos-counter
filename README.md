@@ -11,17 +11,18 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 ## 📡 O que a Central acompanha
 
 - **Contador de dias bons:** calcula o tempo desde o último dia bom registrado e atualiza automaticamente.
-- **Arquivo de ocorrências:** reúne as reclamações, os perrengues e os relatos enviados pela equipe, com busca, filtros por tipo e paginação em cards.
+- **Arquivo de ocorrências:** reúne reclamações e relatos, com busca, filtros por tipo, categoria e data, além de paginação em cards.
+- **Categorias automáticas:** identifica temas pelo texto da nota e mostra o assunto mais frequente; a categoria pode ser corrigida opcionalmente no registro.
 - **Filtro por data:** o calendário destaca os dias com registros; ao selecionar uma data, o arquivo mostra as ocorrências daquele dia.
 - **Dias bons em destaque:** os registros positivos recebem um selo, e o contador considera automaticamente o dia bom mais recente.
 - **Calendário de ocorrências:** mostra em quais datas houve registros e permite abrir as notas daquele dia.
 - **Reclamação aleatória:** sorteia um relato do arquivo para relembrar os momentos mais… movimentados.
 - **Estatísticas oficiais:** contabiliza reclamações, dias bons registrados e dias desde o último dia bom.
 - **Cards para compartilhar:** gera imagens PNG de uma nota ou do resumo estatístico para compartilhar pelo menu do aparelho ou baixar como alternativa.
-- **Entretenimento:** roleta de reclamações, previsões aleatórias do Oráculo do Azar e conquistas duvidosas para desbloquear.
+- **Entretenimento:** roleta de reclamações, Oráculo do Azar, gerador de manchetes, Bingo do Ainos e conquistas duvidosas.
 - **Prévia dinâmica:** ao compartilhar o link, o cartão mostra a contagem atual e a ocorrência mais recente.
 - **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
-- **Navegação por abas:** separa o painel, o arquivo de ocorrências e as conquistas para deixar a página mais fácil de percorrer.
+- **Navegação por abas:** separa o painel, o arquivo de ocorrências e a área de entretenimento para deixar a página mais fácil de percorrer.
 
 ## 🔬 Metodologia (quase) científica
 
