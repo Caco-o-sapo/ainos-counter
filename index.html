@@ -746,7 +746,7 @@
         calendarKicker: "Linha do tempo", calendarTitle: "Calendário de ocorrências", previousMonth: "Mês anterior", nextMonth: "Próximo mês", legendNote: "Ocorrência", legendGood: "Dia bom", clearDate: "Mostrar todas as datas",
         achievementsKicker: "Reconhecimentos oficiais", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
         achievementList: [["☀️","Primeiro dia bom","Um raro sinal de esperança."],["🗃️","Arquivo ativo","10 ocorrências registradas."],["🕵️","Uma semana sob observação","7 dias desde o último dia bom."],["🏆","Mês histórico","30 dias desde o último dia bom."]],
-        statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Baixar resumo PNG", shareImage: "🖼️ Baixar card PNG", shareStatus: "Imagem pronta para baixar e mandar no Discord.", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
+        statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         switchLabel: "Mudar para inglês",
         locale: "pt-BR"
       },
@@ -786,7 +786,7 @@
         calendarKicker: "Timeline", calendarTitle: "Incident calendar", previousMonth: "Previous month", nextMonth: "Next month", legendNote: "Report", legendGood: "Good day", clearDate: "Show all dates",
         achievementsKicker: "Official recognition", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
         achievementList: [["☀️","First good day","A rare sign of hope."],["🗃️","Active archive","10 reports recorded."],["🕵️","One week under watch","7 days since the last good day."],["🏆","Historic month","30 days since the last good day."]],
-        statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Download summary PNG", shareImage: "🖼️ Download note card", shareStatus: "Image ready to download and share.", cardFooter: "AINOS WATCH · Community monitoring center",
+        statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary" cardFooter: "AINOS WATCH · Community monitoring center",
         switchLabel: "Switch to Portuguese",
         locale: "en"
       }
@@ -931,9 +931,27 @@
       ctx.strokeStyle="rgba(244,173,105,.45)";ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(26,26,1148,578,28);ctx.stroke();
       return {canvas,ctx};
     }
-    function baixarImagem(canvas,nome){
+    function compartilharImagem(canvas,nome,textoCompartilhar){
+      const status=document.getElementById("shareMessage");
+      try{
+        if(navigator.share&&navigator.canShare){
+          const data=canvas.toDataURL("image/png"),bytes=atob(data.split(",")[1]),array=new Uint8Array(bytes.length);
+          for(let i=0;i<bytes.length;i++)array[i]=bytes.charCodeAt(i);
+          const arquivo=new File([array],nome,{type:"image/png"});
+          if(navigator.canShare({files:[arquivo]})){
+            status.textContent=texto().shareOpening;
+            navigator.share({files:[arquivo],title:"AINOS WATCH",text:textoCompartilhar})
+              .then(()=>{status.textContent=texto().shareDone;})
+              .catch(erro=>{if(erro.name==="AbortError"){status.textContent=texto().shareCancelled;}else baixarImagem(canvas,nome,true);});
+            return;
+          }
+        }
+      }catch(erro){/* Navegadores sem compartilhamento de arquivos usam o download. */}
+      baixarImagem(canvas,nome,false);
+    }
+    function baixarImagem(canvas,nome,fallback=false){
       const link=document.createElement("a");link.download=nome;link.href=canvas.toDataURL("image/png");document.body.appendChild(link);link.click();link.remove();
-      document.getElementById("shareMessage").textContent=texto().shareStatus;
+      document.getElementById("shareMessage").textContent=fallback?texto().shareFallback:texto().shareStatus;
     }
     function gerarImagemNota(nota,indice){
       const {canvas,ctx}=criarCanvasBase(),t=texto();
@@ -945,7 +963,7 @@
       ctx.fillStyle="#f3eee7";ctx.font="500 40px system-ui, sans-serif";const linhas=desenharQuebraTexto(ctx,"“"+(nota.texto||"")+"”",1020,4);
       linhas.forEach((linha,i)=>ctx.fillText(linha,84,nota.diaBom===true?300+i*57:280+i*57));
       ctx.fillStyle="#77757a";ctx.font="500 15px system-ui, sans-serif";ctx.fillText("https://ainos-counter.vercel.app/",84,558);
-      baixarImagem(canvas,"ainos-nota-"+String(indice+1).padStart(2,"0")+".png");
+      compartilharImagem(canvas,"ainos-nota-"+String(indice+1).padStart(2,"0")+".png",t.shareNoteText+" "+(nota.data?nota.data+" — ":"")+"“"+(nota.texto||"")+"”");
     }
     function gerarImagemEstatisticas(){
       const {canvas,ctx}=criarCanvasBase(),t=texto(),d=obterEstatisticas();
@@ -958,7 +976,7 @@
         ctx.fillStyle="#ffc887";ctx.font="800 58px system-ui, sans-serif";ctx.fillText(card.value,x+24,414);
       });
       ctx.fillStyle="#77757a";ctx.font="500 15px system-ui, sans-serif";ctx.fillText("https://ainos-counter.vercel.app/",84,558);
-      baixarImagem(canvas,"ainos-estatisticas.png");
+      compartilharImagem(canvas,"ainos-estatisticas.png",t.shareSummaryText);
     }
     document.getElementById("shareStats").addEventListener("click",gerarImagemEstatisticas);
 
