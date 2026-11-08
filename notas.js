@@ -2,6 +2,8 @@
 // Para marcar um dia bom, inclua diaBom: true na nota correspondente.
 // O contador usa automaticamente a data mais recente marcada assim.
 export const notas = [
+  { data: "08/11/2026", texto: "Eu vivendo o pesadelo de vcs" },
+  { data: "08/11/2026", texto: "Será q eu faço um copo de vodka pra mim 😞" },
   { data: "07/11/2026", texto: "Moranguete, Abacatudo, 67, 42 sigma farmando aura no passinho do sabor" },
   { data: "07/11/2026", texto: "Sticker elsa bunduda bunda grande andando" },
   { data: "06/11/2026", diaBom: true, texto: "Dia Bom: 'AQUELA AMIGA Q GANHOU O SEGUNDO DIA DE FOLGA, DEUS É BOM'" },
