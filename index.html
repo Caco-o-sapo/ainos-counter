@@ -614,6 +614,8 @@
     .calendar-day:disabled{cursor:default;opacity:.38}.calendar-day:disabled:hover{border-color:transparent;background:transparent}
     @media(max-width:720px){.note-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.note{grid-template-columns:32px minmax(0,1fr);gap:9px;padding:13px;min-height:180px}.note-index{width:30px;height:30px}}
     @media(max-width:520px){.note-list{grid-template-columns:1fr}.note{min-height:0;padding:14px}.note-share-row{padding-top:12px}.pagination{gap:8px}.page-button{padding:0 10px}}
+    .fun-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:18px}.fun-card{min-height:255px;display:flex;flex-direction:column}.fun-copy{margin:0 0 18px;color:var(--muted);font-size:.88rem;line-height:1.55}.fun-action{align-self:flex-start}.fun-card .random-report{margin-top:auto;margin-bottom:0}.oracle-output{display:flex;flex:1;align-items:center;min-height:84px;margin:0 0 17px;padding:16px;border:1px solid rgba(244,173,105,.16);border-radius:13px;color:var(--text);background:rgba(244,173,105,.045);font-size:.92rem;line-height:1.55}.achievement-panel{margin-top:0}
+    @media(max-width:620px){.fun-grid{grid-template-columns:1fr}.fun-card{min-height:0}.fun-card .random-report{margin-top:18px}}
   </style>
 </head>
 
@@ -646,7 +648,7 @@
 
         <button class="section-tab" type="button" role="tab" id="tab-archive" aria-selected="false" aria-controls="panel-archive" data-tab="archive" data-i18n="tabArchive" tabindex="-1">Ocorrências</button>
 
-        <button class="section-tab" type="button" role="tab" id="tab-achievements" aria-selected="false" aria-controls="panel-achievements" data-tab="achievements" data-i18n="tabAchievements" tabindex="-1">Conquistas</button>
+        <button class="section-tab" type="button" role="tab" id="tab-entertainment" aria-selected="false" aria-controls="panel-entertainment" data-tab="entertainment" data-i18n="tabEntertainment" tabindex="-1">Conquistas</button>
 
       </nav>
 
@@ -718,14 +720,13 @@
         </div>
         <div class="notes-tools">
           <input id="notesSearch" class="notes-search" type="search" placeholder="Buscar nas notas..." aria-label="Buscar nas notas">
-          <button id="randomButton" class="tool-button" type="button">🎲 Reclamação aleatória</button>
+          
           <button id="clearFilters" class="tool-button" type="button">Limpar filtros</button>
         </div>
         <div class="filters" role="group" aria-label="Filtrar ocorrências">
           <button class="filter-button active" type="button" data-filter="all">Todas</button><button class="filter-button" type="button" data-filter="complaints">Reclamações</button><button class="filter-button" type="button" data-filter="good">Dias bons</button>
         </div>
         <p id="resultsLabel" class="results-label" aria-live="polite"></p>
-        <aside class="random-report" id="randomReport" hidden><span class="random-icon" aria-hidden="true">🎲</span><div><p class="random-label">Arquivo aleatório</p><p id="randomText" class="random-text"></p></div></aside>
         <div id="listaNotas" class="note-list" aria-live="polite"></div>
         <nav id="pagination" class="pagination" aria-label="Paginação das ocorrências" hidden>
           <button id="prevPage" class="page-button" type="button" data-i18n="previousPage">← Anterior</button>
@@ -735,9 +736,25 @@
       </section>
       </section>
 
-      <section class="tab-panel" role="tabpanel" tabindex="0" id="panel-achievements" aria-labelledby="tab-achievements" hidden>
+      <section class="tab-panel" role="tabpanel" tabindex="0" id="panel-entertainment" aria-labelledby="tab-entertainment" hidden>
 
-<section class="panel extra-panel" aria-labelledby="achievementsTitle"><div class="extra-heading"><div><p class="extra-kicker" data-i18n="achievementsKicker">Reconhecimentos oficiais</p><h2 id="achievementsTitle" data-i18n="achievementsTitle">Conquistas duvidosas</h2></div></div><div id="achievements" class="achievements"></div></section>
+        <div class="fun-grid">
+          <section class="panel extra-panel fun-card" aria-labelledby="randomTitle">
+            <div class="extra-heading"><div><p class="extra-kicker" data-i18n="randomKicker">Arquivo embaralhado</p><h2 id="randomTitle" data-i18n="randomTitle">Roleta de reclamações</h2></div></div>
+            <p class="fun-copy" data-i18n="randomCopy">Uma reclamação escolhida pelo destino. O destino não aceita recurso.</p>
+            <button id="randomButton" class="tool-button fun-action" type="button">🎲 Sortear reclamação</button>
+            <aside class="random-report" id="randomReport" hidden><span class="random-icon" aria-hidden="true">🎲</span><div><p class="random-label">Arquivo aleatório</p><p id="randomText" class="random-text"></p></div></aside>
+          </section>
+          <section class="panel extra-panel fun-card" aria-labelledby="oracleTitle">
+            <div class="extra-heading"><div><p class="extra-kicker" data-i18n="oracleKicker">Consulta sem garantia</p><h2 id="oracleTitle" data-i18n="oracleTitle">Oráculo do azar</h2></div></div>
+            <p id="oracleText" class="oracle-output" data-i18n="oraclePlaceholder">O oráculo aguarda uma consulta.</p>
+            <button id="oracleButton" class="tool-button fun-action" type="button" data-i18n="oracleButton">🔮 Consultar o oráculo</button>
+          </section>
+        </div>
+        <section class="panel extra-panel achievement-panel" aria-labelledby="achievementsTitle">
+          <div class="extra-heading"><div><p class="extra-kicker" data-i18n="achievementsKicker">Reconhecimentos oficiais</p><h2 id="achievementsTitle" data-i18n="achievementsTitle">Conquistas duvidosas</h2></div></div>
+          <div id="achievements" class="achievements"></div>
+        </section>
 
       </section></main>
 
@@ -783,12 +800,12 @@
         footerBudget: "Departamento de Azar · Verba: R$ 0,00",
         searchPlaceholder: "Buscar nas notas...", searchLabel: "Buscar nas notas", randomButton: "🎲 Reclamação aleatória", clearFilters: "Limpar filtros", filterLabel: "Filtrar ocorrências",
         filterAll: "Todas", filterComplaints: "Reclamações", filterGood: "Dias bons", resultsCount: (a,b) => a + (a === 1 ? " ocorrência encontrada" : " ocorrências encontradas"),
-        noMatches: "Nenhuma ocorrência combina com esses filtros.", noComplaints: "Ainda não há reclamações para sortear. Um raríssimo momento de paz.", randomLabel: "Arquivo aleatório",
+        noMatches: "Nenhuma ocorrência combina com esses filtros.", noComplaints: "Ainda não há reclamações para sortear. Um raríssimo momento de paz.", randomLabel: "Reclamação sorteada", randomKicker: "Arquivo embaralhado", randomTitle: "Roleta de reclamações", randomCopy: "Uma reclamação escolhida pelo destino. O destino não aceita recurso.", oracleKicker: "Consulta sem garantia", oracleTitle: "Oráculo do azar", oracleButton: "🔮 Consultar o oráculo", oraclePlaceholder: "O oráculo aguarda uma consulta.", oraclePredictions: ["O próximo problema virá acompanhado de: “mas era só uma coisinha”.","Uma tarefa de cinco minutos encontrará um jeito de durar a tarde inteira.","Você vai abrir uma aba nova e esquecer o que estava procurando.","O universo recomenda conferir se o microfone está mutado antes de falar sozinho.","Uma mensagem começando com “rapidinho” pode exigir uma reunião de emergência.","Hoje, o botão certo será o terceiro que você apertar.","Uma atualização está a caminho. O que ela atualiza permanece um mistério.","O destino prevê que alguém perguntará “deu certo?” antes de dar tempo de tentar."],
         calendarKicker: "Linha do tempo", calendarTitle: "Calendário de ocorrências", previousMonth: "Mês anterior", nextMonth: "Próximo mês", legendNote: "Ocorrência", legendGood: "Dia bom", clearDate: "Mostrar todas as datas", noOccurrence: "sem ocorrência", selectedDatePrefix: "Data selecionada:", pageCount: (a,b) => "Página " + a + " de " + b, previousPage: "← Anterior", nextPage: "Próxima →",
-        achievementsKicker: "Reconhecimentos oficiais", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
+        achievementsKicker: "Troféus de procedência duvidosa", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
         achievementList: [["☀️","Primeiro dia bom","Um raro sinal de esperança."],["🗃️","Arquivo ativo","10 ocorrências registradas."],["🕵️","Uma semana sob observação","7 dias desde o último dia bom."],["🏆","Mês histórico","30 dias desde o último dia bom."]],
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
-        tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabAchievements: "Conquistas",
+        tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento",
         switchLabel: "Mudar para inglês",
         locale: "pt-BR"
       },
@@ -824,12 +841,12 @@
         footerBudget: "Department of Bad Luck · Budget: R$ 0.00",
         searchPlaceholder: "Search the notes...", searchLabel: "Search the notes", randomButton: "🎲 Random complaint", clearFilters: "Clear filters", filterLabel: "Filter reports",
         filterAll: "All", filterComplaints: "Complaints", filterGood: "Good days", resultsCount: (a,b) => a + (a === 1 ? " report found" : " reports found"),
-        noMatches: "No reports match these filters.", noComplaints: "There are no complaints to draw yet. A rare moment of peace.", randomLabel: "Random file",
+        noMatches: "No reports match these filters.", noComplaints: "There are no complaints to draw yet. A rare moment of peace.", randomLabel: "Drawn complaint", randomKicker: "Shuffled archive", randomTitle: "Complaint roulette", randomCopy: "A complaint chosen by fate. Fate does not accept appeals.", oracleKicker: "No guarantees", oracleTitle: "Bad Luck Oracle", oracleButton: "🔮 Consult the oracle", oraclePlaceholder: "The oracle awaits your question.", oraclePredictions: ["The next problem will come with: “it was just a little thing.”","A five-minute task will find a way to last all afternoon.","You will open a new tab and forget what you were looking for.","The universe recommends checking your mic before talking to yourself.","A message starting with “real quick” may require an emergency meeting.","Today, the right button will be the third one you press.","An update is coming. What it updates remains a mystery.","Fate predicts someone will ask “did it work?” before you can try."],
         calendarKicker: "Timeline", calendarTitle: "Incident calendar", previousMonth: "Previous month", nextMonth: "Next month", legendNote: "Report", legendGood: "Good day", clearDate: "Show all dates", noOccurrence: "no report", selectedDatePrefix: "Selected date:", pageCount: (a,b) => "Page " + a + " of " + b, previousPage: "← Previous", nextPage: "Next →",
-        achievementsKicker: "Official recognition", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
+        achievementsKicker: "Questionable trophies", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
         achievementList: [["☀️","First good day","A rare sign of hope."],["🗃️","Active archive","10 reports recorded."],["🕵️","One week under watch","7 days since the last good day."],["🏆","Historic month","30 days since the last good day."]],
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
-        tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabAchievements: "Achievements",
+        tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment",
         switchLabel: "Switch to Portuguese",
         locale: "en"
       }
@@ -1030,6 +1047,16 @@
       compartilharImagem(canvas,"ainos-estatisticas.png",t.shareSummaryText);
     }
     document.getElementById("shareStats").addEventListener("click",gerarImagemEstatisticas);
+
+    let previsaoAnterior=-1;
+    function consultarOraculo(){
+      const previsoes=texto().oraclePredictions;
+      if(previsoes.length<2){document.getElementById("oracleText").textContent=previsoes[0]||"";return;}
+      let indice=Math.floor(Math.random()*previsoes.length);
+      while(indice===previsaoAnterior)indice=Math.floor(Math.random()*previsoes.length);
+      previsaoAnterior=indice;document.getElementById("oracleText").textContent=previsoes[indice];
+    }
+    document.getElementById("oracleButton").addEventListener("click",consultarOraculo);
 
     function sortearReclamacao(){const t=texto(),items=notas.filter(n=>n.diaBom!==true),panel=document.getElementById("randomReport");
       document.getElementById("randomText").textContent=items.length?(()=>{const n=items[Math.floor(Math.random()*items.length)];return(n.data?n.data+" — ":"")+"“"+(n.texto||"")+"”";})():t.noComplaints;panel.hidden=false;
