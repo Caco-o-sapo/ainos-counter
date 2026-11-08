@@ -575,6 +575,23 @@
         to { opacity: 1; transform: translateY(0); }
       }
     }
+    .notes-tools{display:grid;grid-template-columns:minmax(180px,1fr) auto auto;gap:10px;margin:22px 0 12px}
+    .notes-search,.tool-button,.filter-button,.calendar-nav button{min-height:42px;border:1px solid var(--line);border-radius:11px;color:var(--text);background:var(--panel-raised);font:inherit}
+    .notes-search{width:100%;padding:0 13px;outline:none}.notes-search:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(244,173,105,.12)}
+    .tool-button,.filter-button,.calendar-nav button{padding:0 13px;cursor:pointer;transition:.18s ease}.tool-button:hover,.filter-button:hover,.calendar-nav button:hover{border-color:var(--amber);color:var(--amber-bright)}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.filter-button{min-height:34px;padding:0 12px;color:var(--muted);font-size:.82rem}.filter-button.active{border-color:rgba(244,173,105,.5);color:var(--amber-bright);background:rgba(244,173,105,.1)}
+    .results-label{margin:0 0 12px;color:var(--soft);font-size:.78rem}
+    .random-report{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;margin:0 0 20px;padding:15px 17px;border:1px solid rgba(244,173,105,.25);border-radius:14px;background:linear-gradient(120deg,rgba(244,173,105,.08),rgba(244,173,105,.025))}.random-report[hidden]{display:none}
+    .random-icon{font-size:1.2rem}.random-label{margin:0 0 5px;color:var(--amber);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.random-text{margin:0;color:var(--text);line-height:1.5}
+    .lower-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:18px;margin-top:18px}.extra-panel{padding:22px}
+    .extra-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}.extra-heading h2{margin:0;font-size:1.05rem}.extra-kicker{margin:0 0 6px;color:var(--amber);font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    .calendar-nav{display:flex;align-items:center;gap:7px}.calendar-nav button{width:34px;min-height:34px;padding:0}.calendar-month{min-width:110px;color:var(--muted);text-align:center;font-size:.8rem;text-transform:capitalize}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.calendar-weekday{padding:4px 0;color:var(--soft);text-align:center;font-size:.68rem}
+    .calendar-day{position:relative;display:grid;min-height:37px;place-items:center;border:1px solid transparent;border-radius:9px;color:var(--muted);background:transparent;font:inherit;font-size:.78rem;cursor:pointer}.calendar-day:hover{border-color:var(--line);background:var(--panel-raised)}.calendar-day.other-month{opacity:.35}.calendar-day.has-note:after{position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--amber);content:""}.calendar-day.has-good:after{background:var(--green)}.calendar-day.selected{border-color:var(--amber);color:var(--amber-bright);background:rgba(244,173,105,.12)}
+    .calendar-legend{display:flex;gap:14px;margin-top:13px;color:var(--soft);font-size:.72rem}.legend-dot{display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%;background:var(--amber)}.legend-dot.good{background:var(--green)}.clear-date{margin-top:12px;border:0;padding:0;color:var(--amber);background:none;font:inherit;font-size:.76rem;cursor:pointer}
+    .achievements{display:grid;gap:9px}.achievement{display:grid;grid-template-columns:35px 1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.08)}.achievement.locked{opacity:.48}.achievement-icon{display:grid;width:34px;height:34px;place-items:center;border-radius:10px;background:rgba(244,173,105,.1)}.achievement-title{margin:0;font-size:.8rem;font-weight:750}.achievement-copy{margin:3px 0 0;color:var(--soft);font-size:.7rem;line-height:1.35}.achievement-state{color:var(--green);font-size:.68rem;font-weight:750}
+    @media(max-width:720px){.notes-tools{grid-template-columns:1fr 1fr}.notes-search{grid-column:1/-1}.lower-grid{grid-template-columns:1fr}}
+    @media(max-width:420px){.notes-tools{grid-template-columns:1fr}.notes-search{grid-column:auto}.extra-panel{padding:18px}.calendar-day{min-height:34px}}
   </style>
 </head>
 
@@ -644,7 +661,28 @@
           </div>
           <div class="record-count"><strong id="total-notas">0</strong><span id="total-notas-label" data-i18n="records">registros</span></div>
         </div>
+        <div class="notes-tools">
+          <input id="notesSearch" class="notes-search" type="search" placeholder="Buscar nas notas..." aria-label="Buscar nas notas">
+          <button id="randomButton" class="tool-button" type="button">🎲 Reclamação aleatória</button>
+          <button id="clearFilters" class="tool-button" type="button">Limpar filtros</button>
+        </div>
+        <div class="filters" role="group" aria-label="Filtrar ocorrências">
+          <button class="filter-button active" type="button" data-filter="all">Todas</button><button class="filter-button" type="button" data-filter="complaints">Reclamações</button><button class="filter-button" type="button" data-filter="good">Dias bons</button>
+        </div>
+        <p id="resultsLabel" class="results-label" aria-live="polite"></p>
+        <aside class="random-report" id="randomReport" hidden><span class="random-icon" aria-hidden="true">🎲</span><div><p class="random-label">Arquivo aleatório</p><p id="randomText" class="random-text"></p></div></aside>
         <div id="listaNotas" class="note-list" aria-live="polite"></div>
+      </section>
+
+      <section class="lower-grid" aria-label="Calendário e conquistas">
+        <section class="panel extra-panel" aria-labelledby="calendarTitle">
+          <div class="extra-heading"><div><p class="extra-kicker" data-i18n="calendarKicker">Linha do tempo</p><h2 id="calendarTitle" data-i18n="calendarTitle">Calendário de ocorrências</h2></div>
+            <div class="calendar-nav"><button id="prevMonth" type="button" aria-label="Mês anterior">‹</button><span id="calendarMonth" class="calendar-month"></span><button id="nextMonth" type="button" aria-label="Próximo mês">›</button></div></div>
+          <div id="calendarGrid" class="calendar-grid"></div>
+          <div class="calendar-legend"><span><i class="legend-dot"></i><span data-i18n="legendNote">Ocorrência</span></span><span><i class="legend-dot good"></i><span data-i18n="legendGood">Dia bom</span></span></div>
+          <button id="clearDate" class="clear-date" type="button" hidden data-i18n="clearDate">Mostrar todas as datas</button>
+        </section>
+        <section class="panel extra-panel" aria-labelledby="achievementsTitle"><div class="extra-heading"><div><p class="extra-kicker" data-i18n="achievementsKicker">Reconhecimentos oficiais</p><h2 id="achievementsTitle" data-i18n="achievementsTitle">Conquistas duvidosas</h2></div></div><div id="achievements" class="achievements"></div></section>
       </section>
     </main>
 
@@ -688,6 +726,12 @@
         noRecord: "sem registro",
         footerProject: "Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.",
         footerBudget: "Departamento de Azar · Verba: R$ 0,00",
+        searchPlaceholder: "Buscar nas notas...", searchLabel: "Buscar nas notas", randomButton: "🎲 Reclamação aleatória", clearFilters: "Limpar filtros", filterLabel: "Filtrar ocorrências",
+        filterAll: "Todas", filterComplaints: "Reclamações", filterGood: "Dias bons", resultsCount: (a,b) => "Exibindo " + a + " de " + b + " registros",
+        noMatches: "Nenhuma ocorrência combina com esses filtros.", noComplaints: "Ainda não há reclamações para sortear. Um raríssimo momento de paz.", randomLabel: "Arquivo aleatório",
+        calendarKicker: "Linha do tempo", calendarTitle: "Calendário de ocorrências", previousMonth: "Mês anterior", nextMonth: "Próximo mês", legendNote: "Ocorrência", legendGood: "Dia bom", clearDate: "Mostrar todas as datas",
+        achievementsKicker: "Reconhecimentos oficiais", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
+        achievementList: [["☀️","Primeiro dia bom","Um raro sinal de esperança."],["🗃️","Arquivo ativo","10 ocorrências registradas."],["🕵️","Uma semana sob observação","7 dias desde o último dia bom."],["🏆","Mês histórico","30 dias desde o último dia bom."]],
         switchLabel: "Mudar para inglês",
         locale: "pt-BR"
       },
@@ -721,6 +765,12 @@
         noRecord: "no record",
         footerProject: "Unofficial project · An inside joke among friends · Reports may be disputed.",
         footerBudget: "Department of Bad Luck · Budget: R$ 0.00",
+        searchPlaceholder: "Search the notes...", searchLabel: "Search the notes", randomButton: "🎲 Random complaint", clearFilters: "Clear filters", filterLabel: "Filter reports",
+        filterAll: "All", filterComplaints: "Complaints", filterGood: "Good days", resultsCount: (a,b) => "Showing " + a + " of " + b + " reports",
+        noMatches: "No reports match these filters.", noComplaints: "There are no complaints to draw yet. A rare moment of peace.", randomLabel: "Random file",
+        calendarKicker: "Timeline", calendarTitle: "Incident calendar", previousMonth: "Previous month", nextMonth: "Next month", legendNote: "Report", legendGood: "Good day", clearDate: "Show all dates",
+        achievementsKicker: "Official recognition", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
+        achievementList: [["☀️","First good day","A rare sign of hope."],["🗃️","Active archive","10 reports recorded."],["🕵️","One week under watch","7 days since the last good day."],["🏆","Historic month","30 days since the last good day."]],
         switchLabel: "Switch to Portuguese",
         locale: "en"
       }
@@ -786,56 +836,63 @@
       }
     }
 
+    let filtroAtual = "all";
+    let dataSelecionada = "";
+    let mesCalendario = new Date();
+    const busca = document.getElementById("notesSearch");
+    function chaveData(valor) { const p=(valor||"").split("/"); return p.length===3 ? p[2]+"-"+p[1].padStart(2,"0")+"-"+p[0].padStart(2,"0") : ""; }
     function renderizarNotas() {
-      const t = texto();
-      lista.replaceChildren();
-      document.getElementById("total-notas").textContent = notas.length;
-
-      if (notas.length === 0) {
-        const vazio = document.createElement("p");
-        vazio.className = "empty-state";
-        vazio.textContent = t.emptyNotes;
-        lista.appendChild(vazio);
-        return;
-      }
-
-      notas.forEach((nota, indice) => {
-        const item = document.createElement("article");
-        item.className = nota.diaBom === true ? "note note-good-day" : "note";
-
-        const numero = document.createElement("div");
-        numero.className = "note-index";
-        numero.textContent = String(indice + 1).padStart(2, "0");
-        numero.setAttribute("aria-hidden", "true");
-
-        const conteudo = document.createElement("div");
-        conteudo.className = "note-content";
-
-        const linhaData = document.createElement("div");
-        linhaData.className = "note-date-row";
-
-        const data = document.createElement("div");
-        data.className = "note-date";
-        data.textContent = nota.data || t.missingDate;
-        linhaData.appendChild(data);
-
-        if (nota.diaBom === true) {
-          const seloDiaBom = document.createElement("span");
-          seloDiaBom.className = "good-day-badge";
-          seloDiaBom.textContent = t.goodDay;
-          linhaData.appendChild(seloDiaBom);
-        }
-
-        const textoNota = document.createElement("p");
-        textoNota.className = "note-text";
-        textoNota.textContent = "“" + (nota.texto || "") + "”";
-
-        conteudo.append(linhaData, textoNota);
-        item.append(numero, conteudo);
-        lista.appendChild(item);
+      const t=texto(), termo=busca.value.trim().toLocaleLowerCase();
+      const filtradas=notas.map((nota,indice)=>({nota,indice})).filter(({nota})=>{
+        const boa=nota.diaBom===true, okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa);
+        const okBusca=!termo||(nota.texto||"").toLocaleLowerCase().includes(termo)||(nota.data||"").toLocaleLowerCase().includes(termo);
+        return okFiltro&&okBusca&&(!dataSelecionada||chaveData(nota.data)===dataSelecionada);
+      });
+      lista.replaceChildren(); document.getElementById("total-notas").textContent=notas.length;
+      document.getElementById("resultsLabel").textContent=t.resultsCount(filtradas.length,notas.length);
+      if(!filtradas.length){const e=document.createElement("p");e.className="empty-state";e.textContent=notas.length?t.noMatches:t.emptyNotes;lista.appendChild(e);return;}
+      filtradas.forEach(({nota,indice})=>{
+        const item=document.createElement("article");item.className=nota.diaBom===true?"note note-good-day":"note";
+        const numero=document.createElement("div");numero.className="note-index";numero.textContent=String(indice+1).padStart(2,"0");numero.setAttribute("aria-hidden","true");
+        const conteudo=document.createElement("div");conteudo.className="note-content";const linha=document.createElement("div");linha.className="note-date-row";
+        const data=document.createElement("div");data.className="note-date";data.textContent=nota.data||t.missingDate;linha.appendChild(data);
+        if(nota.diaBom===true){const badge=document.createElement("span");badge.className="good-day-badge";badge.textContent=t.goodDay;linha.appendChild(badge);}
+        const p=document.createElement("p");p.className="note-text";p.textContent="“"+(nota.texto||"")+"”";conteudo.append(linha,p);item.append(numero,conteudo);lista.appendChild(item);
       });
     }
-
+    function renderizarCalendario(){
+      const t=texto(),grid=document.getElementById("calendarGrid");grid.replaceChildren();
+      document.getElementById("calendarMonth").textContent=new Intl.DateTimeFormat(t.locale,{month:"long",year:"numeric"}).format(mesCalendario);
+      const dias=idiomaAtual==="en"?["M","T","W","T","F","S","S"]:["S","T","Q","Q","S","S","D"];
+      dias.forEach(d=>{const e=document.createElement("span");e.className="calendar-weekday";e.textContent=d;grid.appendChild(e);});
+      const first=new Date(mesCalendario.getFullYear(),mesCalendario.getMonth(),1),offset=(first.getDay()+6)%7,total=new Date(mesCalendario.getFullYear(),mesCalendario.getMonth()+1,0).getDate(),begin=new Date(mesCalendario.getFullYear(),mesCalendario.getMonth(),1-offset);
+      const map=new Map();notas.forEach(n=>{const k=chaveData(n.data);if(k)map.set(k,(map.get(k)||false)||n.diaBom===true);});
+      const cells=Math.ceil((offset+total)/7)*7;
+      for(let i=0;i<cells;i++){const d=new Date(begin.getFullYear(),begin.getMonth(),begin.getDate()+i),k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"),has=map.has(k),good=map.get(k)===true;
+        const b=document.createElement("button");b.type="button";b.className="calendar-day"+(d.getMonth()!==mesCalendario.getMonth()?" other-month":"")+(has?" has-note":"")+(good?" has-good":"")+(k===dataSelecionada?" selected":"");b.textContent=d.getDate();
+        b.setAttribute("aria-label",new Intl.DateTimeFormat(t.locale,{dateStyle:"full"}).format(d)+(has?" · "+(good?t.goodDay:t.legendNote):""));
+        b.addEventListener("click",()=>{dataSelecionada=dataSelecionada===k?"":k;document.getElementById("clearDate").hidden=!dataSelecionada;renderizarCalendario();renderizarNotas();});grid.appendChild(b);
+      }document.getElementById("clearDate").hidden=!dataSelecionada;
+    }
+    function renderizarConquistas(){
+      const t=texto(),container=document.getElementById("achievements");container.replaceChildren();
+      const hoje=new Date(),dias=dataUltimoDiaBom?Math.max(0,Math.floor((Date.UTC(hoje.getFullYear(),hoje.getMonth(),hoje.getDate())-Date.UTC(dataUltimoDiaBom.getFullYear(),dataUltimoDiaBom.getMonth(),dataUltimoDiaBom.getDate()))/86400000)):0;
+      const unlocked=[notas.some(n=>n.diaBom===true),notas.length>=10,dias>=7,dias>=30];
+      t.achievementList.forEach((a,i)=>{const item=document.createElement("article");item.className="achievement"+(unlocked[i]?"":" locked");
+        const icon=document.createElement("span");icon.className="achievement-icon";icon.textContent=a[0];const content=document.createElement("div");
+        const title=document.createElement("p");title.className="achievement-title";title.textContent=a[1];const copy=document.createElement("p");copy.className="achievement-copy";copy.textContent=a[2];content.append(title,copy);
+        const state=document.createElement("span");state.className="achievement-state";state.textContent=unlocked[i]?t.earned:t.locked;item.append(icon,content,state);container.appendChild(item);
+      });
+    }
+    function sortearReclamacao(){const t=texto(),items=notas.filter(n=>n.diaBom!==true),panel=document.getElementById("randomReport");
+      document.getElementById("randomText").textContent=items.length?(()=>{const n=items[Math.floor(Math.random()*items.length)];return(n.data?n.data+" — ":"")+"“"+(n.texto||"")+"”";})():t.noComplaints;panel.hidden=false;
+    }
+    document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{filtroAtual=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderizarNotas();}));
+    busca.addEventListener("input",renderizarNotas);document.getElementById("randomButton").addEventListener("click",sortearReclamacao);
+    document.getElementById("clearFilters").addEventListener("click",()=>{filtroAtual="all";busca.value="";dataSelecionada="";document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="all"));renderizarCalendario();renderizarNotas();});
+    document.getElementById("prevMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()-1);renderizarCalendario();});
+    document.getElementById("nextMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()+1);renderizarCalendario();});
+    document.getElementById("clearDate").addEventListener("click",()=>{dataSelecionada="";renderizarCalendario();renderizarNotas();});
     function aplicarIdioma() {
       const t = texto();
       document.documentElement.lang = t.locale;
@@ -859,7 +916,18 @@
       botaoIdioma.querySelector('[data-language-option="en"]').classList.toggle("active", idiomaAtual === "en");
 
       atualizarContador(false);
-      renderizarNotas();
+      document.getElementById("notesSearch").placeholder=t.searchPlaceholder;
+      document.getElementById("notesSearch").setAttribute("aria-label",t.searchLabel);
+      document.getElementById("randomButton").textContent=t.randomButton;
+      document.getElementById("clearFilters").textContent=t.clearFilters;
+      document.querySelector(".filters").setAttribute("aria-label",t.filterLabel);
+      document.querySelector('[data-filter="all"]').textContent=t.filterAll;
+      document.querySelector('[data-filter="complaints"]').textContent=t.filterComplaints;
+      document.querySelector('[data-filter="good"]').textContent=t.filterGood;
+      document.getElementById("prevMonth").setAttribute("aria-label",t.previousMonth);
+      document.getElementById("nextMonth").setAttribute("aria-label",t.nextMonth);
+      document.getElementById("randomReport").querySelector(".random-label").textContent=t.randomLabel;
+      renderizarNotas(); renderizarCalendario(); renderizarConquistas();
     }
 
     botaoIdioma.addEventListener("click", () => {
