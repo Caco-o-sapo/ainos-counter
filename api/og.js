@@ -81,7 +81,7 @@ export function GET() {
     width: 1200,
     height: 630,
     headers: {
-      "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=600"
+      "Cache-Control": "no-cache, no-store, must-revalidate"
     }
   });
 }
