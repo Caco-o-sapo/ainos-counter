@@ -597,6 +597,11 @@
     .share-note-button,.share-stats-button{border:1px solid rgba(244,173,105,.32);border-radius:9px;padding:7px 10px;color:var(--amber-bright);background:rgba(244,173,105,.08);font:inherit;font-size:.73rem;font-weight:700;cursor:pointer}.share-note-button:hover,.share-stats-button:hover{border-color:var(--amber);background:rgba(244,173,105,.15)}
     .note-share-row{display:flex;justify-content:flex-end;margin-top:11px}.share-message{min-height:1.2em;margin:10px 0 0;color:var(--soft);font-size:.75rem}
     @media(max-width:600px){.stats-head{align-items:start;flex-direction:column}.stats-grid{grid-template-columns:1fr}.stat-card{padding:12px}}
+    .section-tabs{display:flex;gap:8px;margin:24px 0 18px;padding:6px;border:1px solid rgba(255,255,255,.08);border-radius:15px;background:rgba(25,26,32,.78)}
+    .section-tab{flex:1;min-height:43px;border:1px solid transparent;border-radius:10px;color:var(--muted);background:transparent;font:inherit;font-size:.86rem;font-weight:750;cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
+    .section-tab:hover{color:var(--text);background:rgba(255,255,255,.04)}.section-tab.active{border-color:rgba(244,173,105,.25);color:var(--amber-bright);background:rgba(244,173,105,.1)}
+    .tab-panel[hidden]{display:none}
+    @media(max-width:420px){.section-tabs{gap:4px;margin-top:18px;padding:4px}.section-tab{min-height:40px;padding:0 4px;font-size:.76rem}}
   </style>
 </head>
 
@@ -623,7 +628,19 @@
         <div class="case-id" data-i18n="caseId">DOSSIÊ Nº 000-A</div>
       </section>
 
-      <section class="dashboard" aria-label="Painel de monitoramento">
+      <nav class="section-tabs" role="tablist" aria-label="Seções do site" data-i18n-aria="tablistLabel">
+
+        <button class="section-tab active" type="button" role="tab" id="tab-dashboard" aria-selected="true" aria-controls="panel-dashboard" data-tab="dashboard" data-i18n="tabDashboard">Painel</button>
+
+        <button class="section-tab" type="button" role="tab" id="tab-archive" aria-selected="false" aria-controls="panel-archive" data-tab="archive" data-i18n="tabArchive" tabindex="-1">Ocorrências</button>
+
+        <button class="section-tab" type="button" role="tab" id="tab-achievements" aria-selected="false" aria-controls="panel-achievements" data-tab="achievements" data-i18n="tabAchievements" tabindex="-1">Conquistas</button>
+
+      </nav>
+
+      <section class="tab-panel active" role="tabpanel" tabindex="0" id="panel-dashboard" aria-labelledby="tab-dashboard">
+
+<section class="dashboard" aria-label="Painel de monitoramento">
         <article class="panel counter-panel">
           <div class="metric-label">
             <span class="metric-icon" aria-hidden="true">◷</span>
@@ -657,7 +674,20 @@
         </aside>
       </section>
 
-      <section class="panel notes-panel" aria-labelledby="notes-title">
+<section class="panel stats-panel" aria-labelledby="statsTitle">
+        <div class="stats-head"><div><p class="extra-kicker" data-i18n="statsKicker">Indicadores do dossiê</p><h2 id="statsTitle" data-i18n="statsTitle">Estatísticas oficiais</h2></div><button id="shareStats" class="share-stats-button" type="button" data-i18n="shareStats">🖼️ Baixar resumo PNG</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><p id="statComplaintsLabel" class="stat-label">Reclamações registradas</p><p id="statComplaints" class="stat-value">0</p></article>
+          <article class="stat-card"><p id="statGoodDaysLabel" class="stat-label">Dias bons registrados</p><p id="statGoodDays" class="stat-value">0</p></article>
+          <article class="stat-card"><p id="statDaysLabel" class="stat-label">Dias desde o último dia bom</p><p id="statDays" class="stat-value">—</p></article>
+        </div><p id="shareMessage" class="share-message" aria-live="polite"></p>
+      </section>
+
+      </section>
+
+      <section class="tab-panel" role="tabpanel" tabindex="0" id="panel-archive" aria-labelledby="tab-archive" hidden>
+
+<section class="panel notes-panel" aria-labelledby="notes-title">
         <div class="notes-heading">
           <div>
             <p class="notes-kicker" data-i18n="notesKicker">Arquivo de ocorrências</p>
@@ -679,26 +709,21 @@
         <div id="listaNotas" class="note-list" aria-live="polite"></div>
       </section>
 
-      <section class="panel stats-panel" aria-labelledby="statsTitle">
-        <div class="stats-head"><div><p class="extra-kicker" data-i18n="statsKicker">Indicadores do dossiê</p><h2 id="statsTitle" data-i18n="statsTitle">Estatísticas oficiais</h2></div><button id="shareStats" class="share-stats-button" type="button" data-i18n="shareStats">🖼️ Baixar resumo PNG</button></div>
-        <div class="stats-grid">
-          <article class="stat-card"><p id="statComplaintsLabel" class="stat-label">Reclamações registradas</p><p id="statComplaints" class="stat-value">0</p></article>
-          <article class="stat-card"><p id="statGoodDaysLabel" class="stat-label">Dias bons registrados</p><p id="statGoodDays" class="stat-value">0</p></article>
-          <article class="stat-card"><p id="statDaysLabel" class="stat-label">Dias desde o último dia bom</p><p id="statDays" class="stat-value">—</p></article>
-        </div><p id="shareMessage" class="share-message" aria-live="polite"></p>
-      </section>
-
-      <section class="lower-grid" aria-label="Calendário e conquistas">
-        <section class="panel extra-panel" aria-labelledby="calendarTitle">
+<section class="panel extra-panel" aria-labelledby="calendarTitle">
           <div class="extra-heading"><div><p class="extra-kicker" data-i18n="calendarKicker">Linha do tempo</p><h2 id="calendarTitle" data-i18n="calendarTitle">Calendário de ocorrências</h2></div>
             <div class="calendar-nav"><button id="prevMonth" type="button" aria-label="Mês anterior">‹</button><span id="calendarMonth" class="calendar-month"></span><button id="nextMonth" type="button" aria-label="Próximo mês">›</button></div></div>
           <div id="calendarGrid" class="calendar-grid"></div>
           <div class="calendar-legend"><span><i class="legend-dot"></i><span data-i18n="legendNote">Ocorrência</span></span><span><i class="legend-dot good"></i><span data-i18n="legendGood">Dia bom</span></span></div>
           <button id="clearDate" class="clear-date" type="button" hidden data-i18n="clearDate">Mostrar todas as datas</button>
         </section>
-        <section class="panel extra-panel" aria-labelledby="achievementsTitle"><div class="extra-heading"><div><p class="extra-kicker" data-i18n="achievementsKicker">Reconhecimentos oficiais</p><h2 id="achievementsTitle" data-i18n="achievementsTitle">Conquistas duvidosas</h2></div></div><div id="achievements" class="achievements"></div></section>
+
       </section>
-    </main>
+
+      <section class="tab-panel" role="tabpanel" tabindex="0" id="panel-achievements" aria-labelledby="tab-achievements" hidden>
+
+<section class="panel extra-panel" aria-labelledby="achievementsTitle"><div class="extra-heading"><div><p class="extra-kicker" data-i18n="achievementsKicker">Reconhecimentos oficiais</p><h2 id="achievementsTitle" data-i18n="achievementsTitle">Conquistas duvidosas</h2></div></div><div id="achievements" class="achievements"></div></section>
+
+      </section></main>
 
     <footer class="page-footer">
       <span data-i18n="footerProject">Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.</span>
@@ -747,6 +772,7 @@
         achievementsKicker: "Reconhecimentos oficiais", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
         achievementList: [["☀️","Primeiro dia bom","Um raro sinal de esperança."],["🗃️","Arquivo ativo","10 ocorrências registradas."],["🕵️","Uma semana sob observação","7 dias desde o último dia bom."],["🏆","Mês histórico","30 dias desde o último dia bom."]],
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
+        tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabAchievements: "Conquistas",
         switchLabel: "Mudar para inglês",
         locale: "pt-BR"
       },
@@ -787,6 +813,7 @@
         achievementsKicker: "Official recognition", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
         achievementList: [["☀️","First good day","A rare sign of hope."],["🗃️","Active archive","10 reports recorded."],["🕵️","One week under watch","7 days since the last good day."],["🏆","Historic month","30 days since the last good day."]],
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
+        tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabAchievements: "Achievements",
         switchLabel: "Switch to Portuguese",
         locale: "en"
       }
@@ -1012,6 +1039,7 @@
       botaoIdioma.querySelector('[data-language-option="en"]').classList.toggle("active", idiomaAtual === "en");
 
       atualizarContador(false);
+      document.querySelector(".section-tabs").setAttribute("aria-label",t.tablistLabel);
       document.getElementById("notesSearch").placeholder=t.searchPlaceholder;
       document.getElementById("notesSearch").setAttribute("aria-label",t.searchLabel);
       document.getElementById("randomButton").textContent=t.randomButton;
@@ -1035,6 +1063,27 @@
       }
       aplicarIdioma();
     });
+
+    const botoesAba=[...document.querySelectorAll('[role="tab"][data-tab]')];
+    function ativarAba(nome,focar=false){
+      botoesAba.forEach(botao=>{const ativa=botao.dataset.tab===nome;botao.classList.toggle("active",ativa);botao.setAttribute("aria-selected",String(ativa));botao.tabIndex=ativa?0:-1;
+        const painel=document.getElementById("panel-"+botao.dataset.tab);painel.hidden=!ativa;});
+      if(focar)botoesAba.find(botao=>botao.dataset.tab===nome)?.focus();
+    }
+    botoesAba.forEach((botao,indice)=>{
+      botao.addEventListener("click",()=>ativarAba(botao.dataset.tab));
+      botao.addEventListener("keydown",evento=>{
+        let proximo=indice;
+        if(evento.key==="ArrowRight")proximo=(indice+1)%botoesAba.length;
+        else if(evento.key==="ArrowLeft")proximo=(indice-1+botoesAba.length)%botoesAba.length;
+        else if(evento.key==="Home")proximo=0;
+        else if(evento.key==="End")proximo=botoesAba.length-1;
+        else return;
+        evento.preventDefault();ativarAba(botoesAba[proximo].dataset.tab,true);
+      });
+    });
+
+    document.querySelector(".section-tabs").setAttribute("aria-label",texto().tablistLabel);
 
     aplicarIdioma();
     atualizarContador(true);
