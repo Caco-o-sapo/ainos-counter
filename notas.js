@@ -1,6 +1,7 @@
 // Adicione uma nota no início da lista para que ela apareça primeiro.
 // Para marcar um dia bom, inclua diaBom: true na nota correspondente.
 // O contador usa automaticamente a data mais recente marcada assim.
+// Categoria é opcional: o site tenta identificar pelo texto. Para corrigir uma nota específica, adicione categoria: "trabalho", "jogos", "saude", "social", "cotidiano" ou "outros".
 export const notas = [
   { data: "08/11/2026", texto: "Tava atendendo o cliente. Falei 'o que seria para o senhor'. Fechou a cara cmg. 'onde já se viu chamar puto de senhor'. CAI NA GARGALHADA" },
   { data: "08/11/2026", texto: "Eu vivendo o pesadelo de vcs" },
