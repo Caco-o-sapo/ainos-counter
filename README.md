@@ -20,6 +20,7 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 - **Estatísticas oficiais:** contabiliza reclamações, dias bons registrados e dias desde o último dia bom.
 - **Cards para compartilhar:** gera imagens PNG de uma nota ou do resumo estatístico para compartilhar pelo menu do aparelho ou baixar como alternativa.
 - **Entretenimento:** roleta de reclamações, Oráculo do Azar, gerador de manchetes, Bingo do Ainos e conquistas em cards com progresso.
+- **Mascote do Ainos:** um agente genérico reage aos sorteios, ao oráculo e ao Bingo, e aparece nos cards PNG compartilhados.
 - **Prévia dinâmica:** ao compartilhar o link, o cartão mostra a contagem atual e a ocorrência mais recente.
 - **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
 - **Navegação por abas:** separa o painel, o arquivo de ocorrências e a área de entretenimento para deixar a página mais fácil de percorrer.
