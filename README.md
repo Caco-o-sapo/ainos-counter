@@ -11,7 +11,8 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 ## 📡 O que a Central acompanha
 
 - **Contador de dias bons:** calcula o tempo desde o último dia bom registrado e atualiza automaticamente.
-- **Arquivo de ocorrências:** reúne as reclamações, os perrengues e os relatos enviados pela equipe, com busca e filtros por tipo.
+- **Arquivo de ocorrências:** reúne as reclamações, os perrengues e os relatos enviados pela equipe, com busca, filtros por tipo e paginação em cards.
+- **Filtro por data:** o calendário destaca os dias com registros; ao selecionar uma data, o arquivo mostra as ocorrências daquele dia.
 - **Dias bons em destaque:** os registros positivos recebem um selo, e o contador considera automaticamente o dia bom mais recente.
 - **Calendário de ocorrências:** mostra em quais datas houve registros e permite abrir as notas daquele dia.
 - **Reclamação aleatória:** sorteia um relato do arquivo para relembrar os momentos mais… movimentados.
