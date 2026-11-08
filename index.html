@@ -619,6 +619,25 @@
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .category-filter{margin-left:auto}.category-select{min-height:36px;max-width:190px;border:1px solid var(--line);border-radius:10px;padding:0 10px;color:var(--muted);background:var(--panel-raised);font:inherit;font-size:.78rem}
     .category-badge{display:inline-flex;align-items:center;padding:4px 8px;border:1px solid rgba(244,173,105,.18);border-radius:999px;color:var(--amber-bright);background:rgba(244,173,105,.06);font-size:.65rem;font-weight:700;letter-spacing:.03em}
+    .note-community{margin-top:14px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07)}
+    .reaction-bar{display:flex;gap:6px;flex-wrap:wrap}
+    .reaction-button,.comments-toggle,.comment-submit{min-height:33px;border:1px solid var(--line);border-radius:9px;padding:0 9px;color:var(--muted);background:rgba(255,255,255,.025);font:inherit;font-size:.76rem;cursor:pointer}
+    .reaction-button:hover,.comments-toggle:hover,.comment-submit:hover{border-color:rgba(244,173,105,.48);color:var(--amber-bright)}
+    .reaction-button.selected{border-color:rgba(244,173,105,.45);color:var(--amber-bright);background:rgba(244,173,105,.12)}
+    .reaction-button:disabled{cursor:default;opacity:.85}
+    .comments-toggle{margin-top:9px}
+    .comments-panel{margin-top:10px;padding:11px;border:1px solid var(--line);border-radius:11px;background:rgba(0,0,0,.12)}
+    .comments-panel[hidden]{display:none}
+    .comment-list{display:grid;gap:8px;margin-bottom:12px}
+    .comment-item{padding:9px;border:1px solid rgba(255,255,255,.06);border-radius:9px;background:rgba(255,255,255,.02)}
+    .comment-meta{display:flex;justify-content:space-between;gap:8px;color:var(--amber-bright);font-size:.72rem}
+    .comment-meta time{color:var(--soft);font-size:.67rem}
+    .comment-item p,.comments-empty{margin:6px 0 0;color:var(--muted);font-size:.78rem;line-height:1.45;overflow-wrap:anywhere;white-space:pre-wrap}
+    .comment-form{display:grid;gap:7px;margin-top:10px}
+    .comment-name,.comment-form textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px;color:var(--text);background:var(--panel);font:inherit;font-size:.78rem}
+    .comment-form textarea{resize:vertical}
+    .comment-submit{justify-self:end;color:var(--amber-bright)}
+    .community-status{min-height:1em;margin:7px 0 0;color:var(--soft);font-size:.7rem}
     .stats-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.stat-value.category-stat{font-size:1.05rem;line-height:1.2}
     .fun-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.fun-card{min-height:270px}
     .headline-output{min-height:100px}
@@ -818,6 +837,7 @@
 
   <script type="module">
     import { notas, ultimoDiaBom } from "./notas.js";
+    import { obterIdNota, renderizarInteracoesNota } from "./interacoes.js";
 
     const idiomas = {
       "pt-BR": {
@@ -859,6 +879,7 @@
         achievementProgress: (a,b) => a + " / " + b + " " + (idiomaAtual === "en" ? "progress" : "progresso"),
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento",
+        communityLabel: "Interações da comunidade", commentsLabel: "💬 Comentários", commentsLoading: "Carregando comentários…", reactWith: "Reagir com", commentPlaceholder: "Escreva um comentário (até 500 caracteres)…", namePlaceholder: "Seu nome (opcional)", sendComment: "Enviar comentário", noComments: "Ainda ninguém comentou.", anonymous: "Anônimo", commentSent: "Comentário enviado!", interactionError: "Não foi possível enviar. Tente novamente.", interactionUnavailable: "Comentários e reações estão indisponíveis agora.",
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente",
         categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
         headlineKicker: "Imprensa do caos", headlineTitle: "Gerador de manchetes", headlineButton: "📰 Gerar manchete", headlinePlaceholder: "Uma manchete aguarda a próxima ocorrência.", headlinePrefixes: ["PLANTÃO DO AZAR:", "AINOS EM CRISE:", "ÚLTIMA HORA:", "DOSSIÊ ESPECIAL:"],
@@ -909,6 +930,7 @@
         achievementProgress: (a,b) => a + " / " + b + " progress",
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
         tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment",
+        communityLabel: "Community interactions", commentsLabel: "💬 Comments", commentsLoading: "Loading comments…", reactWith: "React with", commentPlaceholder: "Write a comment (up to 500 characters)…", namePlaceholder: "Your name (optional)", sendComment: "Post comment", noComments: "No comments yet.", anonymous: "Anonymous", commentSent: "Comment posted!", interactionError: "Could not send that. Please try again.", interactionUnavailable: "Comments and reactions are unavailable right now.",
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category",
         categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
         headlineKicker: "Chaos newsroom", headlineTitle: "Headline generator", headlineButton: "📰 Generate headline", headlinePlaceholder: "A headline awaits the next incident.", headlinePrefixes: ["BAD LUCK BULLETIN:", "AINOS IN CRISIS:", "BREAKING:", "SPECIAL REPORT:"],
@@ -1047,7 +1069,9 @@
         const categoryBadge=document.createElement("span");categoryBadge.className="category-badge";categoryBadge.textContent=rotuloCategoria(categoriaDaNota(nota),t);linha.appendChild(categoryBadge);
         const p=document.createElement("p");p.className="note-text";p.textContent="“"+(nota.texto||"")+"”";conteudo.append(linha,p);
         const shareRow=document.createElement("div");shareRow.className="note-share-row";const share=document.createElement("button");share.type="button";share.className="share-note-button";share.textContent=t.shareImage;
-        share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);conteudo.append(shareRow);item.append(numero,conteudo);lista.appendChild(item);
+        share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);conteudo.append(shareRow);
+        renderizarInteracoesNota(conteudo,obterIdNota(nota),t);
+        item.append(numero,conteudo);lista.appendChild(item);
       });
       paginacao.hidden=paginas<=1;document.getElementById("pageLabel").textContent=t.pageCount(paginaAtual,paginas);
       document.getElementById("prevPage").disabled=paginaAtual<=1;document.getElementById("nextPage").disabled=paginaAtual>=paginas;
@@ -1297,6 +1321,6 @@
 
     aplicarIdioma();
     atualizarContador(true);
-  </script>t>
+  </script>
 </body>
 </html>
