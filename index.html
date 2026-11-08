@@ -1086,11 +1086,34 @@
     function normalizarCategoria(valor){return String(valor||"").toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().replace(/\s+/g,"_");}
     const aliasesCategoria={trabalho:"work",emprego:"work",jogos:"games",jogo:"games",game:"games",saude:"health",social:"social",vida_social:"social",cotidiano:"daily",dia_a_dia:"daily",outros:"other",outro:"other"};
     const regrasCategoria={
-      work:["trabalho","chefe","cliente","emprego","horas extras","hora extra","reuniao","salario","patrao","atendimento","expediente","colega de trabalho"],
-      games:["gacha","jogo","jogos","game","rank","partida","pick","nerf","buff","seraphine","lux","steam","videogame"],
-      health:["dor","doenca","doente","medico","remedio","hospital","saude","gripe","cabeca","enxaqueca","febre","sintoma"],
-      social:["amigo","amiga","discord","familia","mae","pai","namorado","namorada","relacionamento","conversa","visita"],
-      daily:["comida","fome","janta","jantando","almoco","beber","vodka","sono","casa","onibus","chuva","tedio","mercado"]
+      work:[
+        "trabalho","chefe","cliente","emprego","horas extras","hora extra","reuniao","salario","patrao","atendimento","expediente","colega de trabalho",
+        "trampo","trampar","trabalhei","trabalhando","trabalhar","trabalha","trabalhou",
+        "atender","atendi","atendia","atendendo","atendeu","atende","atendem",
+        "cliente","clientes","colega","colegas","folga","folgas","turno","plantao"
+      ],
+      games:[
+        "gacha","jogo","jogos","game","rank","partida","pick","nerf","buff","seraphine","lux","steam","videogame",
+        "joguei","jogando","jogar","joga","jogou","partidas","ranked","elo","lobby",
+        "baniu","banir","banido","pickou","pickar","pickado","meu top","top lane",
+        "campeao","campea","skin","skins","banner","pity","pull","pulls","mf"
+      ],
+      health:[
+        "dor","doenca","doente","medico","remedio","hospital","saude","gripe","cabeca","enxaqueca","febre","sintoma",
+        "cansado","cansada","cansaco","machucado","machucada","lesao","alergia","alergico","alergica",
+        "ansiedade","estresse","stress","tosse","consulta","tratamento","remedios","doendo"
+      ],
+      social:[
+        "amigo","amiga","discord","familia","mae","pai","namorado","namorada","relacionamento","conversa","visita",
+        "amigos","amizade","amizades","crush","paquera","ficante","ficar","beijo","date","encontro",
+        "flertar","flertou","paquerar","role","festa","conheci","conheceu","conversando",
+        "linda","lindo","bonita","bonito"
+      ],
+      daily:[
+        "comida","fome","janta","jantando","almoco","beber","vodka","sono","casa","onibus","chuva","tedio","mercado",
+        "jantar","jantei","comer","comi","comendo","almocei","cafe","lanche","lanchei",
+        "bebida","bebendo","bebi","copo","sede","banheiro","preso","presa"
+      ]
     };
     function contemTermo(textoNormalizado,termo){const textoSeparado=" "+normalizarCategoria(textoNormalizado).replace(/_/g," ").replace(/[^a-z0-9]+/g," ")+" ";const termoSeparado=normalizarCategoria(termo).replace(/_/g," ");return textoSeparado.includes(" "+termoSeparado+" ");}
     function categoriaDaNota(nota){
