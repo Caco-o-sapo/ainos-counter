@@ -1038,7 +1038,7 @@
       const t=texto(),container=document.getElementById("achievements");container.replaceChildren();
       const hoje=new Date(),dias=dataUltimoDiaBom?Math.max(0,Math.floor((Date.UTC(hoje.getFullYear(),hoje.getMonth(),hoje.getDate())-Date.UTC(dataUltimoDiaBom.getFullYear(),dataUltimoDiaBom.getMonth(),dataUltimoDiaBom.getDate()))/86400000)):0;
       const categorias=new Set(notas.map(n=>categoriaDaNota(n)));
-      const valores={goodDays:new Set(notas.filter(n=>n.diaBom===true).map(n=>chaveData(n.data)).filter(Boolean)).size,notes:notas.length,categories:categorias.size,days,bingo:existeBingo()?1:0};
+      const valores={goodDays:new Set(notas.filter(n=>n.diaBom===true).map(n=>chaveData(n.data)).filter(Boolean)).size,notes:notas.length,categories:categorias.size,days:dias,bingo:existeBingo()?1:0};
       t.achievementList.forEach(a=>{
         const alvo=a[4],atual=Math.min(alvo,valores[a[3]]||0),desbloqueada=atual>=alvo,percentual=Math.round((atual/alvo)*100);
         const item=document.createElement("article");item.className="achievement "+(desbloqueada?"unlocked":"locked");
