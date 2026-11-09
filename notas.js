@@ -3,6 +3,7 @@
 // O contador usa automaticamente a data mais recente marcada assim.
 // Categoria é opcional: o site tenta identificar pelo texto. Para corrigir uma nota específica, adicione categoria: "trabalho", "jogos", "saude", "social", "cotidiano" ou "outros".
 export const notas = [
+  { data: "09/11/2026", texto: "quero comer chocotone" },
   { data: "09/11/2026", texto: "Acordei achando q tava morto. Atacou alergia." },
   { data: "08/11/2026", texto: "minha miseria é o entretenimento de vcs. como assim se escreve entretenimento e nao entreterimento." },
   { data: "08/11/2026", texto: "acho incrivel q chego em casa e o meu nariz começa a trancar" },
