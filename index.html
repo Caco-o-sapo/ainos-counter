@@ -727,14 +727,42 @@
     @keyframes bossFall{to{transform:rotate(18deg) translateY(14px);filter:grayscale(1);opacity:.6}}
     @media(max-width:720px){.game-layout{grid-template-columns:1fr}.leaderboard-card{grid-column:auto}}
     @media(max-width:520px){.game-heading{padding-top:10px}.boss-card,.bet-card,.leaderboard-card{padding:18px}.boss-avatar{width:66px;height:66px;border-radius:19px;font-size:2.6rem}.leaderboard-list{grid-template-columns:1fr}.section-tabs{flex-wrap:wrap}.section-tab{min-width:calc(50% - 5px)}}
-    .theme-select{min-height:36px;max-width:130px;border:1px solid var(--line);border-radius:999px;padding:0 28px 0 11px;color:var(--muted);background:rgba(255,255,255,.025);font:inherit;font-size:.72rem;font-weight:750;cursor:pointer}
+    .theme-picker-button{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 11px;border:1px solid rgba(var(--amber-rgb),.36);border-radius:999px;color:var(--amber-bright);background:rgba(var(--amber-rgb),.07);font:inherit;font-size:.74rem;font-weight:800;cursor:pointer;white-space:nowrap;transition:.18s ease}
+    .theme-picker-button:hover{border-color:var(--amber);background:rgba(var(--amber-rgb),.14)}
+    .theme-current{padding-left:7px;border-left:1px solid rgba(var(--amber-rgb),.28);color:var(--muted);font-size:.68rem;font-weight:700}
+    .theme-dialog{width:min(760px,calc(100% - 28px));max-width:760px;max-height:min(88vh,780px);padding:0;border:1px solid var(--line);border-radius:22px;color:var(--text);background:var(--panel);box-shadow:0 28px 100px #0009}
+    .theme-dialog::backdrop{background:rgba(5,6,9,.76);backdrop-filter:blur(7px)}
+    .theme-dialog-inner{padding:25px}
+    .theme-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+    .theme-dialog-head h2{margin:0;font-size:1.35rem;letter-spacing:-.035em}
+    .theme-dialog-head p{margin:5px 0 0;color:var(--muted);font-size:.88rem}
+    .theme-close{display:grid;width:38px;height:38px;place-items:center;border:1px solid var(--line);border-radius:11px;color:var(--muted);background:var(--panel-raised);font:inherit;font-size:1.1rem;cursor:pointer}
+    .theme-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .theme-option{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:15px;text-align:left;color:var(--text);background:var(--panel-raised);cursor:pointer;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+    .theme-option:hover{transform:translateY(-2px);border-color:var(--amber)}
+    .theme-option[aria-pressed="true"]{border-color:var(--amber);box-shadow:0 0 0 2px rgba(var(--amber-rgb),.18)}
+    .theme-option-name{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800}
+    .theme-selected{color:var(--amber);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase}
+    .theme-option[aria-pressed="false"] .theme-selected{visibility:hidden}
+    .theme-option-desc{min-height:2.5em;color:var(--muted);font-size:.77rem;line-height:1.4}
+    .theme-swatch{display:block;height:60px;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#181a20}
+    .theme-swatch::before,.theme-swatch::after{display:block;height:13px;margin:8px 8px 0;border:1px solid rgba(255,255,255,.13);border-radius:5px;background:rgba(255,255,255,.08);content:""}
+    .theme-swatch::after{width:58%;height:11px;margin-top:6px}
+    .swatch-dossier{background:radial-gradient(ellipse at 18% 0%,#68413a,#191a20 70%)}
+    .swatch-terminal{background:radial-gradient(ellipse at 18% 0%,#176840,#07120e 72%)}
+    .swatch-newspaper{background:radial-gradient(ellipse at 18% 0%,#d2b17c,#e9dfcc 72%)}
+    .swatch-coast{background:radial-gradient(ellipse at 18% 0%,#236078,#08131d 72%)}
+    .swatch-neon{background:radial-gradient(ellipse at 18% 0%,#743b8f,#100b18 72%)}
+    .swatch-daylight{background:radial-gradient(ellipse at 18% 0%,#9fb9df,#edf2f8 72%)}
+    @media(max-width:600px){.theme-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.theme-dialog-inner{padding:18px}}
+    @media(max-width:380px){.theme-grid{grid-template-columns:1fr}.theme-swatch{height:48px}.theme-current{display:none}}
     .featured-panel{margin-top:16px;padding:23px 27px;background:radial-gradient(ellipse at 0% 100%,rgba(var(--amber-rgb),.09),transparent 45%),linear-gradient(145deg,rgba(31,32,39,.97),rgba(23,24,30,.97))}
     .featured-panel[hidden]{display:none}
     .featured-heading,.featured-footer{display:flex;align-items:center;justify-content:space-between;gap:16px}
     .featured-heading h2{margin:0;font-size:1.18rem;letter-spacing:-.025em}
     .featured-quote{position:relative;margin:19px 0;padding:4px 0 4px 20px;border-left:3px solid var(--amber);color:var(--text);font-size:clamp(1.05rem,2.5vw,1.35rem);font-weight:650;line-height:1.55}
     .featured-date{color:var(--soft);font-size:.75rem}
-    @media(max-width:520px){.topbar-actions{flex-wrap:wrap;justify-content:flex-end}.theme-select{max-width:115px}.featured-panel{padding:19px}.featured-footer{align-items:flex-start;flex-direction:column;gap:10px}}
+    @media(max-width:520px){.topbar-actions{flex-wrap:wrap;justify-content:flex-end}.featured-panel{padding:19px}.featured-footer{align-items:flex-start;flex-direction:column;gap:10px}}
     body[data-theme="terminal"]{
       color-scheme:dark;--bg:#07120e;--panel:#0d1b15;--panel-raised:#14251d;--line:#2b493a;--text:#e9f6ec;--muted:#abc2b1;--soft:#75917f;
       --amber:#58d68d;--amber-bright:#a7f3c5;--amber-rgb:88,214,141;--red:#fb7185;--red-rgb:251,113,133;--green:#9be2aa;--green-rgb:155,226,170;
@@ -762,6 +790,37 @@
     body[data-theme="newspaper"] .boss-card{background:linear-gradient(145deg,#f8eee0,#ebddc8)}
     body[data-theme="newspaper"] .live-label{color:var(--green);background:rgba(var(--green-rgb),.1);border-color:rgba(var(--green-rgb),.25)}
     body[data-theme="newspaper"] .note-text,body[data-theme="newspaper"] .status-copy,body[data-theme="newspaper"] .comment-item p{color:var(--text)}
+  
+    body[data-theme="coast"]{
+      color-scheme:dark;--bg:#08131d;--panel:#10212b;--panel-raised:#172d39;--line:#2b4c5d;--text:#e8f4f8;--muted:#a9c0cb;--soft:#718d99;
+      --amber:#68c5e7;--amber-bright:#a6e7f5;--amber-rgb:104,197,231;--red:#fb8794;--red-rgb:251,135,148;--green:#67d6bb;--green-rgb:103,214,187;
+      background:radial-gradient(ellipse at 8% 0%,rgba(36,119,151,.28),transparent 38rem),radial-gradient(ellipse at 100% 45%,rgba(25,87,121,.17),transparent 34rem),var(--bg)
+    }
+    body[data-theme="coast"]::before{background-image:linear-gradient(rgba(132,220,238,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(132,220,238,.028) 1px,transparent 1px)}
+    body[data-theme="coast"] .panel,body[data-theme="coast"] .note,body[data-theme="coast"] .stat-card,body[data-theme="coast"] .section-tabs,body[data-theme="coast"] .comments-panel{background:linear-gradient(145deg,rgba(18,42,54,.97),rgba(11,27,37,.98))}
+    body[data-theme="coast"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(104,197,231,.14),transparent 45%),linear-gradient(145deg,#173440,#10212b)}
+    body[data-theme="coast"] .boss-card{background:radial-gradient(ellipse at 20% 0%,rgba(251,135,148,.15),transparent 55%),linear-gradient(145deg,#1b2931,#0e1d25)}
+    body[data-theme="neon"]{
+      color-scheme:dark;--bg:#100b18;--panel:#1c1428;--panel-raised:#281b36;--line:#493054;--text:#f6edf8;--muted:#c2adc9;--soft:#91799b;
+      --amber:#e39aff;--amber-bright:#f0c8ff;--amber-rgb:211,120,245;--red:#ff6f9f;--red-rgb:255,111,159;--green:#71e5cb;--green-rgb:113,229,203;
+      background:radial-gradient(ellipse at 15% 0%,rgba(131,49,150,.3),transparent 38rem),radial-gradient(ellipse at 100% 35%,rgba(69,52,151,.2),transparent 34rem),var(--bg)
+    }
+    body[data-theme="neon"]::before{background-image:linear-gradient(rgba(227,154,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(227,154,255,.028) 1px,transparent 1px)}
+    body[data-theme="neon"] .panel,body[data-theme="neon"] .note,body[data-theme="neon"] .stat-card,body[data-theme="neon"] .section-tabs,body[data-theme="neon"] .comments-panel{background:linear-gradient(145deg,rgba(39,26,54,.97),rgba(21,15,31,.98))}
+    body[data-theme="neon"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(211,120,245,.16),transparent 45%),linear-gradient(145deg,#291b38,#181123)}
+    body[data-theme="neon"] .boss-card{background:radial-gradient(ellipse at 20% 0%,rgba(255,111,159,.19),transparent 55%),linear-gradient(145deg,#292039,#171323)}
+    body[data-theme="daylight"]{
+      color-scheme:light;--bg:#edf2f8;--panel:#ffffff;--panel-raised:#f5f7fb;--line:#d4dce8;--text:#263348;--muted:#5d6c80;--soft:#7b8798;
+      --amber:#2d65a7;--amber-bright:#1f4f8b;--amber-rgb:45,101,167;--red:#b94b56;--red-rgb:185,75,86;--green:#34795d;--green-rgb:52,121,93;
+      background:radial-gradient(ellipse at 14% 0%,rgba(113,153,207,.2),transparent 38rem),var(--bg)
+    }
+    body[data-theme="daylight"]::before{background-image:linear-gradient(rgba(44,69,102,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(44,69,102,.035) 1px,transparent 1px)}
+    body[data-theme="daylight"] .panel,body[data-theme="daylight"] .note,body[data-theme="daylight"] .stat-card,body[data-theme="daylight"] .section-tabs,body[data-theme="daylight"] .comments-panel,body[data-theme="daylight"] .comment-item{background:linear-gradient(145deg,#fff,#f6f8fc);box-shadow:0 12px 34px rgba(37,57,84,.07)}
+    body[data-theme="daylight"] .note.note-good-day{background:linear-gradient(145deg,#e7f3e8,#f5f8f4);border-color:#bed4c0}
+    body[data-theme="daylight"] .status-panel{background:linear-gradient(145deg,#fff,#eef3fa)}
+    body[data-theme="daylight"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(45,101,167,.09),transparent 45%),linear-gradient(145deg,#fff,#f1f5fb)}
+    body[data-theme="daylight"] .boss-card{background:linear-gradient(145deg,#fff,#edf2f8)}
+    body[data-theme="daylight"] .note-text,body[data-theme="daylight"] .status-copy,body[data-theme="daylight"] .comment-item p{color:var(--text)}
   </style>
 </head>
 
@@ -775,7 +834,7 @@
           <p class="brand-caption" data-i18n="brandCaption">Central comunitária de monitoramento</p>
         </div>
       </div>
-      <div class="topbar-actions"><a class="admin-access" href="./admin.html"><span aria-hidden="true">🔐</span><span data-i18n="adminAccess">Painel da equipe</span></a><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><select id="themeSelect" class="theme-select" aria-label="Tema visual"><option value="dossier">Dossiê</option><option value="terminal">Terminal</option><option value="newspaper">Jornal</option></select><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
+      <div class="topbar-actions"><a class="admin-access" href="./admin.html"><span aria-hidden="true">🔐</span><span data-i18n="adminAccess">Painel da equipe</span></a><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><button id="themePickerButton" class="theme-picker-button" type="button" aria-haspopup="dialog" aria-controls="themeDialog" aria-label="Temas"><span aria-hidden="true">🎨</span><span data-i18n="themeButton">Temas</span><span id="themeCurrentName" class="theme-current">Dossiê</span></button><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
     </header>
 
     <main>
@@ -954,6 +1013,35 @@
     </footer>
   </div>
 
+  <dialog id="themeDialog" class="theme-dialog" aria-labelledby="themeDialogTitle">
+    <div class="theme-dialog-inner">
+      <div class="theme-dialog-head">
+        <div><p class="eyebrow" data-i18n="themeKicker">APARÊNCIA DA CENTRAL</p><h2 id="themeDialogTitle" data-i18n="themeDialogTitleText">Escolha um tema</h2><p id="themeDialogIntro" data-i18n="themeDialogIntro">Prévia instantânea; a escolha fica salva neste navegador.</p></div>
+        <button id="closeThemeDialog" class="theme-close" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="theme-grid">
+        <button class="theme-option" type="button" data-theme-option="dossier" aria-pressed="false" data-theme-name-key="themeDossier">
+          <span class="theme-swatch swatch-dossier" aria-hidden="true"></span><span class="theme-option-name"><span data-i18n="themeDossier">Dossiê</span><span class="theme-selected" data-i18n="themeSelected">ATUAL</span></span><span class="theme-option-desc" data-i18n="themeDescDossier">O visual oficial da investigação.</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-option="terminal" aria-pressed="false" data-theme-name-key="themeTerminal">
+          <span class="theme-swatch swatch-terminal" aria-hidden="true"></span><span class="theme-option-name"><span data-i18n="themeTerminal">Terminal</span><span class="theme-selected" data-i18n="themeSelected">ATUAL</span></span><span class="theme-option-desc" data-i18n="themeDescTerminal">Verde de monitoramento em tempo real.</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-option="newspaper" aria-pressed="false" data-theme-name-key="themeNewspaper">
+          <span class="theme-swatch swatch-newspaper" aria-hidden="true"></span><span class="theme-option-name"><span data-i18n="themeNewspaper">Jornal</span><span class="theme-selected" data-i18n="themeSelected">ATUAL</span></span><span class="theme-option-desc" data-i18n="themeDescNewspaper">Papel envelhecido e boletim de crise.</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-option="coast" aria-pressed="false" data-theme-name-key="themeCoast">
+          <span class="theme-swatch swatch-coast" aria-hidden="true"></span><span class="theme-option-name"><span data-i18n="themeCoast">Maré baixa</span><span class="theme-selected" data-i18n="themeSelected">ATUAL</span></span><span class="theme-option-desc" data-i18n="themeDescCoast">Azul profundo com brilho de radar.</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-option="neon" aria-pressed="false" data-theme-name-key="themeNeon">
+          <span class="theme-swatch swatch-neon" aria-hidden="true"></span><span class="theme-option-name"><span data-i18n="themeNeon">Neon</span><span class="theme-selected" data-i18n="themeSelected">ATUAL</span></span><span class="theme-option-desc" data-i18n="themeDescNeon">Roxo elétrico para uma crise de alto impacto.</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-option="daylight" aria-pressed="false" data-theme-name-key="themeDaylight">
+          <span class="theme-swatch swatch-daylight" aria-hidden="true"></span><span class="theme-option-name"><span data-i18n="themeDaylight">Plantão claro</span><span class="theme-selected" data-i18n="themeSelected">ATUAL</span></span><span class="theme-option-desc" data-i18n="themeDescDaylight">Claro, limpo e fácil de ler.</span>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
   <script type="module">
     import { notas as notasLegadas, ultimoDiaBom as ultimoDiaBomLegado } from "./notas.js";
     import { listarNotas } from "./notas-store.js";
@@ -1002,7 +1090,9 @@
         achievementProgress: (a,b) => a + " / " + b + " " + (idiomaAtual === "en" ? "progress" : "progresso"),
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento", tabGame: "Chefe final",
-        adminAccess: "Painel da equipe", themeLabel: "Tema visual", themeDossier: "Dossiê", themeTerminal: "Terminal", themeNewspaper: "Jornal",
+        adminAccess: "Painel da equipe", themeLabel: "Escolher tema visual", themeButton: "Temas", themeKicker: "APARÊNCIA DA CENTRAL", themeDialogTitleText: "Escolha um tema", themeDialogIntro: "A prévia é instantânea e a escolha fica salva neste navegador.", closeThemeDialog: "Fechar seletor de temas", themeSelected: "ATUAL",
+        themeDossier: "Dossiê", themeTerminal: "Terminal", themeNewspaper: "Jornal", themeCoast: "Maré baixa", themeNeon: "Neon", themeDaylight: "Plantão claro",
+        themeDescDossier: "O visual oficial da investigação.", themeDescTerminal: "Verde de monitoramento em tempo real.", themeDescNewspaper: "Papel envelhecido e boletim de crise.", themeDescCoast: "Azul profundo com brilho de radar.", themeDescNeon: "Roxo elétrico para uma crise de alto impacto.", themeDescDaylight: "Claro, limpo e fácil de ler.",
         featuredKicker: "Arquivo em destaque", featuredTitle: "Frase do dia", shareFeatured: "🖼️ Compartilhar frase", featuredDatePrefix: "Registro de", commentsOnCard: "COMENTÁRIOS DA COMUNIDADE", commentsUnavailable: "Comentários ainda não carregados.",
         gameEyebrow: "OPERAÇÃO COLETIVA", gameTitle: "Derrubar o Chefe do Azar", gameIntro: "A próxima reclamação pode virar o golpe decisivo. Escolha seu palpite e ajude o grupo.",
         bossKicker: "ALVO ATUAL", bossNames: ["Chefe do Azar", "Burocracia Cósmica", "Caos em Pessoa", "Segunda-feira Eterna"], bossDescription: "Cada palpite certo causa dano. O arquivo decide quem acerta.",
@@ -1061,7 +1151,9 @@
         achievementProgress: (a,b) => a + " / " + b + " progress",
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
         tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment", tabGame: "Final boss",
-        adminAccess: "Team admin", themeLabel: "Visual theme", themeDossier: "Dossier", themeTerminal: "Terminal", themeNewspaper: "Newspaper",
+        adminAccess: "Team admin", themeLabel: "Choose a visual theme", themeButton: "Themes", themeKicker: "CENTER APPEARANCE", themeDialogTitleText: "Choose a theme", themeDialogIntro: "Preview instantly; your choice is saved in this browser.", closeThemeDialog: "Close theme picker", themeSelected: "CURRENT",
+        themeDossier: "Dossier", themeTerminal: "Terminal", themeNewspaper: "Newspaper", themeCoast: "Deep tide", themeNeon: "Neon", themeDaylight: "Day shift",
+        themeDescDossier: "The investigation's official look.", themeDescTerminal: "Live-monitoring green.", themeDescNewspaper: "Aged paper and a crisis bulletin.", themeDescCoast: "Deep blue with a radar glow.", themeDescNeon: "Electric violet for a high-impact crisis.", themeDescDaylight: "Bright, clean, and easy to read.",
         featuredKicker: "Featured archive", featuredTitle: "Quote of the day", shareFeatured: "🖼️ Share quote", featuredDatePrefix: "Filed on", commentsOnCard: "COMMUNITY COMMENTS", commentsUnavailable: "Comments could not be loaded.",
         gameEyebrow: "COMMUNITY OPERATION", gameTitle: "Take Down the Bad Luck Boss", gameIntro: "The next complaint could be the winning hit. Pick your prediction and help the group.",
         bossKicker: "CURRENT TARGET", bossNames: ["Bad Luck Boss", "Cosmic Red Tape", "Chaos Incarnate", "Monday Eternal"], bossDescription: "Every correct prediction deals damage. The archive decides who gets it right.",
@@ -1092,20 +1184,33 @@
     }
 
     let idiomaAtual = idiomaSalvo();
+    const temasDisponiveis = ["dossier", "terminal", "newspaper", "coast", "neon", "daylight"];
+    const chavesTema = {
+      dossier: "themeDossier", terminal: "themeTerminal", newspaper: "themeNewspaper",
+      coast: "themeCoast", neon: "themeNeon", daylight: "themeDaylight"
+    };
     function temaSalvo() {
       try {
         const salvo = localStorage.getItem("ainos-theme");
-        return ["dossier", "terminal", "newspaper"].includes(salvo) ? salvo : "dossier";
+        return temasDisponiveis.includes(salvo) ? salvo : "dossier";
       } catch {
         return "dossier";
       }
     }
+    function atualizarControlesTema() {
+      const atual = document.body.dataset.theme || "dossier";
+      document.getElementById("themeCurrentName").textContent = texto()[chavesTema[atual]];
+      document.querySelectorAll("[data-theme-option]").forEach((opcao) => {
+        opcao.setAttribute("aria-pressed", String(opcao.dataset.themeOption === atual));
+        opcao.setAttribute("aria-label", texto()[opcao.dataset.themeNameKey] + (opcao.dataset.themeOption === atual ? " · " + texto().themeSelected : ""));
+      });
+    }
     function aplicarTema(tema) {
-      const seguro = ["dossier", "terminal", "newspaper"].includes(tema) ? tema : "dossier";
+      const seguro = temasDisponiveis.includes(tema) ? tema : "dossier";
       document.body.dataset.theme = seguro;
-      document.documentElement.style.colorScheme = seguro === "newspaper" ? "light" : "dark";
-      seletorTema.value = seguro;
+      document.documentElement.style.colorScheme = ["newspaper", "daylight"].includes(seguro) ? "light" : "dark";
       try { localStorage.setItem("ainos-theme", seguro); } catch {}
+      atualizarControlesTema();
     }
     let dataUltimoDiaBom = ultimoDiaBomLegado
       ? new Date(...ultimoDiaBomLegado.split("-").map(Number).map((valor, indice) => indice === 1 ? valor - 1 : valor))
@@ -1123,7 +1228,8 @@
     }
     const lista = document.getElementById("listaNotas");
     const botaoIdioma = document.getElementById("languageToggle");
-    const seletorTema = document.getElementById("themeSelect");
+    const botaoTema = document.getElementById("themePickerButton");
+    const dialogTemas = document.getElementById("themeDialog");
 
     function texto() {
       return idiomas[idiomaAtual];
@@ -1476,10 +1582,10 @@
 
       atualizarContador(false);
       document.querySelector(".section-tabs").setAttribute("aria-label",t.tablistLabel);
-      seletorTema.setAttribute("aria-label",t.themeLabel);
-      seletorTema.querySelector('option[value="dossier"]').textContent=t.themeDossier;
-      seletorTema.querySelector('option[value="terminal"]').textContent=t.themeTerminal;
-      seletorTema.querySelector('option[value="newspaper"]').textContent=t.themeNewspaper;
+      botaoTema.setAttribute("aria-label",t.themeLabel);
+      dialogTemas.setAttribute("aria-label",t.themeLabel);
+      document.getElementById("closeThemeDialog").setAttribute("aria-label",t.closeThemeDialog);
+      atualizarControlesTema();
       document.getElementById("notesSearch").placeholder=t.searchPlaceholder;
       document.getElementById("notesSearch").setAttribute("aria-label",t.searchLabel);
       document.getElementById("randomButton").textContent=t.randomButton;
@@ -1494,7 +1600,14 @@
       renderizarFiltroCategoria(); renderizarNotas(); renderizarCalendario(); renderizarConquistas(); renderizarEstatisticas(); renderizarBingo(); renderizarJogo(notas,categoriaDaNota,t); renderizarFraseDestaque();
     }
 
-    seletorTema.addEventListener("change", () => aplicarTema(seletorTema.value));
+    botaoTema.addEventListener("click", () => dialogTemas.showModal());
+    document.getElementById("closeThemeDialog").addEventListener("click", () => dialogTemas.close());
+    dialogTemas.addEventListener("click", (evento) => {
+      if (evento.target === dialogTemas) dialogTemas.close();
+    });
+    document.querySelectorAll("[data-theme-option]").forEach((opcao) => {
+      opcao.addEventListener("click", () => aplicarTema(opcao.dataset.themeOption));
+    });
     aplicarTema(temaSalvo());
 
     botaoIdioma.addEventListener("click", () => {
