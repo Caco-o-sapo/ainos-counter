@@ -643,7 +643,23 @@
     @media(max-width:620px){.fun-grid{grid-template-columns:1fr}.fun-card{min-height:0}.fun-card .random-report{margin-top:18px}}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .category-filter{margin-left:auto}.category-select{min-height:36px;max-width:190px;border:1px solid var(--line);border-radius:10px;padding:0 10px;color:var(--muted);background:var(--panel-raised);font:inherit;font-size:.78rem}
-    .category-badge{display:inline-flex;align-items:center;padding:4px 8px;border:1px solid rgba(var(--amber-rgb),.18);border-radius:999px;color:var(--amber-bright);background:rgba(var(--amber-rgb),.06);font-size:.65rem;font-weight:700;letter-spacing:.03em}
+    .category-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border:1px solid var(--category-border);border-radius:999px;color:var(--category-color);background:var(--category-bg);font-size:.65rem;font-weight:750;letter-spacing:.03em;white-space:nowrap}
+    .category-games{--category-color:#76bfff;--category-bg:rgba(70,150,220,.1);--category-border:rgba(70,150,220,.3)}
+    .category-work{--category-color:#f4ad69;--category-bg:rgba(244,173,105,.1);--category-border:rgba(244,173,105,.3)}
+    .category-health{--category-color:#f58b9b;--category-bg:rgba(225,90,115,.1);--category-border:rgba(225,90,115,.3)}
+    .category-social{--category-color:#c19bff;--category-bg:rgba(145,100,215,.1);--category-border:rgba(145,100,215,.3)}
+    .category-daily{--category-color:#72d6a3;--category-bg:rgba(75,175,120,.1);--category-border:rgba(75,175,120,.3)}
+    .category-other{--category-color:#aaa6a3;--category-bg:rgba(150,150,150,.08);--category-border:rgba(150,150,150,.24)}
+    .calendar-day.category-work:after{background:#f4ad69}.calendar-day.category-games:after{background:#76bfff}.calendar-day.category-health:after{background:#f58b9b}.calendar-day.category-social:after{background:#c19bff}.calendar-day.category-daily:after{background:#72d6a3}.calendar-day.category-other:after{background:#aaa6a3}.calendar-day.has-good:after{background:var(--green)}
+    .note-list[data-density="compact"]{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .note-list[data-density="compact"] .note{min-height:0;padding:11px;gap:8px;border-radius:12px}
+    .note-list[data-density="compact"] .note-index{width:30px;height:30px}
+    .note-list[data-density="compact"] .note-community{margin-top:9px;padding-top:8px}
+    #clearLinkedNote{margin:-3px 0 11px}
+    .note-link-button{border:1px solid rgba(var(--amber-rgb),.25);border-radius:9px;padding:7px 10px;color:var(--muted);background:rgba(255,255,255,.025);font:inherit;font-size:.73rem;font-weight:700;cursor:pointer}
+    .note-link-button:hover{border-color:var(--amber);color:var(--amber-bright)}
+    @media(max-width:900px){.note-list[data-density="compact"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:520px){.note-list[data-density="compact"]{grid-template-columns:1fr}}
     .note-community{margin-top:14px;padding-top:11px;border-top:1px solid rgba(255,255,255,.07)}
     .reaction-bar{display:flex;gap:6px;flex-wrap:wrap}
     .reaction-button,.comments-toggle,.comment-submit{min-height:33px;border:1px solid var(--line);border-radius:9px;padding:0 9px;color:var(--muted);background:rgba(255,255,255,.025);font:inherit;font-size:.76rem;cursor:pointer}
@@ -953,7 +969,7 @@
         </div>
         <div class="notes-tools">
           <input id="notesSearch" class="notes-search" type="search" placeholder="Buscar nas notas..." aria-label="Buscar nas notas">
-          
+          <button id="notesDensityToggle" class="tool-button" type="button" aria-pressed="false">Confortável</button>
           <button id="clearFilters" class="tool-button" type="button">Limpar filtros</button>
         </div>
         <div class="filters" role="group" aria-label="Filtrar ocorrências">
@@ -961,6 +977,7 @@
           <label class="category-filter"><span class="sr-only" data-i18n="categoryLabel">Categoria</span><select id="categoryFilter" class="category-select" aria-label="Filtrar por categoria"></select></label>
         </div>
         <p id="resultsLabel" class="results-label" aria-live="polite"></p>
+        <button id="clearLinkedNote" class="tool-button" type="button" data-i18n="clearLinkedNote" hidden>Ver todas as ocorrências</button>
         <div id="listaNotas" class="note-list" aria-live="polite"></div>
         <nav id="pagination" class="pagination" aria-label="Paginação das ocorrências" hidden>
           <button id="prevPage" class="page-button" type="button" data-i18n="previousPage">← Anterior</button>
@@ -1103,6 +1120,7 @@
         communityLabel: "Interações da comunidade", commentsLabel: "💬 Comentários", commentsLoading: "Carregando comentários…", reactWith: "Reagir com", commentPlaceholder: "Escreva um comentário (até 500 caracteres)…", namePlaceholder: "Seu nome (opcional)", sendComment: "Enviar comentário", noComments: "Ainda ninguém comentou.", anonymous: "Anônimo", commentSent: "Comentário enviado!", interactionError: "Não foi possível enviar. Tente novamente.", interactionUnavailable: "Comentários e reações estão indisponíveis agora.",
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente",
         categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
+        viewCompact: "Compacta", viewComfortable: "Confortável", toggleViewLabel: "Alternar visualização das ocorrências", copyNoteLink: "🔗 Copiar link", noteLinkCopied: "✅ Link copiado", clearLinkedNote: "Ver todas as ocorrências", noteLinkPrompt: "Copie o link desta ocorrência:",
         headlineKicker: "Imprensa do caos", headlineTitle: "Gerador de manchetes", headlineButton: "📰 Gerar manchete", headlinePlaceholder: "Uma manchete aguarda a próxima ocorrência.", headlinePrefixes: ["PLANTÃO DO AZAR:", "AINOS EM CRISE:", "ÚLTIMA HORA:", "DOSSIÊ ESPECIAL:"],
         bingoKicker: "Cartela individual", bingoTitle: "Bingo do Ainos", bingoCopy: "Marque os acontecimentos; a cartela fica salva neste navegador.", bingoReset: "Limpar cartela", bingoProgress: "Marque o que já aconteceu.", bingoComplete: "BINGO! O departamento de azar confirma a sequência.", bingoSquares: ["Reclamação do trabalho","Azar no jogo/gacha","Disse que está cansado","Uma coisa simples virou problema","ESPAÇO LIVRE","Chegou uma notícia inesperada","Se arrependeu de uma escolha","Mandou print do caos","Disse “depois eu resolvo”"],
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente", categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
@@ -1164,6 +1182,7 @@
         communityLabel: "Community interactions", commentsLabel: "💬 Comments", commentsLoading: "Loading comments…", reactWith: "React with", commentPlaceholder: "Write a comment (up to 500 characters)…", namePlaceholder: "Your name (optional)", sendComment: "Post comment", noComments: "No comments yet.", anonymous: "Anonymous", commentSent: "Comment posted!", interactionError: "Could not send that. Please try again.", interactionUnavailable: "Comments and reactions are unavailable right now.",
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category",
         categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
+        viewCompact: "Compact", viewComfortable: "Comfortable", toggleViewLabel: "Toggle report layout", copyNoteLink: "🔗 Copy link", noteLinkCopied: "✅ Link copied", clearLinkedNote: "Show all reports", noteLinkPrompt: "Copy this report link:",
         headlineKicker: "Chaos newsroom", headlineTitle: "Headline generator", headlineButton: "📰 Generate headline", headlinePlaceholder: "A headline awaits the next incident.", headlinePrefixes: ["BAD LUCK BULLETIN:", "AINOS IN CRISIS:", "BREAKING:", "SPECIAL REPORT:"],
         bingoKicker: "Personal card", bingoTitle: "Ainos Bingo", bingoCopy: "Mark what happens; this card is saved in this browser.", bingoReset: "Reset card", bingoProgress: "Mark the things that have happened.", bingoComplete: "BINGO! The Department of Bad Luck confirms the streak.", bingoSquares: ["Work complaint","Bad luck in a game/gacha","Said he is tired","A simple thing became a problem","FREE SPACE","Unexpected news arrived","Regretted a choice","Sent a screenshot of the chaos","Said “I will deal with it later”"],
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category", categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
@@ -1288,6 +1307,8 @@
     let categoriaAtual = "all";
     let dataSelecionada = "";
     let paginaAtual = 1;
+    let notaSelecionadaId = new URLSearchParams(window.location.search).get("nota") || "";
+    let visualizacaoCompacta = (() => { try { return localStorage.getItem("ainos-notes-density") === "compact"; } catch { return false; } })();
     const notasPorPagina = 6;
     let mesCalendario = new Date();
     const busca = document.getElementById("notesSearch");
@@ -1334,10 +1355,24 @@
       return "other";
     }
     function rotuloCategoria(categoria,t=texto()){return t.categories[categoria]||t.categories.other;}
+    function iconeCategoria(categoria){return ({work:"💼",games:"🎮",health:"🩺",social:"🗣️",daily:"☕",other:"📌"})[categoria]||"📌";}
+    function atualizarControleVisualizacao(){
+      const botao=document.getElementById("notesDensityToggle");
+      lista.dataset.density=visualizacaoCompacta?"compact":"comfortable";
+      botao.textContent=visualizacaoCompacta?texto().viewCompact:texto().viewComfortable;
+      botao.setAttribute("aria-label",texto().toggleViewLabel);
+      botao.setAttribute("aria-pressed",String(visualizacaoCompacta));
+    }
+    function limparNotaSelecionada(){
+      notaSelecionadaId="";
+      const url=new URL(window.location.href);url.searchParams.delete("nota");
+      window.history.replaceState(null,"",url);
+      paginaAtual=1;renderizarNotas();
+    }
     function renderizarFiltroCategoria(){
       const t=texto(),valorAtual=categoriaAtual;filtroCategoria.replaceChildren();
       const todas=document.createElement("option");todas.value="all";todas.textContent=t.allCategories;filtroCategoria.appendChild(todas);
-      ["work","games","health","social","daily","other"].forEach(categoria=>{const option=document.createElement("option");option.value=categoria;option.textContent=rotuloCategoria(categoria,t);filtroCategoria.appendChild(option);});
+      ["work","games","health","social","daily","other"].forEach(categoria=>{const option=document.createElement("option");option.value=categoria;option.textContent=iconeCategoria(categoria)+" "+rotuloCategoria(categoria,t);filtroCategoria.appendChild(option);});
       filtroCategoria.value=valorAtual;filtroCategoria.setAttribute("aria-label",t.categoryLabel);
     }
     function renderizarNotas() {
@@ -1345,26 +1380,34 @@
       const filtradas=notas.map((nota,indice)=>({nota,indice})).filter(({nota})=>{
         const boa=nota.diaBom===true,okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa),okCategoria=categoriaAtual==="all"||categoriaDaNota(nota)===categoriaAtual;
         const okBusca=!termo||(nota.texto||"").toLocaleLowerCase().includes(termo)||(nota.data||"").toLocaleLowerCase().includes(termo);
-        return okFiltro&&okCategoria&&okBusca&&(!dataSelecionada||chaveData(nota.data)===dataSelecionada);
+        return okFiltro&&okCategoria&&okBusca&&(!dataSelecionada||chaveData(nota.data)===dataSelecionada)&&(!notaSelecionadaId||obterIdNota(nota)===notaSelecionadaId);
       });
       const paginas=Math.max(1,Math.ceil(filtradas.length/notasPorPagina));paginaAtual=Math.min(paginaAtual,paginas);
       const paginacao=document.getElementById("pagination");
       const dataFormatada=dataSelecionada?new Intl.DateTimeFormat(t.locale).format(new Date(Number(dataSelecionada.slice(0,4)),Number(dataSelecionada.slice(5,7))-1,Number(dataSelecionada.slice(8,10)))):"";
       document.getElementById("total-notas").textContent=notas.length;
       document.getElementById("resultsLabel").textContent=t.resultsCount(filtradas.length,notas.length)+(dataSelecionada?" · "+t.selectedDatePrefix+" "+dataFormatada:"");
+      document.getElementById("clearLinkedNote").hidden=!notaSelecionadaId;
       lista.replaceChildren();
       if(!filtradas.length){const e=document.createElement("p");e.className="empty-state";e.textContent=notas.length?t.noMatches:t.emptyNotes;lista.appendChild(e);paginacao.hidden=true;return;}
       const inicio=(paginaAtual-1)*notasPorPagina,visiveis=filtradas.slice(inicio,inicio+notasPorPagina);
       visiveis.forEach(({nota,indice})=>{
-        const item=document.createElement("article");item.className=nota.diaBom===true?"note note-good-day":"note";
+        const item=document.createElement("article");item.className=nota.diaBom===true?"note note-good-day":"note";item.dataset.noteId=obterIdNota(nota);
         const numero=document.createElement("div");numero.className="note-index";numero.textContent=String(indice+1).padStart(2,"0");numero.setAttribute("aria-hidden","true");
         const conteudo=document.createElement("div");conteudo.className="note-content";const linha=document.createElement("div");linha.className="note-date-row";
         const data=document.createElement("div");data.className="note-date";data.textContent=nota.data||t.missingDate;linha.appendChild(data);
         if(nota.diaBom===true){const badge=document.createElement("span");badge.className="good-day-badge";badge.textContent=t.goodDay;linha.appendChild(badge);}
-        const categoryBadge=document.createElement("span");categoryBadge.className="category-badge";categoryBadge.textContent=rotuloCategoria(categoriaDaNota(nota),t);linha.appendChild(categoryBadge);
+        const categoriaNota=categoriaDaNota(nota);const categoryBadge=document.createElement("span");categoryBadge.className="category-badge category-"+categoriaNota;categoryBadge.textContent=iconeCategoria(categoriaNota)+" "+rotuloCategoria(categoriaNota,t);linha.appendChild(categoryBadge);
         const p=document.createElement("p");p.className="note-text";p.textContent="“"+(nota.texto||"")+"”";conteudo.append(linha,p);
         const shareRow=document.createElement("div");shareRow.className="note-share-row";const share=document.createElement("button");share.type="button";share.className="share-note-button";share.textContent=t.shareImage;
-        share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);conteudo.append(shareRow);
+        share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);
+        const copyLink=document.createElement("button");copyLink.type="button";copyLink.className="note-link-button";copyLink.textContent=t.copyNoteLink;
+        copyLink.addEventListener("click",async()=>{
+          const url=new URL("./",window.location.href);url.searchParams.set("nota",obterIdNota(nota));url.hash="panel-archive";
+          try{await navigator.clipboard.writeText(url.href);copyLink.textContent=t.noteLinkCopied;setTimeout(()=>{if(copyLink.isConnected)copyLink.textContent=texto().copyNoteLink;},1800);}
+          catch{window.prompt(t.noteLinkPrompt,url.href);}
+        });
+        shareRow.appendChild(copyLink);conteudo.append(shareRow);
         renderizarInteracoesNota(conteudo,obterIdNota(nota),t);
         item.append(numero,conteudo);lista.appendChild(item);
       });
@@ -1377,11 +1420,11 @@
       const dias=idiomaAtual==="en"?["M","T","W","T","F","S","S"]:["S","T","Q","Q","S","S","D"];
       dias.forEach(d=>{const e=document.createElement("span");e.className="calendar-weekday";e.textContent=d;grid.appendChild(e);});
       const first=new Date(mesCalendario.getFullYear(),mesCalendario.getMonth(),1),offset=(first.getDay()+6)%7,total=new Date(mesCalendario.getFullYear(),mesCalendario.getMonth()+1,0).getDate(),begin=new Date(mesCalendario.getFullYear(),mesCalendario.getMonth(),1-offset);
-      const map=new Map();notas.forEach(n=>{const k=chaveData(n.data);if(k)map.set(k,(map.get(k)||false)||n.diaBom===true);});
+      const map=new Map();notas.forEach(n=>{const k=chaveData(n.data);if(!k)return;const registro=map.get(k)||{good:false,categories:[]};registro.good=registro.good||n.diaBom===true;const categoria=categoriaDaNota(n);if(!registro.categories.includes(categoria))registro.categories.push(categoria);map.set(k,registro);});
       const cells=Math.ceil((offset+total)/7)*7;
-      for(let i=0;i<cells;i++){const d=new Date(begin.getFullYear(),begin.getMonth(),begin.getDate()+i),k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"),has=map.has(k),good=map.get(k)===true;
-        const b=document.createElement("button");b.type="button";b.className="calendar-day"+(d.getMonth()!==mesCalendario.getMonth()?" other-month":"")+(has?" has-note":"")+(good?" has-good":"")+(k===dataSelecionada?" selected":"");b.textContent=d.getDate();
-        b.disabled=!has;b.setAttribute("aria-label",new Intl.DateTimeFormat(t.locale,{dateStyle:"full"}).format(d)+(has?" · "+(good?t.goodDay:t.legendNote):" · "+t.noOccurrence));
+      for(let i=0;i<cells;i++){const d=new Date(begin.getFullYear(),begin.getMonth(),begin.getDate()+i),k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"),registro=map.get(k),has=Boolean(registro),good=registro?.good===true,categoria=registro?.categories[0]||"other";
+        const b=document.createElement("button");b.type="button";b.className="calendar-day"+(d.getMonth()!==mesCalendario.getMonth()?" other-month":"")+(has?" has-note":"")+(good?" has-good":"")+(has&&!good?" category-"+categoria:"")+(k===dataSelecionada?" selected":"");b.textContent=d.getDate();
+        b.disabled=!has;b.setAttribute("aria-label",new Intl.DateTimeFormat(t.locale,{dateStyle:"full"}).format(d)+(has?" · "+(good?t.goodDay:t.legendNote)+" · "+rotuloCategoria(categoria,t):" · "+t.noOccurrence));
         b.addEventListener("click",()=>{if(!has)return;dataSelecionada=dataSelecionada===k?"":k;paginaAtual=1;document.getElementById("clearDate").hidden=!dataSelecionada;renderizarCalendario();renderizarNotas();});grid.appendChild(b);
       }document.getElementById("clearDate").hidden=!dataSelecionada;
     }
@@ -1552,6 +1595,8 @@
     document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{filtroAtual=b.dataset.filter;paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderizarNotas();}));
     busca.addEventListener("input",()=>{paginaAtual=1;renderizarNotas();});filtroCategoria.addEventListener("change",()=>{categoriaAtual=filtroCategoria.value;paginaAtual=1;renderizarNotas();});document.getElementById("randomButton").addEventListener("click",sortearReclamacao);
     document.getElementById("clearFilters").addEventListener("click",()=>{filtroAtual="all";categoriaAtual="all";filtroCategoria.value="all";busca.value="";dataSelecionada="";paginaAtual=1;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x.dataset.filter==="all"));renderizarCalendario();renderizarNotas();});
+    document.getElementById("notesDensityToggle").addEventListener("click",()=>{visualizacaoCompacta=!visualizacaoCompacta;try{localStorage.setItem("ainos-notes-density",visualizacaoCompacta?"compact":"comfortable");}catch{}atualizarControleVisualizacao();});
+    document.getElementById("clearLinkedNote").addEventListener("click",limparNotaSelecionada);
     document.getElementById("prevMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()-1);renderizarCalendario();});
     document.getElementById("nextMonth").addEventListener("click",()=>{mesCalendario.setMonth(mesCalendario.getMonth()+1);renderizarCalendario();});
     document.getElementById("clearDate").addEventListener("click",()=>{dataSelecionada="";paginaAtual=1;renderizarCalendario();renderizarNotas();});
@@ -1583,6 +1628,7 @@
       atualizarContador(false);
       document.querySelector(".section-tabs").setAttribute("aria-label",t.tablistLabel);
       botaoTema.setAttribute("aria-label",t.themeLabel);
+      atualizarControleVisualizacao();
       dialogTemas.setAttribute("aria-label",t.themeLabel);
       document.getElementById("closeThemeDialog").setAttribute("aria-label",t.closeThemeDialog);
       atualizarControlesTema();
@@ -1672,6 +1718,10 @@
     }
     aplicarIdioma();
     atualizarContador(true);
+    if(notaSelecionadaId){
+      ativarAba("archive");
+      requestAnimationFrame(()=>[...document.querySelectorAll("#listaNotas [data-note-id]")].find(card=>card.dataset.noteId===notaSelecionadaId)?.scrollIntoView({behavior:"smooth",block:"center"}));
+    }
   </script>
 </body>
 </html>
