@@ -1,5 +1,4 @@
-import { supabase } from "./notas-store.js";
-import { importarNotasLegadas, listarNotas } from "./notas-store.js";
+import { supabase, importarNotasLegadas, listarNotas } from "./notas-store.js";
 
 const $ = (id) => document.getElementById(id);
 const loginPanel = $("loginPanel");
@@ -7,34 +6,30 @@ const adminPanel = $("adminPanel");
 const loginStatus = $("loginStatus");
 const adminStatus = $("adminStatus");
 let notas = [];
+let comentarios = [];
 let notaEditando = null;
-let emailAtual = "";
+let paginaNotas = 1;
+const notasPorPagina = 8;
 
 function mostrarStatus(elemento, mensagem, tipo = "") {
   elemento.textContent = mensagem;
   elemento.className = "status" + (tipo ? " " + tipo : "");
 }
-
 function dataHoje() {
   const agora = new Date();
   return agora.getFullYear() + "-" + String(agora.getMonth() + 1).padStart(2, "0") + "-" + String(agora.getDate()).padStart(2, "0");
 }
 $("noteDate").value = dataHoje();
-
 function paraIso(dataBr) {
   const [dia, mes, ano] = String(dataBr || "").split("/");
   return ano && mes && dia ? ano + "-" + mes.padStart(2, "0") + "-" + dia.padStart(2, "0") : "";
 }
-function obterId(nota) {
-  if (nota.id) return String(nota.id);
-  const texto = (nota.data || "") + "|" + (nota.texto || "");
-  let a = 2166136261, b = 2246822519;
-  for (let i = 0; i < texto.length; i++) {
-    const codigo = texto.charCodeAt(i);
-    a = Math.imul(a ^ codigo, 16777619);
-    b = Math.imul(b ^ codigo, 3266489917);
-  }
-  return "n-" + (a >>> 0).toString(16).padStart(8, "0") + (b >>> 0).toString(16).padStart(8, "0");
+
+function atualizarResumo(administradores = null) {
+  $("statNotes").textContent = String(notas.length);
+  $("statGoodDays").textContent = String(new Set(notas.filter((n) => n.diaBom).map((n) => n.data).filter(Boolean)).size);
+  $("statComments").textContent = String(comentarios.length);
+  if (administradores !== null) $("statAdmins").textContent = String(administradores);
 }
 
 function resetarEditor() {
@@ -44,7 +39,6 @@ function resetarEditor() {
   $("editorTitle").textContent = "Adicionar ocorrência";
   $("cancelEdit").hidden = true;
 }
-
 function prepararEdicao(nota) {
   notaEditando = nota;
   $("noteDate").value = paraIso(nota.data);
@@ -55,7 +49,6 @@ function prepararEdicao(nota) {
   $("cancelEdit").hidden = false;
   $("noteForm").scrollIntoView({ behavior: "smooth", block: "start" });
 }
-
 function botao(rotulo, acao, classe = "button") {
   const elemento = document.createElement("button");
   elemento.type = "button";
@@ -64,19 +57,30 @@ function botao(rotulo, acao, classe = "button") {
   elemento.addEventListener("click", acao);
   return elemento;
 }
-
 function renderizarNotas() {
   const lista = $("noteList");
+  const termo = $("searchNotes").value.trim().toLocaleLowerCase();
+  const filtro = $("noteFilter").value;
+  const filtradas = notas.filter((nota) => {
+    const boa = nota.diaBom === true;
+    const tipoOk = filtro === "all" || (filtro === "good" && boa) || (filtro === "complaints" && !boa);
+    const buscaOk = !termo || (nota.texto || "").toLocaleLowerCase().includes(termo) || (nota.data || "").includes(termo);
+    return tipoOk && buscaOk;
+  });
+  const paginas = Math.max(1, Math.ceil(filtradas.length / notasPorPagina));
+  paginaNotas = Math.min(paginaNotas, paginas);
+  const inicio = (paginaNotas - 1) * notasPorPagina;
   lista.replaceChildren();
-  $("noteCount").textContent = notas.length + (notas.length === 1 ? " ocorrência cadastrada" : " ocorrências cadastradas");
-  if (!notas.length) {
+  $("noteCount").textContent = filtradas.length + (filtradas.length === 1 ? " registro encontrado" : " registros encontrados") + " · " + notas.length + " no total";
+  if (!filtradas.length) {
     const vazio = document.createElement("p");
     vazio.className = "empty";
-    vazio.textContent = "O arquivo ainda está vazio. Use “Importar notas atuais” para carregar as notas existentes do notas.js.";
+    vazio.textContent = notas.length ? "Nenhum registro combina com a busca." : "Arquivo vazio. Use “Importar arquivo antigo” para carregar as notas atuais.";
     lista.append(vazio);
+    $("notesPagination").hidden = true;
     return;
   }
-  notas.forEach((nota) => {
+  filtradas.slice(inicio, inicio + notasPorPagina).forEach((nota) => {
     const linha = document.createElement("article");
     linha.className = "row";
     const principal = document.createElement("div");
@@ -103,17 +107,20 @@ function renderizarNotas() {
     linha.append(principal, acoes);
     lista.append(linha);
   });
+  $("notesPagination").hidden = paginas <= 1;
+  $("notePageLabel").textContent = "Página " + paginaNotas + " de " + paginas;
+  $("prevNotes").disabled = paginaNotas <= 1;
+  $("nextNotes").disabled = paginaNotas >= paginas;
 }
-
 async function carregarNotas() {
   try {
     notas = await listarNotas();
+    atualizarResumo();
     renderizarNotas();
   } catch (error) {
     mostrarStatus(adminStatus, "Erro ao carregar notas. Confira se executou supabase-admin.sql: " + error.message, "error");
   }
 }
-
 async function carregarAdministradores() {
   const lista = $("adminList");
   lista.replaceChildren();
@@ -125,6 +132,7 @@ async function carregarAdministradores() {
     lista.append(vazio);
     return;
   }
+  atualizarResumo(data.length);
   if (!data.length) {
     const vazio = document.createElement("p");
     vazio.className = "empty";
@@ -136,6 +144,7 @@ async function carregarAdministradores() {
     const linha = document.createElement("article");
     linha.className = "row admin-row";
     const email = document.createElement("span");
+    email.className = "row-text";
     email.textContent = registro.email;
     const remover = botao("Remover", async () => {
       if (!confirm("Remover " + registro.email + " do acesso administrativo?")) return;
@@ -148,26 +157,31 @@ async function carregarAdministradores() {
     lista.append(linha);
   });
 }
-
 async function carregarComentarios() {
   const lista = $("commentList");
   lista.replaceChildren();
-  const { data, error } = await supabase.from("ainos_comments").select("id,note_id,nickname,body,created_at").order("created_at", { ascending: false }).limit(100);
+  const { data, error, count } = await supabase.from("ainos_comments")
+    .select("id,note_id,nickname,body,created_at", { count: "exact" })
+    .order("created_at", { ascending: false }).limit(100);
   if (error) {
+    comentarios = [];
     const vazio = document.createElement("p");
     vazio.className = "empty";
     vazio.textContent = "Não foi possível carregar comentários: " + error.message;
     lista.append(vazio);
+    atualizarResumo();
     return;
   }
-  if (!data.length) {
+  comentarios = data || [];
+  $("statComments").textContent = String(count ?? comentarios.length);
+  if (!comentarios.length) {
     const vazio = document.createElement("p");
     vazio.className = "empty";
     vazio.textContent = "Nenhum comentário no arquivo.";
     lista.append(vazio);
     return;
   }
-  data.forEach((comentario) => {
+  comentarios.forEach((comentario) => {
     const linha = document.createElement("article");
     linha.className = "row";
     const principal = document.createElement("div");
@@ -179,8 +193,8 @@ async function carregarComentarios() {
     texto.className = "row-text comment";
     texto.textContent = comentario.body;
     const relacao = document.createElement("p");
-    relacao.className = "muted small";
-    relacao.textContent = "Nota: " + comentario.note_id;
+    relacao.className = "soft small";
+    relacao.textContent = "ID da ocorrência: " + comentario.note_id;
     principal.append(titulo, texto, relacao);
     const remover = botao("Apagar", async () => {
       if (!confirm("Apagar este comentário?")) return;
@@ -193,34 +207,43 @@ async function carregarComentarios() {
     lista.append(linha);
   });
 }
-
 async function abrirPainel(user) {
-  emailAtual = user.email || "";
   const { data, error } = await supabase.rpc("claim_ainos_admin_access");
   if (error || data !== true) {
     loginPanel.hidden = false;
     adminPanel.hidden = true;
-    mostrarStatus(loginStatus, "Esta conta ainda não está autorizada. Peça a um administrador para adicionar " + emailAtual + " à lista.", "error");
+    mostrarStatus(loginStatus, "Esta conta ainda não está autorizada. Peça a um administrador para adicionar " + (user.email || "este e-mail") + ".", "error");
     return;
   }
   loginPanel.hidden = true;
   adminPanel.hidden = false;
-  $("signedInAs").textContent = "Conectado como " + emailAtual;
+  $("signedInAs").textContent = "Conectado como " + (user.email || "");
   await Promise.all([carregarNotas(), carregarAdministradores(), carregarComentarios()]);
+}
+function exportarBackup() {
+  const arquivo = {
+    app: "Ainos Watch",
+    exportedAt: new Date().toISOString(),
+    notes: notas
+  };
+  const blob = new Blob([JSON.stringify(arquivo, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "ainos-watch-backup-" + dataHoje() + ".json";
+  link.click();
+  URL.revokeObjectURL(url);
+  mostrarStatus(adminStatus, "Backup JSON baixado.", "ok");
 }
 
 $("loginForm").addEventListener("submit", async (evento) => {
   evento.preventDefault();
   mostrarStatus(loginStatus, "Entrando…");
-  const { error } = await supabase.auth.signInWithPassword({
-    email: $("email").value.trim().toLowerCase(),
-    password: $("password").value
-  });
+  const { error } = await supabase.auth.signInWithPassword({ email: $("email").value.trim().toLowerCase(), password: $("password").value });
   if (error) return mostrarStatus(loginStatus, "Não foi possível entrar: " + error.message, "error");
   const { data } = await supabase.auth.getUser();
   await abrirPainel(data.user);
 });
-
 function mostrarFormularioRecuperacao() {
   $("passwordRecoveryForm").hidden = false;
   $("loginForm").hidden = true;
@@ -228,14 +251,10 @@ function mostrarFormularioRecuperacao() {
   $("forgotPassword").hidden = true;
   mostrarStatus(loginStatus, "Defina uma nova senha para sua conta.");
 }
-
 supabase.auth.onAuthStateChange((event) => {
   if (event === "PASSWORD_RECOVERY") mostrarFormularioRecuperacao();
 });
-if (new URLSearchParams(location.hash.slice(1)).get("type") === "recovery") {
-  mostrarFormularioRecuperacao();
-}
-
+if (new URLSearchParams(location.hash.slice(1)).get("type") === "recovery") mostrarFormularioRecuperacao();
 $("passwordRecoveryForm").addEventListener("submit", async (evento) => {
   evento.preventDefault();
   const password = $("newPassword").value;
@@ -250,7 +269,6 @@ $("passwordRecoveryForm").addEventListener("submit", async (evento) => {
   const { data } = await supabase.auth.getUser();
   if (data.user) await abrirPainel(data.user);
 });
-
 $("forgotPassword").addEventListener("click", async () => {
   const email = $("email").value.trim().toLowerCase();
   if (!email) return mostrarStatus(loginStatus, "Informe seu e-mail para receber o link de redefinição.", "error");
@@ -258,7 +276,6 @@ $("forgotPassword").addEventListener("click", async () => {
   if (error) return mostrarStatus(loginStatus, "Não foi possível enviar o link: " + error.message, "error");
   mostrarStatus(loginStatus, "Se esse e-mail tiver uma conta, o Supabase enviará um link de redefinição.", "ok");
 });
-
 $("showSignup").addEventListener("click", async () => {
   const email = $("email").value.trim().toLowerCase();
   const password = $("password").value;
@@ -268,7 +285,6 @@ $("showSignup").addEventListener("click", async () => {
   if (error) return mostrarStatus(loginStatus, "Não foi possível criar a conta: " + error.message, "error");
   mostrarStatus(loginStatus, "Conta criada. Confirme o e-mail e depois entre. O acesso só é liberado se esse e-mail tiver sido autorizado por um administrador.", "ok");
 });
-
 $("noteForm").addEventListener("submit", async (evento) => {
   evento.preventDefault();
   const data = $("noteDate").value;
@@ -289,7 +305,6 @@ $("noteForm").addEventListener("submit", async (evento) => {
   await carregarNotas();
   mostrarStatus(adminStatus, "Ocorrência salva. O site já pode carregá-la.", "ok");
 });
-
 $("cancelEdit").addEventListener("click", resetarEditor);
 $("adminForm").addEventListener("submit", async (evento) => {
   evento.preventDefault();
@@ -300,7 +315,6 @@ $("adminForm").addEventListener("submit", async (evento) => {
   await carregarAdministradores();
   mostrarStatus(adminStatus, "E-mail autorizado. A pessoa pode criar a própria conta em /admin.html e confirmar o e-mail.", "ok");
 });
-
 $("importLegacy").addEventListener("click", async () => {
   if (!confirm("Importar e atualizar as notas atuais do notas.js? Nenhuma nota já salva no banco será apagada.")) return;
   mostrarStatus(adminStatus, "Importando notas…");
@@ -312,7 +326,11 @@ $("importLegacy").addEventListener("click", async () => {
     mostrarStatus(adminStatus, "Não foi possível importar: " + error.message, "error");
   }
 });
-
+$("exportBackup").addEventListener("click", exportarBackup);
+$("searchNotes").addEventListener("input", () => { paginaNotas = 1; renderizarNotas(); });
+$("noteFilter").addEventListener("change", () => { paginaNotas = 1; renderizarNotas(); });
+$("prevNotes").addEventListener("click", () => { if (paginaNotas > 1) { paginaNotas--; renderizarNotas(); } });
+$("nextNotes").addEventListener("click", () => { paginaNotas++; renderizarNotas(); });
 $("signOut").addEventListener("click", async () => {
   await supabase.auth.signOut();
   adminPanel.hidden = true;
@@ -320,6 +338,19 @@ $("signOut").addEventListener("click", async () => {
   mostrarStatus(loginStatus, "Você saiu do painel.");
 });
 $("refreshComments").addEventListener("click", carregarComentarios);
+document.querySelectorAll("[data-admin-tab]").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const section = tab.dataset.adminTab;
+    document.querySelectorAll("[data-admin-tab]").forEach((button) => {
+      const active = button === tab;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+    document.querySelectorAll("[data-admin-section]").forEach((panel) => {
+      panel.hidden = panel.dataset.adminSection !== section;
+    });
+  });
+});
 
 const emRecuperacao = new URLSearchParams(location.hash.slice(1)).get("type") === "recovery";
 const { data: sessionData } = await supabase.auth.getSession();
