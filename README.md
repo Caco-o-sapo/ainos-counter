@@ -1,10 +1,6 @@
 # 🫡 AINOS WATCH
 
-### 🔔 Avisos de novas ocorrências
-
-Quem quiser pode ativar notificações neste dispositivo para receber um alerta quando uma nova reclamação for publicada. A configuração inicial do Supabase está descrita em [PUSH_NOTIFICATIONS_SETUP.md](./PUSH_NOTIFICATIONS_SETUP.md).
-
-## Central comunitária de monitoramento de dias bons, perrengues e ocorrências inexplicáveis.
+### Central comunitária de monitoramento de dias bons, perrengues e ocorrências inexplicáveis.
 
 [![Abrir a Central de Monitoramento](https://ainos-counter.vercel.app/api/og?v=4)](https://ainos-counter.vercel.app/)
 
@@ -29,6 +25,7 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 - **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
 - **Navegação por abas:** separa o painel, o arquivo de ocorrências e a área de entretenimento para deixar a página mais fácil de percorrer.
 
+- **Notificações push:** quem quiser pode ativar avisos neste dispositivo quando uma nova ocorrência for publicada. A configuração inicial está em [PUSH_NOTIFICATIONS_SETUP.md](./PUSH_NOTIFICATIONS_SETUP.md).
 - **Painel administrativo:** faça login para criar, editar ou apagar notas, buscar e filtrar o arquivo, marcar dias bons, moderar comentários, autorizar administradores, consultar o histórico de alterações e exportar um backup JSON. As alterações aparecem sem novo deploy.
 
 ## 🔐 Acesso administrativo
