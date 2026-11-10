@@ -25,7 +25,7 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 - **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
 - **Navegação por abas:** separa o painel, o arquivo de ocorrências e a área de entretenimento para deixar a página mais fácil de percorrer.
 
-- **Painel administrativo:** faça login para adicionar, editar ou apagar notas, marcar dias bons, moderar comentários e autorizar outros administradores. As alterações aparecem sem novo deploy.
+- **Painel administrativo:** faça login para criar, editar ou apagar notas, buscar e filtrar o arquivo, marcar dias bons, moderar comentários, autorizar administradores e exportar um backup JSON. As alterações aparecem sem novo deploy.
 
 ## 🔐 Acesso administrativo
 
