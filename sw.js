@@ -9,6 +9,7 @@ const SHELL_FILES = [
   "/notas.js",
   "/notas-store.js",
   "/interacoes.js",
+  "/mural.js",
   "/supabase-config.js",
   "/push-notifications.js"
 ];
