@@ -217,7 +217,7 @@ function renderizarComentarios() {
     texto.textContent = comentario.body;
     const relacao = document.createElement("p");
     relacao.className = "soft small";
-    relacao.textContent = "ID da ocorrência: " + comentario.note_id;
+    relacao.textContent = comentario.note_id === "ainos-mural-publico" ? "Mural comunitário" : "ID da ocorrência: " + comentario.note_id;
     principal.append(titulo, texto, relacao);
     const remover = botao("Apagar", async () => {
       if (!confirm("Apagar este comentário?")) return;
