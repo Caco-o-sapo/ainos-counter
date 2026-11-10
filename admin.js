@@ -100,7 +100,7 @@ function renderizarNotas() {
         if (!confirm("Apagar esta ocorrência? Os comentários vinculados também deixarão de aparecer associados a uma nota.")) return;
         const { error } = await supabase.from("ainos_notes").delete().eq("id", nota.id);
         if (error) return mostrarStatus(adminStatus, "Não foi possível apagar: " + error.message, "error");
-        await carregarNotas();
+        await Promise.all([carregarNotas(), carregarLogs()]);
         mostrarStatus(adminStatus, "Ocorrência apagada.", "ok");
       }, "danger")
     );
@@ -124,7 +124,7 @@ async function carregarNotas() {
 async function carregarAdministradores() {
   const lista = $("adminList");
   lista.replaceChildren();
-  const { data, error } = await supabase.from("ainos_admin_allowlist").select("email,created_at").order("email");
+  const { data, error } = await supabase.from("ainos_admin_allowlist").select("email,created_at,is_owner").order("email");
   if (error) {
     const vazio = document.createElement("p");
     vazio.className = "empty";
@@ -146,14 +146,21 @@ async function carregarAdministradores() {
     const email = document.createElement("span");
     email.className = "row-text";
     email.textContent = registro.email;
-    const remover = botao("Remover", async () => {
-      if (!confirm("Remover " + registro.email + " do acesso administrativo?")) return;
-      const { error: rpcError } = await supabase.rpc("set_ainos_admin_email", { p_email: registro.email, p_allowed: false });
-      if (rpcError) return mostrarStatus(adminStatus, "Não foi possível remover: " + rpcError.message, "error");
-      await carregarAdministradores();
-      mostrarStatus(adminStatus, "Acesso removido.", "ok");
-    }, "danger");
-    linha.append(email, remover);
+    if (registro.is_owner) {
+      const protegido = document.createElement("span");
+      protegido.className = "count-pill owner-pill";
+      protegido.textContent = "👑 Proprietário · protegido";
+      linha.append(email, protegido);
+    } else {
+      const remover = botao("Remover", async () => {
+        if (!confirm("Remover " + registro.email + " do acesso administrativo?")) return;
+        const { error: rpcError } = await supabase.rpc("set_ainos_admin_email", { p_email: registro.email, p_allowed: false });
+        if (rpcError) return mostrarStatus(adminStatus, "Não foi possível remover: " + rpcError.message, "error");
+        await Promise.all([carregarAdministradores(), carregarLogs()]);
+        mostrarStatus(adminStatus, "Acesso removido.", "ok");
+      }, "danger");
+      linha.append(email, remover);
+    }
     lista.append(linha);
   });
 }
@@ -200,10 +207,84 @@ async function carregarComentarios() {
       if (!confirm("Apagar este comentário?")) return;
       const { error: deleteError } = await supabase.from("ainos_comments").delete().eq("id", comentario.id);
       if (deleteError) return mostrarStatus(adminStatus, "Não foi possível apagar: " + deleteError.message, "error");
-      await carregarComentarios();
+      await Promise.all([carregarComentarios(), carregarLogs()]);
       mostrarStatus(adminStatus, "Comentário apagado.", "ok");
     }, "danger");
     linha.append(principal, remover);
+    lista.append(linha);
+  });
+}
+async function carregarPerfil() {
+  const { data, error } = await supabase.rpc("get_my_ainos_admin_profile");
+  if (error) {
+    mostrarStatus(adminStatus, "Não foi possível carregar seu perfil: " + error.message, "error");
+    return;
+  }
+  const perfil = data?.[0];
+  $("displayName").value = perfil?.display_name || "";
+  $("ownerBadge").textContent = perfil?.is_owner ? "👑 Proprietário protegido" : "Administrador";
+  $("ownerBadge").classList.toggle("owner-pill", perfil?.is_owner === true);
+}
+const acoesAuditoria = {
+  note_created: "Criou ocorrência",
+  note_updated: "Editou ocorrência",
+  note_deleted: "Apagou ocorrência",
+  admin_added: "Autorizou administrador",
+  admin_removed: "Removeu acesso administrativo",
+  admin_name_changed: "Alterou o nome do perfil",
+  comment_deleted: "Apagou comentário",
+  owner_designated: "Designou proprietário"
+};
+async function carregarLogs() {
+  const lista = $("auditList");
+  if (!lista) return;
+  lista.replaceChildren();
+  const { data, error } = await supabase.from("ainos_admin_logs")
+    .select("id,actor_email,actor_label,action,target_id,target_summary,details,created_at")
+    .order("created_at", { ascending: false }).limit(150);
+  if (error) {
+    const vazio = document.createElement("p");
+    vazio.className = "empty";
+    vazio.textContent = "Não foi possível carregar o histórico. Execute a versão atualizada de supabase-admin.sql: " + error.message;
+    lista.append(vazio);
+    return;
+  }
+  if (!data?.length) {
+    const vazio = document.createElement("p");
+    vazio.className = "empty";
+    vazio.textContent = "Ainda não há alterações registradas.";
+    lista.append(vazio);
+    return;
+  }
+  data.forEach((registro) => {
+    const linha = document.createElement("article");
+    linha.className = "row";
+    const principal = document.createElement("div");
+    principal.className = "row-main";
+    const titulo = document.createElement("p");
+    titulo.className = "row-title";
+    titulo.textContent = new Intl.DateTimeFormat("pt-BR", { dateStyle: "medium", timeStyle: "short" }).format(new Date(registro.created_at)) + " · " + (acoesAuditoria[registro.action] || registro.action);
+    const autor = document.createElement("p");
+    autor.className = "row-text";
+    autor.textContent = (registro.actor_label || registro.actor_email) + (registro.actor_label !== registro.actor_email ? " · " + registro.actor_email : "");
+    const resumo = document.createElement("p");
+    resumo.className = "soft small";
+    resumo.textContent = registro.target_summary || ("Alvo: " + registro.target_id);
+    principal.append(titulo, autor, resumo);
+    if (registro.details && Object.keys(registro.details).length) {
+      const detalhes = document.createElement("details");
+      detalhes.className = "setup-help";
+      const rotulo = document.createElement("summary");
+      rotulo.textContent = "Ver detalhes da alteração";
+      const codigo = document.createElement("pre");
+      codigo.className = "small";
+      codigo.style.whiteSpace = "pre-wrap";
+      codigo.style.overflowWrap = "anywhere";
+      codigo.textContent = JSON.stringify(registro.details, null, 2);
+      detalhes.append(rotulo, codigo);
+      principal.append(detalhes);
+    }
+    linha.append(principal);
     lista.append(linha);
   });
 }
@@ -218,7 +299,7 @@ async function abrirPainel(user) {
   loginPanel.hidden = true;
   adminPanel.hidden = false;
   $("signedInAs").textContent = "Conectado como " + (user.email || "");
-  await Promise.all([carregarNotas(), carregarAdministradores(), carregarComentarios()]);
+  await Promise.all([carregarNotas(), carregarAdministradores(), carregarComentarios(), carregarPerfil(), carregarLogs()]);
 }
 function exportarBackup() {
   const arquivo = {
@@ -302,8 +383,16 @@ $("noteForm").addEventListener("submit", async (evento) => {
   const { error } = await supabase.from("ainos_notes").upsert(payload, { onConflict: "id" });
   if (error) return mostrarStatus(adminStatus, "Não foi possível salvar: " + error.message, "error");
   resetarEditor();
-  await carregarNotas();
+  await Promise.all([carregarNotas(), carregarLogs()]);
   mostrarStatus(adminStatus, "Ocorrência salva. O site já pode carregá-la.", "ok");
+});
+$("profileForm").addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+  const nome = $("displayName").value.trim();
+  const { error } = await supabase.rpc("set_my_ainos_admin_name", { p_name: nome });
+  if (error) return mostrarStatus(adminStatus, "Não foi possível salvar o nome: " + error.message, "error");
+  await Promise.all([carregarPerfil(), carregarLogs()]);
+  mostrarStatus(adminStatus, "Nome atualizado. Ele aparecerá nas próximas ações.", "ok");
 });
 $("cancelEdit").addEventListener("click", resetarEditor);
 $("adminForm").addEventListener("submit", async (evento) => {
@@ -312,7 +401,7 @@ $("adminForm").addEventListener("submit", async (evento) => {
   const { error } = await supabase.rpc("set_ainos_admin_email", { p_email: email, p_allowed: true });
   if (error) return mostrarStatus(adminStatus, "Não foi possível autorizar: " + error.message, "error");
   $("adminForm").reset();
-  await carregarAdministradores();
+  await Promise.all([carregarAdministradores(), carregarLogs()]);
   mostrarStatus(adminStatus, "E-mail autorizado. A pessoa pode criar a própria conta em /admin.html e confirmar o e-mail.", "ok");
 });
 $("importLegacy").addEventListener("click", async () => {
@@ -320,7 +409,7 @@ $("importLegacy").addEventListener("click", async () => {
   mostrarStatus(adminStatus, "Importando notas…");
   try {
     const quantidade = await importarNotasLegadas();
-    await carregarNotas();
+    await Promise.all([carregarNotas(), carregarLogs()]);
     mostrarStatus(adminStatus, quantidade + " notas importadas/atualizadas. Você pode continuar editando pelo painel.", "ok");
   } catch (error) {
     mostrarStatus(adminStatus, "Não foi possível importar: " + error.message, "error");
@@ -338,6 +427,7 @@ $("signOut").addEventListener("click", async () => {
   mostrarStatus(loginStatus, "Você saiu do painel.");
 });
 $("refreshComments").addEventListener("click", carregarComentarios);
+$("refreshLogs").addEventListener("click", carregarLogs);
 document.querySelectorAll("[data-admin-tab]").forEach((tab) => {
   tab.addEventListener("click", () => {
     const section = tab.dataset.adminTab;
