@@ -158,9 +158,18 @@ create policy "Admins can delete Ainos comments"
   on public.ainos_comments for delete to authenticated
   using (public.is_ainos_admin());
 
--- Primeiro acesso:
--- 1) Cadastre/convide o usuário em Authentication > Users no Supabase.
--- 2) Troque pelo e-mail dele e rode esta linha no SQL Editor:
--- insert into public.ainos_admin_allowlist(email) values (lower('seu@email.com'))
--- on conflict (email) do nothing;
--- 3) Entre em /admin.html com essa conta. O primeiro login conclui a autorização.
+-- PRIMEIRO ADMINISTRADOR:
+-- Depois de criar e confirmar a conta em /admin.html, substitua o e-mail nesta linha
+-- e execute o ARQUIVO TODO novamente no SQL Editor. Não coloque este trecho dentro
+-- de nenhuma função. O restante do arquivo é idempotente e pode ser executado de novo.
+do $bootstrap$
+declare
+  v_admin_email text := lower('seu@email.com'); -- TROQUE SOMENTE ESTE E-MAIL
+begin
+  if v_admin_email <> 'seu@email.com' then
+    insert into public.ainos_admin_allowlist(email)
+    values (v_admin_email)
+    on conflict (email) do nothing;
+  end if;
+end
+$bootstrap$;
