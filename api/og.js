@@ -1,6 +1,7 @@
 import { createElement as h } from "react";
 import { ImageResponse } from "@vercel/og";
-import { notas, ultimoDiaBom } from "../notas.js";
+import { notas as notasLegadas, ultimoDiaBom as diaBomLegado } from "../notas.js";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "../supabase-config.js";
 
 function dataDeHojeEmSaoPaulo() {
   const partes = new Intl.DateTimeFormat("en-US", {
@@ -22,14 +23,36 @@ function bloco(style, ...children) {
   return h("div", { style }, ...children);
 }
 
-export function GET() {
+async function carregarRelatos() {
+  const cabecalhos = {
+    apikey: SUPABASE_PUBLISHABLE_KEY,
+    Authorization: "Bearer " + SUPABASE_PUBLISHABLE_KEY
+  };
+  try {
+    const [relatosResponse, diasResponse] = await Promise.all([
+      fetch(SUPABASE_URL + "/rest/v1/ainos_notes?select=id,data,texto,dia_bom&order=data.desc,position.asc,created_at.desc&limit=1", { headers: cabecalhos, cache: "no-store" }),
+      fetch(SUPABASE_URL + "/rest/v1/ainos_notes?select=data&dia_bom=eq.true&order=data.desc&limit=1", { headers: cabecalhos, cache: "no-store" })
+    ]);
+    if (!relatosResponse.ok || !diasResponse.ok) throw new Error("Supabase indisponível");
+    const [relatos, diasBons] = await Promise.all([relatosResponse.json(), diasResponse.json()]);
+    const ultimoRegistro = relatos[0] || null;
+    return {
+      nota: ultimoRegistro ? {
+        ...ultimoRegistro,
+        data: ultimoRegistro.data ? ultimoRegistro.data.split("-").reverse().join("/") : ""
+      } : null,
+      ultimoDiaBom: diasBons[0]?.data || null
+    };
+  } catch {
+    return { nota: notasLegadas[0] || null, ultimoDiaBom: diaBomLegado };
+  }
+}
+
+export async function GET() {
+  const { nota: ultimaNota, ultimoDiaBom } = await carregarRelatos();
   const dias = ultimoDiaBom
-    ? Math.max(
-        0,
-        Math.floor((paraUtc(dataDeHojeEmSaoPaulo()) - paraUtc(ultimoDiaBom)) / 86400000)
-      )
+    ? Math.max(0, Math.floor((paraUtc(dataDeHojeEmSaoPaulo()) - paraUtc(ultimoDiaBom)) / 86400000))
     : null;
-  const ultimaNota = notas[0];
   const textoNota = ultimaNota?.texto
     ? (ultimaNota.texto.length > 132 ? ultimaNota.texto.slice(0, 129) + "…" : ultimaNota.texto)
     : "Nenhuma ocorrência registrada até agora.";
