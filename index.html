@@ -1340,15 +1340,29 @@
       }
     };
 
+    function idiomaDoDispositivo() {
+      const preferencias = [
+        ...(Array.isArray(navigator.languages) ? navigator.languages : []),
+        navigator.language || ""
+      ];
+      for (const preferencia of preferencias) {
+        const idioma = String(preferencia).toLowerCase().replace("_", "-");
+        if (idioma === "en" || idioma.startsWith("en-")) return "en";
+        if (idioma === "pt" || idioma.startsWith("pt-")) return "pt-BR";
+      }
+      return "pt-BR";
+    }
+
     function idiomaSalvo() {
       try {
-        return localStorage.getItem("ainos-language") === "en" ? "en" : "pt-BR";
-      } catch {
-        return "pt-BR";
-      }
+        const salvo = localStorage.getItem("ainos-language");
+        if (salvo === "en" || salvo === "pt-BR") return salvo;
+      } catch {}
+      return idiomaDoDispositivo();
     }
 
     let idiomaAtual = idiomaSalvo();
+    document.documentElement.lang = idiomaAtual === "en" ? "en" : "pt-BR";
     const temasDisponiveis = ["dossier", "terminal", "newspaper", "coast", "neon", "daylight"];
     const chavesTema = {
       dossier: "themeDossier", terminal: "themeTerminal", newspaper: "themeNewspaper",
