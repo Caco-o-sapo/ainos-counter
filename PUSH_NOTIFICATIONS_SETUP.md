@@ -28,7 +28,11 @@ No Supabase, abra **SQL Editor**, cole o conteúdo completo de [supabase-push-no
 
 ## 3. Criar a Edge Function
 
-No Supabase, abra **Edge Functions** e crie uma função chamada `push-note`. Copie nela o código de [supabase/functions/push-note/index.ts](./supabase/functions/push-note/index.ts) e publique.
+No Supabase, abra **Edge Functions → Deploy a new function → Via Editor**. Dê à função exatamente o nome `push-note` e crie-a pelo editor. O editor precisa ter um arquivo chamado **`index.ts`**.
+
+Abra [supabase/functions/push-note/index.ts](./supabase/functions/push-note/index.ts), copie o conteúdo inteiro e cole dentro do `index.ts` do editor, substituindo o exemplo. Mantenha o caminho padrão; não configure um entrypoint personalizado nem envie o arquivo como uma pasta compactada. Depois clique em **Deploy function**.
+
+Se a função já foi criada e a implantação falhou, abra-a em **Edge Functions → push-note → Code**, confirme que existe o arquivo `index.ts` com o código completo e tente **Deploy updates** novamente. O erro “Entrypoint path does not exist” significa que o pacote não continha o arquivo de entrada esperado; ele não indica, por si só, erro no SQL ou nas chaves.
 
 Na configuração da função, deixe **Verify JWT** desativado. A função valida um segredo próprio do webhook antes de processar qualquer envio.
 
