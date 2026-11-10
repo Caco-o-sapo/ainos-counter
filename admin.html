@@ -21,9 +21,10 @@
     .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat{position:relative;overflow:hidden;min-height:116px;padding:17px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#1c1d23,#15161a)}.stat:after{position:absolute;right:-20px;bottom:-45px;width:110px;height:110px;border:1px solid rgba(var(--amber-rgb),.1);border-radius:50%;box-shadow:0 0 0 18px rgba(var(--amber-rgb),.025),0 0 0 38px rgba(var(--amber-rgb),.02);content:""}.stat-label{margin:0;color:var(--muted);font-size:.73rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.stat-value{position:relative;z-index:1;display:block;margin-top:8px;color:var(--amber-bright);font-size:2rem;font-weight:850;line-height:1.1;font-variant-numeric:tabular-nums}
     .admin-nav{display:flex;gap:8px;overflow:auto;margin:22px 0 0;padding-bottom:2px}.admin-tab{flex:0 0 auto;min-height:41px;padding:0 15px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:#17181d;font-weight:700}.admin-tab:hover{color:var(--text);border-color:#66514a}.admin-tab.active{border-color:#8b5a35;color:#25180f;background:var(--amber)}.section{margin-top:14px}.workspace{display:grid;grid-template-columns:minmax(300px,.85fr) minmax(0,1.35fr);align-items:start;gap:15px}.editor{position:sticky;top:15px}.search-tools{display:grid;grid-template-columns:minmax(180px,1fr) 180px;gap:9px;margin-top:16px}.list{display:grid;gap:10px;margin-top:15px}.row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:14px;border:1px solid var(--line);border-radius:13px;background:rgba(17,18,23,.7);transition:border-color .16s ease}.row:hover{border-color:#544441}.row-main{min-width:0}.row-title{margin:0;color:var(--amber);font-size:.74rem;font-weight:800;letter-spacing:.04em}.row-text{margin:5px 0 0;overflow-wrap:anywhere;line-height:1.55}.row-actions{display:flex;flex-shrink:0;gap:7px}.row-actions .button,.row-actions .danger{min-height:34px;padding:0 10px;font-size:.8rem}.empty{padding:18px 2px;color:var(--muted)}.admin-row{align-items:center}.comment{white-space:pre-wrap;overflow-wrap:anywhere}.owner-pill{border-color:#715b35;color:#ffd99a;background:#332a1c}.count-pill{display:inline-flex;align-items:center;min-height:25px;padding:0 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.75rem;font-weight:700}.pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:15px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07)}.pagination[hidden]{display:none}.form-actions{display:flex;flex-wrap:wrap;gap:8px}.section[hidden],[hidden]{display:none!important}
     @media(max-width:850px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace{grid-template-columns:1fr}.editor{position:static}.shell{width:min(100% - 28px,700px)}}
-    @media(max-width:560px){.shell{width:min(100% - 22px,600px);padding-top:14px}.topbar{align-items:flex-start}.top-actions{flex-wrap:wrap;justify-content:flex-end}.intro{align-items:flex-start;flex-direction:column;padding-top:25px}.case-id{display:none}.panel{padding:17px}.stats{gap:8px}.stat{min-height:102px;padding:13px}.stat-value{font-size:1.65rem}.search-tools{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.row{flex-direction:column}.row-actions{width:100%}.row-actions button{flex:1}.toolbar-actions .button{flex:1}}
+    @media(max-width:560px){.card-grid{grid-template-columns:1fr}.shell{width:min(100% - 22px,600px);padding-top:14px}.topbar{align-items:flex-start}.top-actions{flex-wrap:wrap;justify-content:flex-end}.intro{align-items:flex-start;flex-direction:column;padding-top:25px}.case-id{display:none}.panel{padding:17px}.stats{gap:8px}.stat{min-height:102px;padding:13px}.stat-value{font-size:1.65rem}.search-tools{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.row{flex-direction:column}.row-actions{width:100%}.row-actions button{flex:1}.toolbar-actions .button{flex:1}}
   
     /* Reuse the theme selected on the public site. */
+    .card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card-grid .row{height:100%;min-width:0;flex-direction:column;align-items:stretch;justify-content:space-between;gap:12px}.card-grid .row-main{width:100%}.card-grid .row-actions{width:100%}.card-grid .row-actions button{flex:1}.admin-grid .row{min-height:86px}.pagination{position:sticky;bottom:0;padding:12px 0;background:var(--panel);z-index:2}.pagination .button{min-width:104px}
     body[data-theme="dossier"]{color-scheme:dark;--bg:#101116;--panel:#191a20;--raised:#202127;--line:#34343b;--text:#f3eee7;--muted:#aaa6a3;--soft:#77757a;--amber:#f4ad69;--amber-bright:#ffc887;--green:#a2c9a4;--red:#ed7967;--amber-rgb:244,173,105;--button-ink:#21160e;background:radial-gradient(ellipse at 12% 0%,rgba(111,55,46,.24),transparent 36rem),radial-gradient(ellipse at 100% 35%,rgba(128,88,53,.1),transparent 32rem),var(--bg)}
     body[data-theme="terminal"]{color-scheme:dark;--bg:#07120e;--panel:#0d1b15;--raised:#14251d;--line:#2b493a;--text:#e9f6ec;--muted:#abc2b1;--soft:#75917f;--amber:#58d68d;--amber-bright:#a7f3c5;--green:#9be2aa;--red:#fb7185;--amber-rgb:88,214,141;--button-ink:#07120e;background:radial-gradient(ellipse at 50% 0%,rgba(26,104,68,.28),transparent 38rem),var(--bg)}
     body[data-theme="newspaper"]{color-scheme:light;--bg:#e9dfcc;--panel:#f8f1e3;--raised:#eee3ce;--line:#c9b99d;--text:#33291f;--muted:#625647;--soft:#857663;--amber:#96541f;--amber-bright:#713a11;--green:#54754e;--red:#a64035;--amber-rgb:150,84,31;--button-ink:#fffaf2;background:radial-gradient(ellipse at 50% 0%,rgba(184,142,83,.2),transparent 42rem),var(--bg)}
@@ -119,7 +120,7 @@
               <input id="searchNotes" class="search" type="search" placeholder="Buscar no texto ou data..." aria-label="Buscar ocorrências">
               <select id="noteFilter" class="search" aria-label="Filtrar ocorrências"><option value="all">Todas</option><option value="complaints">Reclamações</option><option value="good">Dias bons</option></select>
             </div>
-            <div id="noteList" class="list"></div>
+            <div id="noteList" class="list card-grid"></div>
             <nav id="notesPagination" class="pagination" aria-label="Paginação de ocorrências" hidden><button id="prevNotes" class="button" type="button">← Anterior</button><span id="notePageLabel" class="muted small"></span><button id="nextNotes" class="button" type="button">Próxima →</button></nav>
           </section>
         </div>
@@ -128,7 +129,8 @@
       <section class="section" data-admin-section="comments" hidden>
         <section class="panel">
           <div class="panel-head"><div><p class="eyebrow">MODERAÇÃO</p><h2>Comentários da comunidade</h2><p class="panel-copy">Os 100 mais recentes aparecem primeiro.</p></div><button id="refreshComments" class="button" type="button">↻ Atualizar</button></div>
-          <div id="commentList" class="list"></div>
+          <div id="commentList" class="list card-grid"></div>
+          <nav id="commentsPagination" class="pagination" aria-label="Paginação de comentários" hidden><button id="prevComments" class="button" type="button">← Anterior</button><span id="commentsPageLabel" class="muted small"></span><button id="nextComments" class="button" type="button">Próxima →</button></nav>
         </section>
       </section>
 
@@ -151,14 +153,15 @@
         </div>
         <section class="panel section">
           <div class="panel-head"><div><p class="eyebrow">PERMISSÕES</p><h2>Administradores</h2><p class="panel-copy">A conta proprietária aparece protegida e não pode ser removida pelo painel.</p></div></div>
-          <div id="adminList" class="list"></div>
+          <div id="adminList" class="list card-grid admin-grid"></div>
         </section>
       </section>
 
       <section class="section" data-admin-section="activity" hidden>
         <section class="panel">
           <div class="panel-head"><div><p class="eyebrow">AUDITORIA</p><h2>Registro de atividades</h2><p class="panel-copy">Quem alterou o quê e quando. Eventos mais recentes primeiro.</p></div><button id="refreshLogs" class="button" type="button">↻ Atualizar</button></div>
-          <div id="auditList" class="list"></div>
+          <div id="auditList" class="list card-grid"></div>
+          <nav id="activityPagination" class="pagination" aria-label="Paginação de atividades" hidden><button id="prevActivity" class="button" type="button">← Anterior</button><span id="activityPageLabel" class="muted small"></span><button id="nextActivity" class="button" type="button">Próxima →</button></nav>
         </section>
       </section>
     </section>
