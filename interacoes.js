@@ -232,3 +232,18 @@ export async function renderizarInteracoesNota(destino, noteId, t) {
     }
   }
 }
+
+export async function buscarComentariosParaImagem(noteId, limite = 2) {
+  try {
+    const { data, error } = await supabase
+      .from("ainos_comments")
+      .select("nickname,body,created_at")
+      .eq("note_id", noteId)
+      .order("created_at", { ascending: false })
+      .limit(limite);
+    if (error) throw error;
+    return data || [];
+  } catch {
+    return [];
+  }
+}
