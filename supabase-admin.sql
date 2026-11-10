@@ -343,3 +343,6 @@ begin
   end if;
 end
 $bootstrap$;
+
+-- Atualiza a API do Supabase para reconhecer as funções recém-criadas.
+notify pgrst, 'reload schema';
