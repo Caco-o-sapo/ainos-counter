@@ -11,6 +11,22 @@ let notaEditando = null;
 let paginaNotas = 1;
 const notasPorPagina = 8;
 
+const temasDisponiveis = ["dossier", "terminal", "newspaper", "coast", "neon", "daylight"];
+function aplicarTemaSalvo() {
+  let tema = "dossier";
+  try {
+    const salvo = localStorage.getItem("ainos-theme");
+    if (temasDisponiveis.includes(salvo)) tema = salvo;
+  } catch {}
+  document.body.dataset.theme = tema;
+  document.documentElement.style.colorScheme = ["newspaper", "daylight"].includes(tema) ? "light" : "dark";
+}
+aplicarTemaSalvo();
+window.addEventListener("storage", (evento) => {
+  if (evento.key === "ainos-theme") aplicarTemaSalvo();
+});
+
+
 function mostrarStatus(elemento, mensagem, tipo = "") {
   elemento.textContent = mensagem;
   elemento.className = "status" + (tipo ? " " + tipo : "");
