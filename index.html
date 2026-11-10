@@ -621,6 +621,7 @@
     .calendar-day{position:relative;display:grid;min-height:37px;place-items:center;border:1px solid transparent;border-radius:9px;color:var(--muted);background:transparent;font:inherit;font-size:.78rem;cursor:pointer}.calendar-day:hover{border-color:var(--line);background:var(--panel-raised)}.calendar-day.other-month{opacity:.35}.calendar-day.has-note:after{position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--amber);content:""}.calendar-day.has-good:after{background:var(--green)}.calendar-day.selected{border-color:var(--amber);color:var(--amber-bright);background:rgba(var(--amber-rgb),.12)}
     .calendar-legend{display:flex;gap:14px;margin-top:13px;color:var(--soft);font-size:.72rem}.legend-dot{display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%;background:var(--amber)}.legend-dot.good{background:var(--green)}.clear-date{margin-top:12px;border:0;padding:0;color:var(--amber);background:none;font:inherit;font-size:.76rem;cursor:pointer}
     .achievements{display:grid;gap:9px}.achievement{display:grid;grid-template-columns:35px 1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.08)}.achievement.locked{opacity:.48}.achievement-icon{display:grid;width:34px;height:34px;place-items:center;border-radius:10px;background:rgba(var(--amber-rgb),.1)}.achievement-title{margin:0;font-size:.8rem;font-weight:750}.achievement-copy{margin:3px 0 0;color:var(--soft);font-size:.7rem;line-height:1.35}.achievement-state{color:var(--green);font-size:.68rem;font-weight:750}
+    @media(max-width:520px){.section-tabs{flex-wrap:wrap}.section-tab{min-width:calc(50% - 5px)}}
     @media(max-width:720px){.notes-tools{grid-template-columns:1fr 1fr}.notes-search{grid-column:1/-1}.lower-grid{grid-template-columns:1fr}}
     @media(max-width:420px){.notes-tools{grid-template-columns:1fr}.notes-search{grid-column:auto}.extra-panel{padding:18px}.calendar-day{min-height:34px}}
     .stats-panel{margin-top:18px;padding:22px}.stats-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:17px}.stats-head h2{margin:0;font-size:1.1rem}
@@ -706,49 +707,8 @@
     .mascot-speech strong{color:var(--amber-bright);font-size:.76rem}.mascot-speech p{margin:4px 0 0;color:var(--muted);font-size:.75rem;line-height:1.4}
     @keyframes mascotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
     @media(prefers-reduced-motion:reduce){.ainos-mascot{animation:none}}
-    .game-root{display:grid;gap:16px}
-    .game-heading{padding:20px 2px 4px}
-    .game-title{margin:0;font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:-.04em}
-    .game-copy{margin:9px 0 0;color:var(--muted);font-size:.86rem;line-height:1.55}
-    .game-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:15px}
-    .boss-card{position:relative;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 20% 0%,rgba(var(--red-rgb),.17),transparent 55%),linear-gradient(145deg,#251d24,#19191f)}
-    .boss-top{display:flex;align-items:center;gap:17px}
-    .boss-avatar{display:grid;width:82px;height:82px;flex:0 0 auto;place-items:center;border:1px solid rgba(var(--red-rgb),.32);border-radius:24px;background:rgba(var(--red-rgb),.1);font-size:3.3rem;filter:drop-shadow(0 8px 18px rgba(var(--red-rgb),.24));animation:bossBob 2.8s ease-in-out infinite}
-    .boss-avatar.boss-defeated{animation:bossFall .7s ease both}
-    .boss-name{margin:0;font-size:clamp(1.25rem,3vw,1.8rem);letter-spacing:-.035em}
-    .boss-description{max-width:45ch;margin:18px 0;color:var(--muted);font-size:.88rem;line-height:1.55}
-    .boss-health-label{display:flex;justify-content:space-between;gap:12px;margin:22px 0 8px;color:var(--muted);font-size:.76rem}
-    .boss-health-label strong{color:var(--amber-bright);font-variant-numeric:tabular-nums}
-    .boss-health-track{height:15px;overflow:hidden;border:1px solid rgba(255,255,255,.11);border-radius:999px;background:#101116}
-    .boss-health-fill{display:block;width:100%;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--red),var(--amber-bright));box-shadow:0 0 15px rgba(var(--red-rgb),.45);transition:width .8s cubic-bezier(.2,.8,.2,1)}
-    .boss-status{margin:13px 0 0;color:#f3d3c0;font-size:.85rem;font-weight:750;line-height:1.4}
-    .boss-damage{margin:7px 0 0;color:var(--soft);font-size:.72rem}
-    .bet-card{padding:22px}
-    .bet-card .extra-heading{align-items:start}
-    .bet-card h3,.leaderboard-card h3{margin:0;font-size:1.05rem}
     .round-count{flex:0 0 auto;padding:7px 9px;border:1px solid var(--line);border-radius:9px;color:var(--amber-bright);font-size:.7rem}
-    .bet-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:16px 0 12px}
-    .bet-option{min-height:40px;border:1px solid var(--line);border-radius:10px;padding:8px;color:var(--muted);background:rgba(255,255,255,.025);font:inherit;font-size:.79rem;font-weight:700;cursor:pointer;transition:.18s ease}
-    .bet-option:hover:not(:disabled){border-color:rgba(var(--amber-rgb),.5);color:var(--amber-bright);transform:translateY(-1px)}
-    .bet-option.selected{border-color:var(--amber);color:var(--amber-bright);background:rgba(var(--amber-rgb),.13);box-shadow:0 0 0 2px rgba(var(--amber-rgb),.08)}
-    .bet-option:disabled{cursor:default;opacity:.78}
-    .bet-name{width:100%;min-height:40px;border:1px solid var(--line);border-radius:10px;padding:0 11px;color:var(--text);background:var(--panel);font:inherit;font-size:.8rem}
-    .bet-submit{margin-top:9px;color:var(--amber-bright)}
-    .bet-submit:disabled{cursor:not-allowed;opacity:.48}
-    .bet-status{min-height:1.2em;margin:10px 0 0;color:var(--soft);font-size:.75rem;line-height:1.4}
-    .leaderboard-card{grid-column:1/-1;padding:20px 22px}
-    .leaderboard-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 18px;margin:4px 0 12px;padding:0;list-style:none}
-    .leaderboard-row{display:grid;grid-template-columns:30px minmax(0,1fr) auto;align-items:center;gap:9px;padding:9px 10px;border:1px solid rgba(255,255,255,.07);border-radius:10px;background:rgba(0,0,0,.08)}
-    .leaderboard-row.is-you{border-color:rgba(var(--amber-rgb),.34);background:rgba(var(--amber-rgb),.07)}
-    .leaderboard-rank{color:var(--amber);font-family:ui-monospace,monospace;font-size:.72rem}
-    .leaderboard-name{overflow:hidden;color:var(--text);font-size:.8rem;text-overflow:ellipsis;white-space:nowrap}
-    .leaderboard-points{color:var(--amber-bright);font-size:.8rem;font-weight:800}
-    .leaderboard-empty{grid-column:1/-1;padding:12px 0;color:var(--soft);font-size:.8rem}
     .my-score{margin:12px 0 0;color:var(--muted);font-size:.77rem}
-    @keyframes bossBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-7px) rotate(2deg)}}
-    @keyframes bossFall{to{transform:rotate(18deg) translateY(14px);filter:grayscale(1);opacity:.6}}
-    @media(max-width:720px){.game-layout{grid-template-columns:1fr}.leaderboard-card{grid-column:auto}}
-    @media(max-width:520px){.game-heading{padding-top:10px}.boss-card,.bet-card,.leaderboard-card{padding:18px}.boss-avatar{width:66px;height:66px;border-radius:19px;font-size:2.6rem}.leaderboard-list{grid-template-columns:1fr}.section-tabs{flex-wrap:wrap}.section-tab{min-width:calc(50% - 5px)}}
     .theme-picker-button{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 11px;border:1px solid rgba(var(--amber-rgb),.36);border-radius:999px;color:var(--amber-bright);background:rgba(var(--amber-rgb),.07);font:inherit;font-size:.74rem;font-weight:800;cursor:pointer;white-space:nowrap;transition:.18s ease}
     .theme-picker-button:hover{border-color:var(--amber);background:rgba(var(--amber-rgb),.14)}
     .theme-current{padding-left:7px;border-left:1px solid rgba(var(--amber-rgb),.28);color:var(--muted);font-size:.68rem;font-weight:700}
@@ -796,7 +756,6 @@
     body[data-theme="terminal"] .note.note-good-day{background:linear-gradient(145deg,rgba(28,66,42,.4),rgba(10,24,18,.98))}
     body[data-theme="terminal"] .section-tabs,body[data-theme="terminal"] .stat-card,body[data-theme="terminal"] .comments-panel{background:rgba(11,29,20,.88)}
     body[data-theme="terminal"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(88,214,141,.13),transparent 45%),linear-gradient(145deg,#10251a,#0b1912)}
-    body[data-theme="terminal"] .boss-card{background:radial-gradient(ellipse at 20% 0%,rgba(251,113,133,.16),transparent 55%),linear-gradient(145deg,#1b2020,#101a16)}
     body[data-theme="newspaper"]{
       color-scheme:light;--bg:#e9dfcc;--panel:#f8f1e3;--panel-raised:#eee3ce;--line:#c9b99d;--text:#33291f;--muted:#625647;--soft:#857663;
       --amber:#96541f;--amber-bright:#713a11;--amber-rgb:150,84,31;--red:#a64035;--red-rgb:166,64,53;--green:#54754e;--green-rgb:84,117,78;
@@ -809,7 +768,6 @@
     body[data-theme="newspaper"] .counter-panel::after{border-color:rgba(150,84,31,.15);box-shadow:0 0 0 32px rgba(150,84,31,.035),0 0 0 68px rgba(150,84,31,.025)}
     body[data-theme="newspaper"] .status-panel{background:linear-gradient(145deg,#f8f1e3,#eee2cd)}
     body[data-theme="newspaper"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(150,84,31,.09),transparent 45%),linear-gradient(145deg,#fbf5e9,#f0e6d3)}
-    body[data-theme="newspaper"] .boss-card{background:linear-gradient(145deg,#f8eee0,#ebddc8)}
     body[data-theme="newspaper"] .live-label{color:var(--green);background:rgba(var(--green-rgb),.1);border-color:rgba(var(--green-rgb),.25)}
     body[data-theme="newspaper"] .note-text,body[data-theme="newspaper"] .status-copy,body[data-theme="newspaper"] .comment-item p{color:var(--text)}
   
@@ -821,7 +779,6 @@
     body[data-theme="coast"]::before{background-image:linear-gradient(rgba(132,220,238,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(132,220,238,.028) 1px,transparent 1px)}
     body[data-theme="coast"] .panel,body[data-theme="coast"] .note,body[data-theme="coast"] .stat-card,body[data-theme="coast"] .section-tabs,body[data-theme="coast"] .comments-panel{background:linear-gradient(145deg,rgba(18,42,54,.97),rgba(11,27,37,.98))}
     body[data-theme="coast"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(104,197,231,.14),transparent 45%),linear-gradient(145deg,#173440,#10212b)}
-    body[data-theme="coast"] .boss-card{background:radial-gradient(ellipse at 20% 0%,rgba(251,135,148,.15),transparent 55%),linear-gradient(145deg,#1b2931,#0e1d25)}
     body[data-theme="neon"]{
       color-scheme:dark;--bg:#100b18;--panel:#1c1428;--panel-raised:#281b36;--line:#493054;--text:#f6edf8;--muted:#c2adc9;--soft:#91799b;
       --amber:#e39aff;--amber-bright:#f0c8ff;--amber-rgb:211,120,245;--red:#ff6f9f;--red-rgb:255,111,159;--green:#71e5cb;--green-rgb:113,229,203;
@@ -830,7 +787,6 @@
     body[data-theme="neon"]::before{background-image:linear-gradient(rgba(227,154,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(227,154,255,.028) 1px,transparent 1px)}
     body[data-theme="neon"] .panel,body[data-theme="neon"] .note,body[data-theme="neon"] .stat-card,body[data-theme="neon"] .section-tabs,body[data-theme="neon"] .comments-panel{background:linear-gradient(145deg,rgba(39,26,54,.97),rgba(21,15,31,.98))}
     body[data-theme="neon"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(211,120,245,.16),transparent 45%),linear-gradient(145deg,#291b38,#181123)}
-    body[data-theme="neon"] .boss-card{background:radial-gradient(ellipse at 20% 0%,rgba(255,111,159,.19),transparent 55%),linear-gradient(145deg,#292039,#171323)}
     body[data-theme="daylight"]{
       color-scheme:light;--bg:#edf2f8;--panel:#ffffff;--panel-raised:#f5f7fb;--line:#d4dce8;--text:#263348;--muted:#5d6c80;--soft:#7b8798;
       --amber:#2d65a7;--amber-bright:#1f4f8b;--amber-rgb:45,101,167;--red:#b94b56;--red-rgb:185,75,86;--green:#34795d;--green-rgb:52,121,93;
@@ -841,7 +797,6 @@
     body[data-theme="daylight"] .note.note-good-day{background:linear-gradient(145deg,#e7f3e8,#f5f8f4);border-color:#bed4c0}
     body[data-theme="daylight"] .status-panel{background:linear-gradient(145deg,#fff,#eef3fa)}
     body[data-theme="daylight"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(45,101,167,.09),transparent 45%),linear-gradient(145deg,#fff,#f1f5fb)}
-    body[data-theme="daylight"] .boss-card{background:linear-gradient(145deg,#fff,#edf2f8)}
     body[data-theme="daylight"] .note-text,body[data-theme="daylight"] .status-copy,body[data-theme="daylight"] .comment-item p{color:var(--text)}
       .favorite-note-button{min-width:36px;border:1px solid rgba(var(--amber-rgb),.26);border-radius:9px;padding:6px 9px;color:var(--muted);background:rgba(255,255,255,.025);font:inherit;font-size:1rem;cursor:pointer}
     .favorite-note-button[aria-pressed="true"]{border-color:rgba(var(--amber-rgb),.55);color:var(--amber-bright);background:rgba(var(--amber-rgb),.12)}
@@ -998,9 +953,6 @@
         <button class="section-tab" type="button" role="tab" id="tab-archive" aria-selected="false" aria-controls="panel-archive" data-tab="archive" data-i18n="tabArchive" tabindex="-1">Ocorrências</button>
 
         <button class="section-tab" type="button" role="tab" id="tab-entertainment" aria-selected="false" aria-controls="panel-entertainment" data-tab="entertainment" data-i18n="tabEntertainment" tabindex="-1">Conquistas</button>
-
-        <button class="section-tab" type="button" role="tab" id="tab-game" aria-selected="false" aria-controls="panel-game" data-tab="game" data-i18n="tabGame" tabindex="-1">Chefe final</button>
-
       </nav>
 
       <section class="tab-panel active" role="tabpanel" tabindex="0" id="panel-dashboard" aria-labelledby="tab-dashboard">
@@ -1160,10 +1112,7 @@
         </section>
 
       </section>
-
-      <section class="tab-panel" role="tabpanel" tabindex="0" id="panel-game" aria-labelledby="tab-game" hidden>
-        <div id="gameRoot" class="game-root" aria-live="polite"></div>
-      </section></main>
+</main>
 
     <footer class="page-footer">
       <span data-i18n="footerProject">Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.</span>
@@ -1207,8 +1156,6 @@
     import { PUSH_VAPID_PUBLIC_KEY } from "./supabase-config.js";
     import { pushDisponivel, pushAtivo, ativarPush, desativarPush } from "./push-notifications.js";
     import { obterIdNota, renderizarInteracoesNota, buscarComentariosParaImagem } from "./interacoes.js";
-    import { renderizarJogo } from "./jogo.js";
-
     let notas = notasLegadas;
 
     const idiomas = {
@@ -1250,16 +1197,11 @@
         achievementList: [["☀️","Primeiro dia bom","Marque um registro positivo.","goodDays",1],["🗃️","Arquivo inaugurado","Registre 10 ocorrências.","notes",10],["📚","Arquivista","Chegue a 25 registros.","notes",25],["🏛️","Memória institucional","Chegue a 50 registros.","notes",50],["🎭","Mente aberta","Registre 3 categorias diferentes.","categories",3],["🧭","Dossiê completo","Registre notas em 5 categorias.","categories",5],["🔍","Uma semana sob observação","7 dias desde o último dia bom.","days",7],["⏳","Mês histórico","30 dias desde o último dia bom.","days",30],["🛰️","Missão de longa duração","100 dias desde o último dia bom.","days",100],["🎯","Bingo!","Complete uma linha na cartela.","bingo",1]],
         achievementProgress: (a,b) => a + " / " + b + " " + (idiomaAtual === "en" ? "progress" : "progresso"),
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", deviceInfoKicker: "No seu dispositivo", deviceInfoTitle: "A central vai com você", deviceInfoCopy: "Instale o site como app para abrir direto da tela inicial, ou ative avisos para receber uma notificação quando uma reclamação nova for publicada. As opções ficam no Menu; avisos são opcionais e configurados por dispositivo.", deviceAppBadge: "App instalável", deviceAlertsBadge: "Avisos opcionais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
-        tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento", tabGame: "Chefe final",
+        tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento",
         adminAccess: "Painel da equipe", menuButton: "Menu", menuTitle: "Acessos e ajustes", themeLabel: "Escolher tema visual", themeButton: "Temas", themeKicker: "APARÊNCIA DA CENTRAL", themeDialogTitleText: "Escolha um tema", themeDialogIntro: "A prévia é instantânea e a escolha fica salva neste navegador.", closeThemeDialog: "Fechar seletor de temas", themeSelected: "ATUAL",
         themeDossier: "Dossiê", themeTerminal: "Terminal", themeNewspaper: "Jornal", themeCoast: "Maré baixa", themeNeon: "Neon", themeDaylight: "Plantão claro",
         themeDescDossier: "O visual oficial da investigação.", themeDescTerminal: "Verde de monitoramento em tempo real.", themeDescNewspaper: "Papel envelhecido e boletim de crise.", themeDescCoast: "Azul profundo com brilho de radar.", themeDescNeon: "Roxo elétrico para uma crise de alto impacto.", themeDescDaylight: "Claro, limpo e fácil de ler.",
         featuredKicker: "Arquivo em destaque", featuredTitle: "Frase do dia", shareFeatured: "🖼️ Compartilhar frase", featuredDatePrefix: "Registro de", commentsOnCard: "COMENTÁRIOS DA COMUNIDADE", commentsUnavailable: "Comentários ainda não carregados.",
-        gameEyebrow: "OPERAÇÃO COLETIVA", gameTitle: "Derrubar o Chefe do Azar", gameIntro: "A próxima reclamação pode virar o golpe decisivo. Escolha seu palpite e ajude o grupo.",
-        bossKicker: "ALVO ATUAL", bossNames: ["Chefe do Azar", "Burocracia Cósmica", "Caos em Pessoa", "Segunda-feira Eterna"], bossDescription: "Cada palpite certo causa dano. O arquivo decide quem acerta.",
-        bossHealth: "Vida do chefão", bossStatus: "O chefão segue de pé. Façam seus palpites!", bossDefeated: "CHEFÃO DERROTADO! O grupo venceu — por enquanto.", bossHits: (a,b) => a + " / " + b + " acertos para derrubar este chefão",
-        betKicker: "BOLÃO DA PRÓXIMA RECLAMAÇÃO", betTitle: "Qual será o próximo caos?", betInstructions: "Escolha uma categoria antes da próxima nota aparecer no arquivo.", betChoose: "Categorias para o palpite",
-        nicknamePlaceholder: "Seu nome no placar (opcional)", betSubmit: "Registrar palpite", betSending: "Registrando…", betRecorded: "Palpite registrado:", betOpen: "A rodada está aberta. Escolha com sabedoria duvidosa.", betAlready: "Seu palpite desta rodada já foi registrado.", betCount: (n) => n + (n === 1 ? " palpite" : " palpites"),
         defaultAgent: "Agente", leaderboardTitle: "Placar do esquadrão", yourScore: "Seus acertos", noScores: "Ainda sem acertos. O azar está vencendo por W.O.", gameLoading: "Buscando sinais do chefão…", gameError: "Não foi possível carregar o jogo.", gameSqlHint: "Rode a query atualizada do Supabase para ativar o jogo.", gameEmpty: "Ainda não há reclamações para começar o bolão.",
         communityLabel: "Interações da comunidade", commentsLabel: "💬 Comentários", commentsLoading: "Carregando comentários…", reactWith: "Reagir com", commentPlaceholder: "Escreva um comentário (até 500 caracteres)…", namePlaceholder: "Seu nome (opcional)", sendComment: "Enviar comentário", noComments: "Ainda ninguém comentou.", anonymous: "Anônimo", commentSent: "Comentário enviado!", interactionError: "Não foi possível enviar. Tente novamente.", interactionUnavailable: "Comentários e reações estão indisponíveis agora.",
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente",
@@ -1313,16 +1255,11 @@
         achievementList: [["☀️","First good day","Mark a positive report.","goodDays",1],["🗃️","Archive opened","Record 10 reports.","notes",10],["📚","Archivist","Reach 25 reports.","notes",25],["🏛️","Institutional memory","Reach 50 reports.","notes",50],["🎭","Open-minded","Record 3 different categories.","categories",3],["🧭","Complete case file","Record notes in 5 categories.","categories",5],["🔍","One week under watch","7 days since the last good day.","days",7],["⏳","Historic month","30 days since the last good day.","days",30],["🛰️","Long-haul mission","100 days since the last good day.","days",100],["🎯","Bingo!","Complete a line on the card.","bingo",1]],
         achievementProgress: (a,b) => a + " / " + b + " progress",
         statsKicker: "Case file metrics", statsTitle: "Official statistics", deviceInfoKicker: "On your device", deviceInfoTitle: "Take the watch with you", deviceInfoCopy: "Install the site as an app for quick access from your home screen, or enable alerts for new reports. Both options are in the Menu; alerts are optional and set up separately on each device.", deviceAppBadge: "Installable app", deviceAlertsBadge: "Optional alerts", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
-        tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment", tabGame: "Final boss",
+        tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment",
         adminAccess: "Team admin", menuButton: "Menu", menuTitle: "Access and settings", themeLabel: "Choose a visual theme", themeButton: "Themes", themeKicker: "CENTER APPEARANCE", themeDialogTitleText: "Choose a theme", themeDialogIntro: "Preview instantly; your choice is saved in this browser.", closeThemeDialog: "Close theme picker", themeSelected: "CURRENT",
         themeDossier: "Dossier", themeTerminal: "Terminal", themeNewspaper: "Newspaper", themeCoast: "Deep tide", themeNeon: "Neon", themeDaylight: "Day shift",
         themeDescDossier: "The investigation's official look.", themeDescTerminal: "Live-monitoring green.", themeDescNewspaper: "Aged paper and a crisis bulletin.", themeDescCoast: "Deep blue with a radar glow.", themeDescNeon: "Electric violet for a high-impact crisis.", themeDescDaylight: "Bright, clean, and easy to read.",
         featuredKicker: "Featured archive", featuredTitle: "Quote of the day", shareFeatured: "🖼️ Share quote", featuredDatePrefix: "Filed on", commentsOnCard: "COMMUNITY COMMENTS", commentsUnavailable: "Comments could not be loaded.",
-        gameEyebrow: "COMMUNITY OPERATION", gameTitle: "Take Down the Bad Luck Boss", gameIntro: "The next complaint could be the winning hit. Pick your prediction and help the group.",
-        bossKicker: "CURRENT TARGET", bossNames: ["Bad Luck Boss", "Cosmic Red Tape", "Chaos Incarnate", "Monday Eternal"], bossDescription: "Every correct prediction deals damage. The archive decides who gets it right.",
-        bossHealth: "Boss health", bossStatus: "The boss is still standing. Place your predictions!", bossDefeated: "BOSS DEFEATED! The group wins — for now.", bossHits: (a,b) => a + " / " + b + " correct predictions to take this boss down",
-        betKicker: "NEXT COMPLAINT POOL", betTitle: "What will go wrong next?", betInstructions: "Choose a category before the next note appears in the archive.", betChoose: "Prediction categories",
-        nicknamePlaceholder: "Name on the scoreboard (optional)", betSubmit: "Place prediction", betSending: "Submitting…", betRecorded: "Prediction recorded:", betOpen: "The round is open. Choose with questionable wisdom.", betAlready: "Your prediction for this round is already in.", betCount: (n) => n + (n === 1 ? " prediction" : " predictions"),
         defaultAgent: "Agent", leaderboardTitle: "Squad leaderboard", yourScore: "Your correct picks", noScores: "No correct picks yet. Bad luck is winning by forfeit.", gameLoading: "Scanning for boss activity…", gameError: "The game could not load.", gameSqlHint: "Run the updated Supabase query to activate the game.", gameEmpty: "There are no complaints yet, so the pool cannot start.",
         communityLabel: "Community interactions", commentsLabel: "💬 Comments", commentsLoading: "Loading comments…", reactWith: "React with", commentPlaceholder: "Write a comment (up to 500 characters)…", namePlaceholder: "Your name (optional)", sendComment: "Post comment", noComments: "No comments yet.", anonymous: "Anonymous", commentSent: "Comment posted!", interactionError: "Could not send that. Please try again.", interactionUnavailable: "Comments and reactions are unavailable right now.",
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category",
@@ -1855,7 +1792,7 @@
       document.getElementById("prevMonth").setAttribute("aria-label",t.previousMonth);
       document.getElementById("nextMonth").setAttribute("aria-label",t.nextMonth);
       document.getElementById("randomReport").querySelector(".random-label").textContent=t.randomLabel;
-      renderizarFiltroCategoria(); renderizarNotas(); renderizarCalendario(); renderizarConquistas(); renderizarEstatisticas(); renderizarBingo(); renderizarJogo(notas,categoriaDaNota,t); renderizarFraseDestaque();
+      renderizarFiltroCategoria(); renderizarNotas(); renderizarCalendario(); renderizarConquistas(); renderizarEstatisticas(); renderizarBingo(); renderizarFraseDestaque();
     }
 
     botaoTema.addEventListener("click", () => dialogTemas.showModal());
