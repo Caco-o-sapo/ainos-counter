@@ -70,6 +70,22 @@
       .pagination span{order:-1;width:100%;text-align:center}
     }
 
+  
+    /* Mobile layout fixes from phone review */
+    @media(max-width:560px){
+      .card-grid{grid-template-columns:minmax(0,1fr)}
+      .card-grid .row{min-height:0}
+      .intro .toolbar-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      .intro .toolbar-actions .button{min-width:0;padding:8px 10px;line-height:1.3;white-space:normal}
+      #signOut{grid-column:1/-1}
+      .pagination{position:static}
+      .panel-head{gap:10px}
+      .panel-head>div{min-width:0}
+    }
+    @media(max-width:360px){
+      .admin-tab{font-size:.72rem}
+      .intro .toolbar-actions{grid-template-columns:1fr 1fr}
+    }
   </style>
 </head>
 <body>
