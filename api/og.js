@@ -39,6 +39,7 @@ async function carregarRelatos() {
     return {
       nota: ultimoRegistro ? {
         ...ultimoRegistro,
+        diaBom: ultimoRegistro.dia_bom === true,
         data: ultimoRegistro.data ? ultimoRegistro.data.split("-").reverse().join("/") : ""
       } : null,
       ultimoDiaBom: diasBons[0]?.data || null
