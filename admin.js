@@ -1,4 +1,4 @@
-import { supabase, importarNotasLegadas, listarNotas } from "./notas-store.js";
+import { supabase, importarNotasLegadas, listarNotasDoBanco } from "./notas-store.js";
 
 const $ = (id) => document.getElementById(id);
 const loginPanel = $("loginPanel");
@@ -114,7 +114,7 @@ function renderizarNotas() {
 }
 async function carregarNotas() {
   try {
-    notas = await listarNotas();
+    notas = await listarNotasDoBanco();
     atualizarResumo();
     renderizarNotas();
   } catch (error) {
