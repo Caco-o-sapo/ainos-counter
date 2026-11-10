@@ -1350,7 +1350,7 @@
           desenharQuebraTexto(ctx,comentario.body||"",900,2).forEach((linha,j)=>ctx.fillText(linha,84,y+21+j*19));
         });
       }else{
-        ctx.fillStyle="#aaa6a3";ctx.font="500 15px system-ui, sans-serif";ctx.fillText(t.commentsUnavailable,84,580);
+        ctx.fillStyle="#aaa6a3";ctx.font="500 15px system-ui, sans-serif";ctx.fillText(t.noComments,84,580);
       }
       desenharMascoteCanvas(ctx,nota.diaBom===true?"happy":"complaint");
       ctx.fillStyle="#77757a";ctx.font="500 15px system-ui, sans-serif";ctx.fillText("https://ainos-counter.vercel.app/",84,746);
