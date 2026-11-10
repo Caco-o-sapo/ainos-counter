@@ -221,6 +221,14 @@ $("loginForm").addEventListener("submit", async (evento) => {
   await abrirPainel(data.user);
 });
 
+$("forgotPassword").addEventListener("click", async () => {
+  const email = $("email").value.trim().toLowerCase();
+  if (!email) return mostrarStatus(loginStatus, "Informe seu e-mail para receber o link de redefinição.", "error");
+  const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: location.origin + location.pathname });
+  if (error) return mostrarStatus(loginStatus, "Não foi possível enviar o link: " + error.message, "error");
+  mostrarStatus(loginStatus, "Se esse e-mail tiver uma conta, o Supabase enviará um link de redefinição.", "ok");
+});
+
 $("showSignup").addEventListener("click", async () => {
   const email = $("email").value.trim().toLowerCase();
   const password = $("password").value;
