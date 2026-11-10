@@ -136,6 +136,28 @@
       gap: 10px;
     }
 
+    .admin-access {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 38px;
+      padding: 0 12px;
+      border: 1px solid rgba(var(--amber-rgb),.36);
+      border-radius: 999px;
+      color: var(--amber-bright);
+      background: rgba(var(--amber-rgb),.07);
+      font-size: .76rem;
+      font-weight: 750;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .18s ease, border-color .18s ease;
+    }
+
+    .admin-access:hover {
+      border-color: var(--amber);
+      background: rgba(var(--amber-rgb),.14);
+    }
+
     .language-toggle {
       display: inline-flex;
       align-items: center;
@@ -753,7 +775,7 @@
           <p class="brand-caption" data-i18n="brandCaption">Central comunitária de monitoramento</p>
         </div>
       </div>
-      <div class="topbar-actions"><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><select id="themeSelect" class="theme-select" aria-label="Tema visual"><option value="dossier">Dossiê</option><option value="terminal">Terminal</option><option value="newspaper">Jornal</option></select><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
+      <div class="topbar-actions"><a class="admin-access" href="./admin.html"><span aria-hidden="true">🔐</span><span data-i18n="adminAccess">Painel da equipe</span></a><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><select id="themeSelect" class="theme-select" aria-label="Tema visual"><option value="dossier">Dossiê</option><option value="terminal">Terminal</option><option value="newspaper">Jornal</option></select><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
     </header>
 
     <main>
@@ -980,7 +1002,7 @@
         achievementProgress: (a,b) => a + " / " + b + " " + (idiomaAtual === "en" ? "progress" : "progresso"),
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento", tabGame: "Chefe final",
-        themeLabel: "Tema visual", themeDossier: "Dossiê", themeTerminal: "Terminal", themeNewspaper: "Jornal",
+        adminAccess: "Painel da equipe", themeLabel: "Tema visual", themeDossier: "Dossiê", themeTerminal: "Terminal", themeNewspaper: "Jornal",
         featuredKicker: "Arquivo em destaque", featuredTitle: "Frase do dia", shareFeatured: "🖼️ Compartilhar frase", featuredDatePrefix: "Registro de", commentsOnCard: "COMENTÁRIOS DA COMUNIDADE", commentsUnavailable: "Comentários ainda não carregados.",
         gameEyebrow: "OPERAÇÃO COLETIVA", gameTitle: "Derrubar o Chefe do Azar", gameIntro: "A próxima reclamação pode virar o golpe decisivo. Escolha seu palpite e ajude o grupo.",
         bossKicker: "ALVO ATUAL", bossNames: ["Chefe do Azar", "Burocracia Cósmica", "Caos em Pessoa", "Segunda-feira Eterna"], bossDescription: "Cada palpite certo causa dano. O arquivo decide quem acerta.",
@@ -1039,7 +1061,7 @@
         achievementProgress: (a,b) => a + " / " + b + " progress",
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
         tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment", tabGame: "Final boss",
-        themeLabel: "Visual theme", themeDossier: "Dossier", themeTerminal: "Terminal", themeNewspaper: "Newspaper",
+        adminAccess: "Team admin", themeLabel: "Visual theme", themeDossier: "Dossier", themeTerminal: "Terminal", themeNewspaper: "Newspaper",
         featuredKicker: "Featured archive", featuredTitle: "Quote of the day", shareFeatured: "🖼️ Share quote", featuredDatePrefix: "Filed on", commentsOnCard: "COMMUNITY COMMENTS", commentsUnavailable: "Comments could not be loaded.",
         gameEyebrow: "COMMUNITY OPERATION", gameTitle: "Take Down the Bad Luck Boss", gameIntro: "The next complaint could be the winning hit. Pick your prediction and help the group.",
         bossKicker: "CURRENT TARGET", bossNames: ["Bad Luck Boss", "Cosmic Red Tape", "Chaos Incarnate", "Monday Eternal"], bossDescription: "Every correct prediction deals damage. The archive decides who gets it right.",
