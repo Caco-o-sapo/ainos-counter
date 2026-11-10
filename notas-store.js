@@ -40,7 +40,7 @@ function daLinha(row) {
   };
 }
 
-export async function listarNotas() {
+export async function listarNotasDoBanco() {
   const { data, error } = await supabase
     .from("ainos_notes")
     .select("id,data,texto,dia_bom,categoria,position")
@@ -49,6 +49,13 @@ export async function listarNotas() {
     .order("created_at", { ascending: false });
   if (error) throw error;
   return (data || []).map(daLinha);
+}
+
+export async function listarNotas() {
+  const salvas = await listarNotasDoBanco();
+  if (salvas.length) return salvas;
+  // Mantém o arquivo visível caso a tabela tenha sido criada, mas a migração ainda não tenha sido feita.
+  return notasLegadas.map((nota, position) => ({ ...nota, id: idLegado(nota), position }));
 }
 
 export async function importarNotasLegadas() {
