@@ -41,8 +41,8 @@ async function carregarRelatos() {
         ...ultimoRegistro,
         diaBom: ultimoRegistro.dia_bom === true,
         data: ultimoRegistro.data ? ultimoRegistro.data.split("-").reverse().join("/") : ""
-      } : null,
-      ultimoDiaBom: diasBons[0]?.data || null
+      } : (notasLegadas[0] || null),
+      ultimoDiaBom: diasBons[0]?.data || (ultimoRegistro ? null : diaBomLegado)
     };
   } catch {
     return { nota: notasLegadas[0] || null, ultimoDiaBom: diaBomLegado };
