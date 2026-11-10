@@ -10,9 +10,11 @@ Se o link não voltar para o painel, abra **Authentication → URL Configuration
 
 ## 2. Preparar o banco e autorizar o primeiro administrador
 
-No Supabase, abra **SQL Editor**. Cole o arquivo [supabase-admin.sql](./supabase-admin.sql) inteiro. Antes de executar, encontre o trecho no final chamado **PRIMEIRO ADMINISTRADOR** e troque somente `seu@email.com` pelo e-mail confirmado no cadastro. Execute o arquivo completo.
+No Supabase, abra **SQL Editor**. Cole a versão atual do arquivo [supabase-admin.sql](./supabase-admin.sql) inteiro. No bloco **PRIMEIRO ADMINISTRADOR** no final, troque somente `seu@email.com` pelo e-mail confirmado no cadastro. Execute o arquivo completo.
 
-Não cole o comando de autorização dentro de uma função SQL. A configuração inicial agora fica nesse trecho separado no fim do arquivo.
+Esse bloco marca sua conta como **proprietário**. A atualização também adiciona o histórico de atividades. Se você já tinha executado uma versão anterior do SQL, execute o arquivo atualizado inteiro novamente: ele aplica as colunas, funções e gatilhos que faltavam sem apagar as notas.
+
+Não cole comandos dentro de uma função SQL. O bloco de proprietário fica separado no final do arquivo.
 
 ## 3. Entrar e importar as notas
 
@@ -28,7 +30,9 @@ Na seção **Administradores** do painel, autorize o e-mail da pessoa. Ela cria 
 
 - Criar, editar e apagar ocorrências.
 - Escolher data, categoria automática ou manual e marcar um dia bom.
+- Definir o nome que aparecerá no histórico de atividades.
 - Revisar e apagar comentários da comunidade.
-- Autorizar ou remover outros administradores.
+- Autorizar ou remover outros administradores; a conta proprietária fica protegida.
+- Consultar um histórico de quem criou, editou ou apagou notas, moderou comentários e alterou acessos.
 
 A seção de reações permanece pública para os visitantes, como antes.
