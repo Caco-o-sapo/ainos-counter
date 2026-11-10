@@ -48,7 +48,7 @@ export async function GET(request) {
 
   const nota = await carregarNota(id);
   if (!nota) return paginaErro(404, "Esta ocorrência não foi encontrada.");
-  const relato = String(nota.texto || "Sem texto").replace(/\\s+/g, " ").trim();
+  const relato = String(nota.texto || "Sem texto").replace(/\s+/g, " ").trim();
   const resumo = relato.length > 220 ? relato.slice(0, 217).trimEnd() + "…" : relato;
   const titulo = "AINOS WATCH · Ocorrência de " + (nota.data || "data não informada");
   const descricao = "“" + resumo + "”";
