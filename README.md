@@ -2,7 +2,7 @@
 
 ### Central comunitária de monitoramento de dias bons, perrengues e ocorrências inexplicáveis.
 
-[![Abrir a Central de Monitoramento](https://ainos-counter.vercel.app/api/og?v=3)](https://ainos-counter.vercel.app/)
+[![Abrir a Central de Monitoramento](https://ainos-counter.vercel.app/api/og?v=4)](https://ainos-counter.vercel.app/)
 
 > **A pergunta que mobiliza a equipe:** há quantos dias o Ainos não tem um dia bom?
 
