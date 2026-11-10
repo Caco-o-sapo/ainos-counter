@@ -53,7 +53,7 @@ security definer
 set search_path = ''
 as $$
 declare
-  removida boolean;
+  removida_count integer;
 begin
   if p_endpoint is null or p_owner_token is null then
     return false;
@@ -62,8 +62,8 @@ begin
   delete from public.ainos_push_subscriptions
   where endpoint = p_endpoint
     and owner_token = p_owner_token;
-  get diagnostics removida = row_count;
-  return removida;
+  get diagnostics removida_count = row_count;
+  return removida_count > 0;
 end;
 $$;
 
