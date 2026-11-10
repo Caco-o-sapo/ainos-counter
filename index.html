@@ -884,6 +884,61 @@
     @media(max-width:720px){.calendar-day{min-height:56px;padding:6px}.calendar-legend{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}}
     @media(max-width:420px){.calendar-grid{gap:4px}.calendar-weekday{font-size:.58rem}.calendar-day{min-height:49px;padding:4px;border-radius:9px;font-size:.78rem}.calendar-number{min-width:22px;height:22px}.calendar-count{min-width:17px;height:17px;padding:0 3px;font-size:.58rem}.calendar-marker{width:6px;height:6px}.calendar-legend{grid-template-columns:repeat(2,minmax(0,1fr))}.calendar-nav{gap:5px}.calendar-month{min-width:105px;font-size:.82rem}}
 
+
+    /* Header and hero refresh */
+    .page-shell{padding-top:18px}
+    .topbar{padding-bottom:15px}
+    .header-tools{display:flex;align-items:center;gap:12px}
+    .site-menu{position:relative;z-index:30}
+    .site-menu>summary{list-style:none}
+    .site-menu>summary::-webkit-details-marker{display:none}
+    .site-menu-toggle{display:inline-flex;align-items:center;gap:9px;min-height:42px;padding:0 15px;border:1px solid rgba(var(--amber-rgb),.45);border-radius:12px;color:var(--amber-bright);background:linear-gradient(135deg,rgba(var(--amber-rgb),.16),rgba(var(--amber-rgb),.06));font-size:.82rem;font-weight:800;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+    .site-menu-toggle:hover,.site-menu[open]>.site-menu-toggle{border-color:var(--amber);background:rgba(var(--amber-rgb),.18)}
+    .site-menu-toggle:active{transform:translateY(1px)}
+    .site-menu-panel{position:absolute;top:calc(100% + 10px);right:0;width:min(320px,calc(100vw - 32px));padding:15px;border:1px solid var(--line);border-radius:16px;background:var(--panel);box-shadow:0 24px 70px rgba(0,0,0,.45);animation:menuIn .16s ease-out}
+    @keyframes menuIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+    .site-menu-title{margin:0 0 11px;padding:0 2px;color:var(--soft);font-size:.67rem;font-weight:850;letter-spacing:.13em;text-transform:uppercase}
+    .site-menu-items{display:grid;gap:8px}
+    .site-menu-items .admin-access,.site-menu-items .theme-picker-button{width:100%;min-height:42px;justify-content:flex-start;padding:0 12px;border-radius:10px;font-size:.78rem}
+    .site-menu-items .theme-current{margin-left:auto}
+    .site-menu-items .language-toggle{justify-self:start;min-height:40px;padding:0 12px}
+    #installAppButton[hidden],#notificationsButton[hidden]{display:none!important}
+    .intro{position:relative;align-items:center;gap:28px;margin-top:24px;padding:32px 34px;border:1px solid rgba(var(--amber-rgb),.18);border-radius:22px;overflow:hidden;background:radial-gradient(ellipse at 88% 8%,rgba(var(--amber-rgb),.11),transparent 37%),linear-gradient(120deg,rgba(32,28,31,.94),rgba(21,22,28,.98));box-shadow:0 18px 55px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.045)}
+    .intro::after{position:absolute;right:28%;bottom:-142px;width:250px;height:250px;border:1px solid rgba(var(--amber-rgb),.08);border-radius:50%;box-shadow:0 0 0 28px rgba(var(--amber-rgb),.018),0 0 0 58px rgba(var(--amber-rgb),.014);content:"";pointer-events:none}
+    .intro-main{position:relative;z-index:1}
+    .intro .eyebrow{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+    .intro .eyebrow::before{width:20px;height:1px;background:var(--amber);content:""}
+    .intro h1{max-width:760px}
+    .intro-copy{max-width:560px}
+    .case-id{position:relative;z-index:1;display:flex;min-width:180px;min-height:96px;flex:0 0 auto;flex-direction:column;align-items:flex-start;justify-content:center;gap:10px;padding:17px 19px;border-color:rgba(var(--amber-rgb),.2);border-radius:15px;color:var(--amber-bright);background:rgba(10,11,15,.35);font-family:inherit;font-size:.75rem;font-weight:800;letter-spacing:.1em}
+    .case-id-icon{font-size:1.35rem;filter:grayscale(.25)}
+    .section-tabs{margin-top:18px;box-shadow:0 9px 26px rgba(0,0,0,.12)}
+    @media(max-width:720px){
+      .page-shell{width:min(100% - 28px,1060px)}
+      .intro{gap:18px;padding:25px}
+      .case-id{min-width:150px}
+    }
+    @media(max-width:560px){
+      .topbar{align-items:flex-start;gap:12px}
+      .brand{gap:9px}
+      .brand-mark{width:38px;height:38px}
+      .brand-caption{max-width:165px;font-size:.68rem}
+      .header-tools{gap:7px}
+      .live-label{gap:6px;padding:7px 8px;font-size:.55rem;letter-spacing:.045em}
+      .site-menu-toggle{min-height:39px;padding:0 11px;font-size:.75rem}
+      .intro{align-items:flex-start;flex-direction:column;margin-top:18px;padding:22px 20px}
+      .intro h1{font-size:clamp(2rem,10vw,2.8rem)}
+      .intro-copy{font-size:.9rem}
+      .case-id{min-height:0;min-width:0;flex-direction:row;align-items:center;gap:8px;padding:9px 11px;font-size:.65rem}
+      .case-id-icon{font-size:1rem}
+      .section-tabs{margin-top:14px}
+    }
+    @media(max-width:380px){
+      .brand-caption{display:none}
+      .live-label{font-size:0}
+      .live-label .live-dot{width:8px;height:8px}
+      .site-menu-toggle{gap:6px;padding:0 9px}
+    }
   </style>
 </head>
 
@@ -897,17 +952,32 @@
           <p class="brand-caption" data-i18n="brandCaption">Central comunitária de monitoramento</p>
         </div>
       </div>
-      <div class="topbar-actions"><a class="admin-access" href="./admin.html"><span aria-hidden="true">🔐</span><span data-i18n="adminAccess">Painel da equipe</span></a><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><button id="themePickerButton" class="theme-picker-button" type="button" aria-haspopup="dialog" aria-controls="themeDialog" aria-label="Temas"><span aria-hidden="true">🎨</span><span data-i18n="themeButton">Temas</span><span id="themeCurrentName" class="theme-current">Dossiê</span></button><button id="installAppButton" class="theme-picker-button" type="button"><span aria-hidden="true">📲</span><span data-i18n="installApp">Instalar</span></button><button id="notificationsButton" class="theme-picker-button" type="button"><span id="notificationsIcon" aria-hidden="true">🔔</span><span id="notificationsLabel" data-i18n="enableNotifications">Ativar avisos</span></button><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
+      <div class="header-tools">
+        <div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div>
+        <details class="site-menu" id="siteMenu">
+          <summary class="site-menu-toggle"><span aria-hidden="true">☰</span><span data-i18n="menuButton">Menu</span></summary>
+          <div class="site-menu-panel">
+            <p class="site-menu-title" data-i18n="menuTitle">Acessos e ajustes</p>
+            <div class="site-menu-items">
+              <a class="admin-access" href="./admin.html"><span aria-hidden="true">🔐</span><span data-i18n="adminAccess">Painel da equipe</span></a>
+              <button id="themePickerButton" class="theme-picker-button" type="button" aria-haspopup="dialog" aria-controls="themeDialog" aria-label="Temas"><span aria-hidden="true">🎨</span><span data-i18n="themeButton">Temas</span><span id="themeCurrentName" class="theme-current">Dossiê</span></button>
+              <button id="installAppButton" class="theme-picker-button" type="button"><span aria-hidden="true">📲</span><span data-i18n="installApp">Instalar</span></button>
+              <button id="notificationsButton" class="theme-picker-button" type="button"><span id="notificationsIcon" aria-hidden="true">🔔</span><span id="notificationsLabel" data-i18n="enableNotifications">Ativar avisos</span></button>
+              <button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button>
+            </div>
+          </div>
+        </details>
+      </div>
     </header>
 
     <main>
       <section class="intro" aria-labelledby="page-title">
-        <div>
+        <div class="intro-main">
           <p class="eyebrow" data-i18n="report">Relatório de acompanhamento · 001</p>
           <h1 id="page-title" data-i18n="pageTitle">Um dia bom para o Ainos?</h1>
           <p class="intro-copy" data-i18n="introCopy">A equipe acompanha os acontecimentos recentes e aguarda sinais concretos de que a maré virou.</p>
         </div>
-        <div class="case-id" data-i18n="caseId">DOSSIÊ Nº 000-A</div>
+        <div class="case-id"><span class="case-id-icon" aria-hidden="true">📁</span><span data-i18n="caseId">DOSSIÊ Nº 000-A</span></div>
       </section>
 
       <nav class="section-tabs" role="tablist" aria-label="Seções do site" data-i18n-aria="tablistLabel">
@@ -1157,7 +1227,7 @@
         achievementProgress: (a,b) => a + " / " + b + " " + (idiomaAtual === "en" ? "progress" : "progresso"),
         statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento", tabGame: "Chefe final",
-        adminAccess: "Painel da equipe", themeLabel: "Escolher tema visual", themeButton: "Temas", themeKicker: "APARÊNCIA DA CENTRAL", themeDialogTitleText: "Escolha um tema", themeDialogIntro: "A prévia é instantânea e a escolha fica salva neste navegador.", closeThemeDialog: "Fechar seletor de temas", themeSelected: "ATUAL",
+        adminAccess: "Painel da equipe", menuButton: "Menu", menuTitle: "Acessos e ajustes", themeLabel: "Escolher tema visual", themeButton: "Temas", themeKicker: "APARÊNCIA DA CENTRAL", themeDialogTitleText: "Escolha um tema", themeDialogIntro: "A prévia é instantânea e a escolha fica salva neste navegador.", closeThemeDialog: "Fechar seletor de temas", themeSelected: "ATUAL",
         themeDossier: "Dossiê", themeTerminal: "Terminal", themeNewspaper: "Jornal", themeCoast: "Maré baixa", themeNeon: "Neon", themeDaylight: "Plantão claro",
         themeDescDossier: "O visual oficial da investigação.", themeDescTerminal: "Verde de monitoramento em tempo real.", themeDescNewspaper: "Papel envelhecido e boletim de crise.", themeDescCoast: "Azul profundo com brilho de radar.", themeDescNeon: "Roxo elétrico para uma crise de alto impacto.", themeDescDaylight: "Claro, limpo e fácil de ler.",
         featuredKicker: "Arquivo em destaque", featuredTitle: "Frase do dia", shareFeatured: "🖼️ Compartilhar frase", featuredDatePrefix: "Registro de", commentsOnCard: "COMENTÁRIOS DA COMUNIDADE", commentsUnavailable: "Comentários ainda não carregados.",
@@ -1220,7 +1290,7 @@
         achievementProgress: (a,b) => a + " / " + b + " progress",
         statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
         tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment", tabGame: "Final boss",
-        adminAccess: "Team admin", themeLabel: "Choose a visual theme", themeButton: "Themes", themeKicker: "CENTER APPEARANCE", themeDialogTitleText: "Choose a theme", themeDialogIntro: "Preview instantly; your choice is saved in this browser.", closeThemeDialog: "Close theme picker", themeSelected: "CURRENT",
+        adminAccess: "Team admin", menuButton: "Menu", menuTitle: "Access and settings", themeLabel: "Choose a visual theme", themeButton: "Themes", themeKicker: "CENTER APPEARANCE", themeDialogTitleText: "Choose a theme", themeDialogIntro: "Preview instantly; your choice is saved in this browser.", closeThemeDialog: "Close theme picker", themeSelected: "CURRENT",
         themeDossier: "Dossier", themeTerminal: "Terminal", themeNewspaper: "Newspaper", themeCoast: "Deep tide", themeNeon: "Neon", themeDaylight: "Day shift",
         themeDescDossier: "The investigation's official look.", themeDescTerminal: "Live-monitoring green.", themeDescNewspaper: "Aged paper and a crisis bulletin.", themeDescCoast: "Deep blue with a radar glow.", themeDescNeon: "Electric violet for a high-impact crisis.", themeDescDaylight: "Bright, clean, and easy to read.",
         featuredKicker: "Featured archive", featuredTitle: "Quote of the day", shareFeatured: "🖼️ Share quote", featuredDatePrefix: "Filed on", commentsOnCard: "COMMUNITY COMMENTS", commentsUnavailable: "Comments could not be loaded.",
@@ -1812,6 +1882,11 @@
     });
 
     document.querySelector(".section-tabs").setAttribute("aria-label",texto().tablistLabel);
+
+    const menuSite=document.getElementById("siteMenu");
+    menuSite.addEventListener("click",evento=>{if(evento.target.closest("a,button"))menuSite.open=false;});
+    document.addEventListener("click",evento=>{if(menuSite.open&&!menuSite.contains(evento.target))menuSite.open=false;});
+    document.addEventListener("keydown",evento=>{if(evento.key==="Escape")menuSite.open=false;});
 
     const botaoInstalar=document.getElementById("installAppButton");
     let promptInstalacao=null;
