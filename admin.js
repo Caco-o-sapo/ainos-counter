@@ -221,6 +221,31 @@ $("loginForm").addEventListener("submit", async (evento) => {
   await abrirPainel(data.user);
 });
 
+supabase.auth.onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY") {
+    $("passwordRecoveryForm").hidden = false;
+    $("loginForm").hidden = true;
+    $("showSignup").hidden = true;
+    $("forgotPassword").hidden = true;
+    mostrarStatus(loginStatus, "Defina uma nova senha para sua conta.");
+  }
+});
+
+$("passwordRecoveryForm").addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+  const password = $("newPassword").value;
+  if (password.length < 8) return mostrarStatus(loginStatus, "Use uma senha com pelo menos 8 caracteres.", "error");
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) return mostrarStatus(loginStatus, "Não foi possível trocar a senha: " + error.message, "error");
+  $("passwordRecoveryForm").hidden = true;
+  $("loginForm").hidden = false;
+  $("showSignup").hidden = false;
+  $("forgotPassword").hidden = false;
+  mostrarStatus(loginStatus, "Senha atualizada. Entrando no painel…", "ok");
+  const { data } = await supabase.auth.getUser();
+  if (data.user) await abrirPainel(data.user);
+});
+
 $("forgotPassword").addEventListener("click", async () => {
   const email = $("email").value.trim().toLowerCase();
   if (!email) return mostrarStatus(loginStatus, "Informe seu e-mail para receber o link de redefinição.", "error");
