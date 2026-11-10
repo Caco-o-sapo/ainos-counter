@@ -155,7 +155,12 @@ async function carregarAdministradores() {
       const remover = botao("Remover", async () => {
         if (!confirm("Remover " + registro.email + " do acesso administrativo?")) return;
         const { error: rpcError } = await supabase.rpc("set_ainos_admin_email", { p_email: registro.email, p_allowed: false });
-        if (rpcError) return mostrarStatus(adminStatus, "Não foi possível remover: " + rpcError.message, "error");
+        if (rpcError) {
+          const mensagem = rpcError.message.includes("cannot_remove_owner")
+            ? "A conta proprietária está protegida e não pode ser removida."
+            : "Não foi possível remover: " + rpcError.message;
+          return mostrarStatus(adminStatus, mensagem, "error");
+        }
         await Promise.all([carregarAdministradores(), carregarLogs()]);
         mostrarStatus(adminStatus, "Acesso removido.", "ok");
       }, "danger");
