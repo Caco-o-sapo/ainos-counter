@@ -932,7 +932,9 @@
   </div>
 
   <script type="module">
-    import { notas, ultimoDiaBom } from "./notas.js";
+    import { notas as notasLegadas, ultimoDiaBom as ultimoDiaBomLegado } from "./notas.js";
+    import { listarNotas } from "./notas-store.js";
+    let notas = notasLegadas;
     import { obterIdNota, renderizarInteracoesNota, buscarComentariosParaImagem } from "./interacoes.js";
     import { renderizarJogo } from "./jogo.js";
 
@@ -1081,9 +1083,20 @@
       seletorTema.value = seguro;
       try { localStorage.setItem("ainos-theme", seguro); } catch {}
     }
-    const dataUltimoDiaBom = ultimoDiaBom
-      ? new Date(...ultimoDiaBom.split("-").map(Number).map((valor, indice) => indice === 1 ? valor - 1 : valor))
+    let dataUltimoDiaBom = ultimoDiaBomLegado
+      ? new Date(...ultimoDiaBomLegado.split("-").map(Number).map((valor, indice) => indice === 1 ? valor - 1 : valor))
       : null;
+
+    function recalcularUltimoDiaBom() {
+      const datas = notas
+        .filter((nota) => nota.diaBom === true)
+        .map((nota) => chaveData(nota.data))
+        .filter(Boolean)
+        .sort((a, b) => b.localeCompare(a));
+      dataUltimoDiaBom = datas[0]
+        ? new Date(...datas[0].split("-").map(Number).map((valor, indice) => indice === 1 ? valor - 1 : valor))
+        : null;
+    }
     const lista = document.getElementById("listaNotas");
     const botaoIdioma = document.getElementById("languageToggle");
     const seletorTema = document.getElementById("themeSelect");
@@ -1513,6 +1526,13 @@
 
     document.querySelector(".section-tabs").setAttribute("aria-label",texto().tablistLabel);
 
+    try {
+      notas = await listarNotas();
+      recalcularUltimoDiaBom();
+    } catch (erro) {
+      // Enquanto a tabela ainda não estiver configurada, mantém as notas de notas.js.
+      console.warn("Não foi possível carregar as notas do Supabase; usando o arquivo local.", erro);
+    }
     aplicarIdioma();
     atualizarContador(true);
   </script>
