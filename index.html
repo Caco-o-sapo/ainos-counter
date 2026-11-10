@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ainos Watch">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#101116">
   <meta name="description" content="Confira há quantos dias o Ainos está sem um dia bom e leia as últimas atualizações do monitoramento.">
   <title>Central de Monitoramento do Ainos</title>
@@ -837,6 +842,9 @@
     body[data-theme="daylight"] .featured-panel{background:radial-gradient(ellipse at 0% 100%,rgba(45,101,167,.09),transparent 45%),linear-gradient(145deg,#fff,#f1f5fb)}
     body[data-theme="daylight"] .boss-card{background:linear-gradient(145deg,#fff,#edf2f8)}
     body[data-theme="daylight"] .note-text,body[data-theme="daylight"] .status-copy,body[data-theme="daylight"] .comment-item p{color:var(--text)}
+      .favorite-note-button{min-width:36px;border:1px solid rgba(var(--amber-rgb),.26);border-radius:9px;padding:6px 9px;color:var(--muted);background:rgba(255,255,255,.025);font:inherit;font-size:1rem;cursor:pointer}
+    .favorite-note-button[aria-pressed="true"]{border-color:rgba(var(--amber-rgb),.55);color:var(--amber-bright);background:rgba(var(--amber-rgb),.12)}
+    .note-share-row{gap:7px}
   </style>
 </head>
 
@@ -850,7 +858,7 @@
           <p class="brand-caption" data-i18n="brandCaption">Central comunitária de monitoramento</p>
         </div>
       </div>
-      <div class="topbar-actions"><a class="admin-access" href="./admin.html"><span aria-hidden="true">🔐</span><span data-i18n="adminAccess">Painel da equipe</span></a><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><button id="themePickerButton" class="theme-picker-button" type="button" aria-haspopup="dialog" aria-controls="themeDialog" aria-label="Temas"><span aria-hidden="true">🎨</span><span data-i18n="themeButton">Temas</span><span id="themeCurrentName" class="theme-current">Dossiê</span></button><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
+      <div class="topbar-actions"><a class="admin-access" href="./admin.html"><span aria-hidden="true">🔐</span><span data-i18n="adminAccess">Painel da equipe</span></a><div class="live-label"><span class="live-dot" aria-hidden="true"></span><span data-i18n="liveStatus">MONITORAMENTO ATIVO</span></div><button id="themePickerButton" class="theme-picker-button" type="button" aria-haspopup="dialog" aria-controls="themeDialog" aria-label="Temas"><span aria-hidden="true">🎨</span><span data-i18n="themeButton">Temas</span><span id="themeCurrentName" class="theme-current">Dossiê</span></button><button id="installAppButton" class="theme-picker-button" type="button"><span aria-hidden="true">📲</span><span data-i18n="installApp">Instalar</span></button><button class="language-toggle" id="languageToggle" type="button" aria-label="Mudar para inglês"><span data-language-option="pt">PT</span><span class="language-divider" aria-hidden="true">/</span><span data-language-option="en">EN</span></button></div>
     </header>
 
     <main>
@@ -973,7 +981,7 @@
           <button id="clearFilters" class="tool-button" type="button">Limpar filtros</button>
         </div>
         <div class="filters" role="group" aria-label="Filtrar ocorrências">
-          <button class="filter-button active" type="button" data-filter="all">Todas</button><button class="filter-button" type="button" data-filter="complaints">Reclamações</button><button class="filter-button" type="button" data-filter="good">Dias bons</button>
+          <button class="filter-button active" type="button" data-filter="all">Todas</button><button class="filter-button" type="button" data-filter="complaints">Reclamações</button><button class="filter-button" type="button" data-filter="good">Dias bons</button><button class="filter-button" type="button" data-filter="favorites" data-i18n="filterFavorites">⭐ Favoritas</button>
           <label class="category-filter"><span class="sr-only" data-i18n="categoryLabel">Categoria</span><select id="categoryFilter" class="category-select" aria-label="Filtrar por categoria"></select></label>
         </div>
         <p id="resultsLabel" class="results-label" aria-live="polite"></p>
@@ -1121,6 +1129,7 @@
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente",
         categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
         viewCompact: "Compacta", viewComfortable: "Confortável", toggleViewLabel: "Alternar visualização das ocorrências", copyNoteLink: "🔗 Copiar link", noteLinkCopied: "✅ Link copiado", clearLinkedNote: "Ver todas as ocorrências", noteLinkPrompt: "Copie o link desta ocorrência:",
+        filterFavorites: "⭐ Favoritas", saveFavorite: "Salvar nos favoritos", removeFavorite: "Remover dos favoritos", noFavorites: "Você ainda não salvou nenhuma ocorrência neste navegador.", installApp: "Instalar", installHelp: "Abra o menu do navegador e escolha “Instalar app” ou “Adicionar à tela inicial”.", installIosHelp: "No iPhone/iPad: toque em Compartilhar e depois em “Adicionar à Tela de Início”.",
         headlineKicker: "Imprensa do caos", headlineTitle: "Gerador de manchetes", headlineButton: "📰 Gerar manchete", headlinePlaceholder: "Uma manchete aguarda a próxima ocorrência.", headlinePrefixes: ["PLANTÃO DO AZAR:", "AINOS EM CRISE:", "ÚLTIMA HORA:", "DOSSIÊ ESPECIAL:"],
         bingoKicker: "Cartela individual", bingoTitle: "Bingo do Ainos", bingoCopy: "Marque os acontecimentos; a cartela fica salva neste navegador.", bingoReset: "Limpar cartela", bingoProgress: "Marque o que já aconteceu.", bingoComplete: "BINGO! O departamento de azar confirma a sequência.", bingoSquares: ["Reclamação do trabalho","Azar no jogo/gacha","Disse que está cansado","Uma coisa simples virou problema","ESPAÇO LIVRE","Chegou uma notícia inesperada","Se arrependeu de uma escolha","Mandou print do caos","Disse “depois eu resolvo”"],
         categoryLabel: "Filtrar por tema", allCategories: "Todas as categorias", mostCommonCategory: "Tema mais frequente", categories: { games: "Jogos", work: "Trabalho", health: "Saúde", social: "Vida social", daily: "Cotidiano", other: "Outros" },
@@ -1183,6 +1192,7 @@
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category",
         categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
         viewCompact: "Compact", viewComfortable: "Comfortable", toggleViewLabel: "Toggle report layout", copyNoteLink: "🔗 Copy link", noteLinkCopied: "✅ Link copied", clearLinkedNote: "Show all reports", noteLinkPrompt: "Copy this report link:",
+        filterFavorites: "⭐ Favorites", saveFavorite: "Save to favorites", removeFavorite: "Remove from favorites", noFavorites: "You haven't saved any reports in this browser yet.", installApp: "Install", installHelp: "Open your browser menu and choose “Install app” or “Add to Home Screen.”", installIosHelp: "On iPhone/iPad: tap Share, then “Add to Home Screen.”",
         headlineKicker: "Chaos newsroom", headlineTitle: "Headline generator", headlineButton: "📰 Generate headline", headlinePlaceholder: "A headline awaits the next incident.", headlinePrefixes: ["BAD LUCK BULLETIN:", "AINOS IN CRISIS:", "BREAKING:", "SPECIAL REPORT:"],
         bingoKicker: "Personal card", bingoTitle: "Ainos Bingo", bingoCopy: "Mark what happens; this card is saved in this browser.", bingoReset: "Reset card", bingoProgress: "Mark the things that have happened.", bingoComplete: "BINGO! The Department of Bad Luck confirms the streak.", bingoSquares: ["Work complaint","Bad luck in a game/gacha","Said he is tired","A simple thing became a problem","FREE SPACE","Unexpected news arrived","Regretted a choice","Sent a screenshot of the chaos","Said “I will deal with it later”"],
         categoryLabel: "Filter by topic", allCategories: "All categories", mostCommonCategory: "Top category", categories: { games: "Games", work: "Work", health: "Health", social: "Social life", daily: "Everyday", other: "Other" },
@@ -1309,6 +1319,7 @@
     let paginaAtual = 1;
     let notaSelecionadaId = new URLSearchParams(window.location.search).get("nota") || "";
     let visualizacaoCompacta = (() => { try { return localStorage.getItem("ainos-notes-density") === "compact"; } catch { return false; } })();
+    let favoritas = (() => { try { const dados=JSON.parse(localStorage.getItem("ainos-favorites")||"[]"); return new Set(Array.isArray(dados)?dados:[]); } catch { return new Set(); } })();
     const notasPorPagina = 6;
     let mesCalendario = new Date();
     const busca = document.getElementById("notesSearch");
@@ -1363,6 +1374,8 @@
       botao.setAttribute("aria-label",texto().toggleViewLabel);
       botao.setAttribute("aria-pressed",String(visualizacaoCompacta));
     }
+    function salvarFavoritas(){try{localStorage.setItem("ainos-favorites",JSON.stringify([...favoritas]));}catch{}}
+    function desenharBotaoFavorito(botao,id){const salvo=favoritas.has(id);botao.textContent=salvo?"★":"☆";botao.setAttribute("aria-pressed",String(salvo));botao.setAttribute("aria-label",salvo?texto().removeFavorite:texto().saveFavorite);botao.title=salvo?texto().removeFavorite:texto().saveFavorite;}
     function limparNotaSelecionada(){
       notaSelecionadaId="";
       const url=new URL(window.location.href);url.searchParams.delete("nota");
@@ -1378,7 +1391,7 @@
     function renderizarNotas() {
       const t=texto(),termo=busca.value.trim().toLocaleLowerCase();
       const filtradas=notas.map((nota,indice)=>({nota,indice})).filter(({nota})=>{
-        const boa=nota.diaBom===true,okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa),okCategoria=categoriaAtual==="all"||categoriaDaNota(nota)===categoriaAtual;
+        const boa=nota.diaBom===true,okFiltro=filtroAtual==="all"||(filtroAtual==="good"&&boa)||(filtroAtual==="complaints"&&!boa)||(filtroAtual==="favorites"&&favoritas.has(obterIdNota(nota))),okCategoria=categoriaAtual==="all"||categoriaDaNota(nota)===categoriaAtual;
         const okBusca=!termo||(nota.texto||"").toLocaleLowerCase().includes(termo)||(nota.data||"").toLocaleLowerCase().includes(termo);
         return okFiltro&&okCategoria&&okBusca&&(!dataSelecionada||chaveData(nota.data)===dataSelecionada)&&(!notaSelecionadaId||obterIdNota(nota)===notaSelecionadaId);
       });
@@ -1389,7 +1402,7 @@
       document.getElementById("resultsLabel").textContent=t.resultsCount(filtradas.length,notas.length)+(dataSelecionada?" · "+t.selectedDatePrefix+" "+dataFormatada:"");
       document.getElementById("clearLinkedNote").hidden=!notaSelecionadaId;
       lista.replaceChildren();
-      if(!filtradas.length){const e=document.createElement("p");e.className="empty-state";e.textContent=notas.length?t.noMatches:t.emptyNotes;lista.appendChild(e);paginacao.hidden=true;return;}
+      if(!filtradas.length){const e=document.createElement("p");e.className="empty-state";e.textContent=filtroAtual==="favorites"?t.noFavorites:(notas.length?t.noMatches:t.emptyNotes);lista.appendChild(e);paginacao.hidden=true;return;}
       const inicio=(paginaAtual-1)*notasPorPagina,visiveis=filtradas.slice(inicio,inicio+notasPorPagina);
       visiveis.forEach(({nota,indice})=>{
         const item=document.createElement("article");item.className=nota.diaBom===true?"note note-good-day":"note";item.dataset.noteId=obterIdNota(nota);
@@ -1403,11 +1416,14 @@
         share.addEventListener("click",()=>gerarImagemNota(nota,indice));shareRow.appendChild(share);
         const copyLink=document.createElement("button");copyLink.type="button";copyLink.className="note-link-button";copyLink.textContent=t.copyNoteLink;
         copyLink.addEventListener("click",async()=>{
-          const url=new URL("./",window.location.href);url.searchParams.set("nota",obterIdNota(nota));url.hash="panel-archive";
+          const url=new URL("/api/share",window.location.origin);url.searchParams.set("nota",obterIdNota(nota));
           try{await navigator.clipboard.writeText(url.href);copyLink.textContent=t.noteLinkCopied;setTimeout(()=>{if(copyLink.isConnected)copyLink.textContent=texto().copyNoteLink;},1800);}
           catch{window.prompt(t.noteLinkPrompt,url.href);}
         });
-        shareRow.appendChild(copyLink);conteudo.append(shareRow);
+        shareRow.appendChild(copyLink);
+        const favorite=document.createElement("button");favorite.type="button";favorite.className="favorite-note-button";desenharBotaoFavorito(favorite,obterIdNota(nota));
+        favorite.addEventListener("click",()=>{const id=obterIdNota(nota);if(favoritas.has(id))favoritas.delete(id);else favoritas.add(id);salvarFavoritas();desenharBotaoFavorito(favorite,id);if(filtroAtual==="favorites")renderizarNotas();});
+        shareRow.appendChild(favorite);conteudo.append(shareRow);
         renderizarInteracoesNota(conteudo,obterIdNota(nota),t);
         item.append(numero,conteudo);lista.appendChild(item);
       });
@@ -1722,6 +1738,23 @@
       ativarAba("archive");
       requestAnimationFrame(()=>[...document.querySelectorAll("#listaNotas [data-note-id]")].find(card=>card.dataset.noteId===notaSelecionadaId)?.scrollIntoView({behavior:"smooth",block:"center"}));
     }
+    const botaoInstalar=document.getElementById("installAppButton");
+    let promptInstalacao=null;
+    const appInstalada=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+    if(appInstalada)botaoInstalar.hidden=true;
+    window.addEventListener("beforeinstallprompt",evento=>{evento.preventDefault();promptInstalacao=evento;});
+    window.addEventListener("appinstalled",()=>{botaoInstalar.hidden=true;promptInstalacao=null;});
+    botaoInstalar.addEventListener("click",async()=>{
+      if(promptInstalacao){
+        promptInstalacao.prompt();
+        const escolha=await promptInstalacao.userChoice;
+        if(escolha?.outcome==="accepted")botaoInstalar.hidden=true;
+        promptInstalacao=null;
+        return;
+      }
+      alert(/iphone|ipad|ipod/i.test(navigator.userAgent)?texto().installIosHelp:texto().installHelp);
+    });
+    if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(erro=>console.warn("Não foi possível registrar o app instalável.",erro));
   </script>
 </body>
 </html>
