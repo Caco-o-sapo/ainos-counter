@@ -917,6 +917,11 @@
       .notes-panel,.stats-panel,.featured-panel{padding:19px}
       .lower-grid{grid-template-columns:minmax(0,1fr)}
     }
+    @media(max-width:560px){
+      .topbar{flex-wrap:wrap}
+      .header-tools{width:100%;justify-content:flex-end}
+      .site-menu-panel{max-height:min(78dvh,560px);overflow-y:auto;overscroll-behavior:contain}
+    }
     @media(max-width:520px){
       .topbar{gap:10px;padding-bottom:15px}
       .topbar-actions{gap:7px}
