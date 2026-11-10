@@ -7,9 +7,14 @@ const loginStatus = $("loginStatus");
 const adminStatus = $("adminStatus");
 let notas = [];
 let comentarios = [];
+let atividades = [];
 let notaEditando = null;
 let paginaNotas = 1;
-const notasPorPagina = 8;
+let paginaComentarios = 1;
+let paginaAtividades = 1;
+const notasPorPagina = 6;
+const comentariosPorPagina = 8;
+const atividadesPorPagina = 10;
 
 const temasDisponiveis = ["dossier", "terminal", "newspaper", "coast", "neon", "daylight"];
 function aplicarTemaSalvo() {
@@ -185,31 +190,21 @@ async function carregarAdministradores() {
     lista.append(linha);
   });
 }
-async function carregarComentarios() {
+function renderizarComentarios() {
   const lista = $("commentList");
   lista.replaceChildren();
-  const { data, error, count } = await supabase.from("ainos_comments")
-    .select("id,note_id,nickname,body,created_at", { count: "exact" })
-    .order("created_at", { ascending: false }).limit(100);
-  if (error) {
-    comentarios = [];
-    const vazio = document.createElement("p");
-    vazio.className = "empty";
-    vazio.textContent = "Não foi possível carregar comentários: " + error.message;
-    lista.append(vazio);
-    atualizarResumo();
-    return;
-  }
-  comentarios = data || [];
-  $("statComments").textContent = String(count ?? comentarios.length);
   if (!comentarios.length) {
     const vazio = document.createElement("p");
     vazio.className = "empty";
     vazio.textContent = "Nenhum comentário no arquivo.";
     lista.append(vazio);
+    $("commentsPagination").hidden = true;
     return;
   }
-  comentarios.forEach((comentario) => {
+  const paginas = Math.max(1, Math.ceil(comentarios.length / comentariosPorPagina));
+  paginaComentarios = Math.min(paginaComentarios, paginas);
+  const inicio = (paginaComentarios - 1) * comentariosPorPagina;
+  comentarios.slice(inicio, inicio + comentariosPorPagina).forEach((comentario) => {
     const linha = document.createElement("article");
     linha.className = "row";
     const principal = document.createElement("div");
@@ -234,6 +229,31 @@ async function carregarComentarios() {
     linha.append(principal, remover);
     lista.append(linha);
   });
+  $("commentsPagination").hidden = paginas <= 1;
+  $("commentsPageLabel").textContent = "Página " + paginaComentarios + " de " + paginas;
+  $("prevComments").disabled = paginaComentarios <= 1;
+  $("nextComments").disabled = paginaComentarios >= paginas;
+}
+async function carregarComentarios() {
+  const lista = $("commentList");
+  const { data, error, count } = await supabase.from("ainos_comments")
+    .select("id,note_id,nickname,body,created_at", { count: "exact" })
+    .order("created_at", { ascending: false }).limit(100);
+  if (error) {
+    comentarios = [];
+    lista.replaceChildren();
+    const vazio = document.createElement("p");
+    vazio.className = "empty";
+    vazio.textContent = "Não foi possível carregar comentários: " + error.message;
+    lista.append(vazio);
+    atualizarResumo();
+    $("commentsPagination").hidden = true;
+    return;
+  }
+  comentarios = data || [];
+  paginaComentarios = 1;
+  $("statComments").textContent = String(count ?? comentarios.length);
+  renderizarComentarios();
 }
 async function carregarPerfil() {
   const { data, error } = await supabase.rpc("get_my_ainos_admin_profile");
@@ -260,28 +280,21 @@ const acoesAuditoria = {
   comment_deleted: "Apagou comentário",
   owner_designated: "Designou proprietário"
 };
-async function carregarLogs() {
+function renderizarAtividades() {
   const lista = $("auditList");
-  if (!lista) return;
   lista.replaceChildren();
-  const { data, error } = await supabase.from("ainos_admin_logs")
-    .select("id,actor_email,actor_label,action,target_id,target_summary,details,created_at")
-    .order("created_at", { ascending: false }).limit(150);
-  if (error) {
-    const vazio = document.createElement("p");
-    vazio.className = "empty";
-    vazio.textContent = "Não foi possível carregar o histórico. Execute a versão atualizada de supabase-admin.sql: " + error.message;
-    lista.append(vazio);
-    return;
-  }
-  if (!data?.length) {
+  if (!atividades.length) {
     const vazio = document.createElement("p");
     vazio.className = "empty";
     vazio.textContent = "Ainda não há alterações registradas.";
     lista.append(vazio);
+    $("activityPagination").hidden = true;
     return;
   }
-  data.forEach((registro) => {
+  const paginas = Math.max(1, Math.ceil(atividades.length / atividadesPorPagina));
+  paginaAtividades = Math.min(paginaAtividades, paginas);
+  const inicio = (paginaAtividades - 1) * atividadesPorPagina;
+  atividades.slice(inicio, inicio + atividadesPorPagina).forEach((registro) => {
     const linha = document.createElement("article");
     linha.className = "row";
     const principal = document.createElement("div");
@@ -312,6 +325,30 @@ async function carregarLogs() {
     linha.append(principal);
     lista.append(linha);
   });
+  $("activityPagination").hidden = paginas <= 1;
+  $("activityPageLabel").textContent = "Página " + paginaAtividades + " de " + paginas;
+  $("prevActivity").disabled = paginaAtividades <= 1;
+  $("nextActivity").disabled = paginaAtividades >= paginas;
+}
+async function carregarLogs() {
+  const lista = $("auditList");
+  if (!lista) return;
+  const { data, error } = await supabase.from("ainos_admin_logs")
+    .select("id,actor_email,actor_label,action,target_id,target_summary,details,created_at")
+    .order("created_at", { ascending: false }).limit(150);
+  if (error) {
+    atividades = [];
+    lista.replaceChildren();
+    const vazio = document.createElement("p");
+    vazio.className = "empty";
+    vazio.textContent = "Não foi possível carregar o histórico. Execute a versão atualizada de supabase-admin.sql: " + error.message;
+    lista.append(vazio);
+    $("activityPagination").hidden = true;
+    return;
+  }
+  atividades = data || [];
+  paginaAtividades = 1;
+  renderizarAtividades();
 }
 async function abrirPainel(user) {
   const { data, error } = await supabase.rpc("claim_ainos_admin_access");
@@ -453,6 +490,10 @@ $("signOut").addEventListener("click", async () => {
 });
 $("refreshComments").addEventListener("click", carregarComentarios);
 $("refreshLogs").addEventListener("click", carregarLogs);
+$("prevComments").addEventListener("click", () => { if (paginaComentarios > 1) { paginaComentarios--; renderizarComentarios(); } });
+$("nextComments").addEventListener("click", () => { paginaComentarios++; renderizarComentarios(); });
+$("prevActivity").addEventListener("click", () => { if (paginaAtividades > 1) { paginaAtividades--; renderizarAtividades(); } });
+$("nextActivity").addEventListener("click", () => { paginaAtividades++; renderizarAtividades(); });
 document.querySelectorAll("[data-admin-tab]").forEach((tab) => {
   tab.addEventListener("click", () => {
     const section = tab.dataset.adminTab;
