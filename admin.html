@@ -39,6 +39,16 @@
         <div class="field"><label for="newPassword">Nova senha</label><input id="newPassword" type="password" autocomplete="new-password" required minlength="8"></div>
         <button class="button primary" type="submit">Salvar nova senha</button>
       </form>
+      <details class="setup-help" open>
+        <summary>Primeiro acesso? Veja o passo a passo</summary>
+        <ol>
+          <li>Crie sua conta aqui e confirme o e-mail.</li>
+          <li>No Supabase, abra <strong>SQL Editor</strong>, cole o arquivo <code>supabase-admin.sql</code> inteiro e troque o e-mail no bloco <strong>PRIMEIRO ADMINISTRADOR</strong>, no final. Execute o arquivo completo.</li>
+          <li>Volte aqui e entre com seu e-mail e senha. Depois, clique em <strong>Importar notas atuais</strong>.</li>
+        </ol>
+        <p class="muted small">Não cole o comando de autorização dentro de uma função SQL. A configuração inicial já fica separada no fim do arquivo.</p>
+        <a href="https://github.com/Caco-o-sapo/ainos-counter/blob/main/supabase-admin.sql" target="_blank" rel="noreferrer">Abrir o SQL de configuração ↗</a>
+      </details>
       <p id="loginStatus" class="status" role="status"></p>
     </section>
 
