@@ -25,6 +25,12 @@ A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a 
 - **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
 - **Navegação por abas:** separa o painel, o arquivo de ocorrências e a área de entretenimento para deixar a página mais fácil de percorrer.
 
+- **Painel administrativo:** faça login para adicionar, editar ou apagar notas, marcar dias bons, moderar comentários e autorizar outros administradores. As alterações aparecem sem novo deploy.
+
+## 🔐 Acesso administrativo
+
+O painel fica em [ainos-counter.vercel.app/admin.html](https://ainos-counter.vercel.app/admin.html). A configuração inicial e a importação das notas existentes estão descritas em [ADMIN_SETUP.md](./ADMIN_SETUP.md).
+
 ## 🔬 Metodologia (quase) científica
 
 A equipe considera os relatos recebidos, registra os acontecimentos e aguarda novas evidências de melhora. Os dados são atualizados com seriedade administrativa e rigor estatístico altamente discutível.
