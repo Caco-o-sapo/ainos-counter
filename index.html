@@ -1726,19 +1726,6 @@
 
     document.querySelector(".section-tabs").setAttribute("aria-label",texto().tablistLabel);
 
-    try {
-      notas = await listarNotas();
-      recalcularUltimoDiaBom();
-    } catch (erro) {
-      // Enquanto a tabela ainda não estiver configurada, mantém as notas de notas.js.
-      console.warn("Não foi possível carregar as notas do Supabase; usando o arquivo local.", erro);
-    }
-    aplicarIdioma();
-    atualizarContador(true);
-    if(notaSelecionadaId){
-      ativarAba("archive");
-      requestAnimationFrame(()=>[...document.querySelectorAll("#listaNotas [data-note-id]")].find(card=>card.dataset.noteId===notaSelecionadaId)?.scrollIntoView({behavior:"smooth",block:"center"}));
-    }
     const botaoInstalar=document.getElementById("installAppButton");
     let promptInstalacao=null;
     const appInstalada=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
@@ -1756,6 +1743,21 @@
       alert(/iphone|ipad|ipod/i.test(navigator.userAgent)?texto().installIosHelp:texto().installHelp);
     });
     if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(erro=>console.warn("Não foi possível registrar o app instalável.",erro));
+
+    try {
+      notas = await listarNotas();
+      recalcularUltimoDiaBom();
+    } catch (erro) {
+      // Enquanto a tabela ainda não estiver configurada, mantém as notas de notas.js.
+      console.warn("Não foi possível carregar as notas do Supabase; usando o arquivo local.", erro);
+    }
+    aplicarIdioma();
+    atualizarContador(true);
+    if(notaSelecionadaId){
+      ativarAba("archive");
+      requestAnimationFrame(()=>[...document.querySelectorAll("#listaNotas [data-note-id]")].find(card=>card.dataset.noteId===notaSelecionadaId)?.scrollIntoView({behavior:"smooth",block:"center"}));
+    }
+
   </script>
 </body>
 </html>
