@@ -222,7 +222,11 @@ async function carregarComentarios() {
 async function carregarPerfil() {
   const { data, error } = await supabase.rpc("get_my_ainos_admin_profile");
   if (error) {
-    mostrarStatus(adminStatus, "Não foi possível carregar seu perfil: " + error.message, "error");
+    const migrationMissing = error.message.includes("get_my_ainos_admin_profile");
+    const mensagem = migrationMissing
+      ? "O banco ainda não recebeu a atualização do painel. Execute a versão mais recente de supabase-admin.sql no SQL Editor."
+      : "Não foi possível carregar seu perfil: " + error.message;
+    mostrarStatus(adminStatus, mensagem, "error");
     return;
   }
   const perfil = data?.[0];
