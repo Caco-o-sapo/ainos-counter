@@ -23,34 +23,52 @@ function bloco(style, ...children) {
   return h("div", { style }, ...children);
 }
 
-async function carregarRelatos() {
+function idNotaLegada(nota) {
+  const texto = (nota.data || "") + "|" + (nota.texto || "");
+  let a = 2166136261;
+  let b = 2246822519;
+  for (let i = 0; i < texto.length; i++) {
+    const codigo = texto.charCodeAt(i);
+    a = Math.imul(a ^ codigo, 16777619);
+    b = Math.imul(b ^ codigo, 3266489917);
+  }
+  return "n-" + (a >>> 0).toString(16).padStart(8, "0") + (b >>> 0).toString(16).padStart(8, "0");
+}
+
+async function carregarRelatos(notaId = "") {
   const cabecalhos = {
     apikey: SUPABASE_PUBLISHABLE_KEY,
     Authorization: "Bearer " + SUPABASE_PUBLISHABLE_KEY
   };
   try {
-    const [relatosResponse, diasResponse] = await Promise.all([
+    const pedidos = [
       fetch(SUPABASE_URL + "/rest/v1/ainos_notes?select=id,data,texto,dia_bom&order=data.desc,position.asc,created_at.desc&limit=1", { headers: cabecalhos, cache: "no-store" }),
       fetch(SUPABASE_URL + "/rest/v1/ainos_notes?select=data&dia_bom=eq.true&order=data.desc&limit=1", { headers: cabecalhos, cache: "no-store" })
-    ]);
-    if (!relatosResponse.ok || !diasResponse.ok) throw new Error("Supabase indisponível");
-    const [relatos, diasBons] = await Promise.all([relatosResponse.json(), diasResponse.json()]);
-    const ultimoRegistro = relatos[0] || null;
+    ];
+    if (notaId) pedidos.push(fetch(SUPABASE_URL + "/rest/v1/ainos_notes?select=id,data,texto,dia_bom&id=eq." + encodeURIComponent(notaId) + "&limit=1", { headers: cabecalhos, cache: "no-store" }));
+    const respostas = await Promise.all(pedidos);
+    if (respostas.some((resposta) => !resposta.ok)) throw new Error("Supabase indisponível");
+    const [ultimos, diasBons, escolhidos] = await Promise.all(respostas.map((resposta) => resposta.json()));
+    const ultimoRegistro = ultimos[0] || null;
+    const escolhido = escolhidos?.[0] || (notaId ? notasLegadas.find((nota) => idNotaLegada(nota) === notaId) : null);
+    const notaSelecionada = escolhido || ultimoRegistro;
+    const normalizarNota = (nota) => nota?.data && nota.data.includes("-")
+      ? { ...nota, diaBom: nota.dia_bom === true, data: nota.data.split("-").reverse().join("/") }
+      : nota;
     return {
-      nota: ultimoRegistro ? {
-        ...ultimoRegistro,
-        diaBom: ultimoRegistro.dia_bom === true,
-        data: ultimoRegistro.data ? ultimoRegistro.data.split("-").reverse().join("/") : ""
-      } : (notasLegadas[0] || null),
-      ultimoDiaBom: diasBons[0]?.data || (ultimoRegistro ? null : diaBomLegado)
+      nota: normalizarNota(notaSelecionada || notasLegadas[0] || null),
+      ultimoDiaBom: diasBons[0]?.data || (!ultimoRegistro ? diaBomLegado : null),
+      notaEspecifica: Boolean(notaId)
     };
   } catch {
-    return { nota: notasLegadas[0] || null, ultimoDiaBom: diaBomLegado };
+    const notaLegada = notaId ? notasLegadas.find((nota) => idNotaLegada(nota) === notaId) : null;
+    return { nota: notaLegada || notasLegadas[0] || null, ultimoDiaBom: diaBomLegado, notaEspecifica: Boolean(notaId) };
   }
 }
 
-export async function GET() {
-  const { nota: ultimaNota, ultimoDiaBom } = await carregarRelatos();
+export async function GET(request) {
+  const notaId = new URL(request.url).searchParams.get("nota") || "";
+  const { nota: ultimaNota, ultimoDiaBom, notaEspecifica } = await carregarRelatos(notaId);
   const dias = ultimoDiaBom
     ? Math.max(0, Math.floor((paraUtc(dataDeHojeEmSaoPaulo()) - paraUtc(ultimoDiaBom)) / 86400000))
     : null;
@@ -77,12 +95,12 @@ export async function GET() {
           bloco({ marginTop: 5, color: "#aaa6a3", fontSize: 15 }, "Central comunitária de monitoramento")
         )
       ),
-      bloco({ display: "flex", alignItems: "center", gap: 10, padding: "11px 16px", border: "1px solid #485344", borderRadius: 99, color: "#c0d9c1", background: "#202820", fontSize: 14, fontWeight: 700, letterSpacing: 1 }, "MONITORAMENTO ATIVO")
+      bloco({ display: "flex", alignItems: "center", gap: 10, padding: "11px 16px", border: "1px solid #485344", borderRadius: 99, color: "#c0d9c1", background: "#202820", fontSize: 14, fontWeight: 700, letterSpacing: 1 }, notaEspecifica ? "NOTA COMPARTILHADA" : "MONITORAMENTO ATIVO")
     ),
 
     bloco({ display: "flex", alignItems: "center", gap: 70 },
       bloco({ display: "flex", flexDirection: "column", flex: 1 },
-        bloco({ color: "#f4ad69", fontSize: 17, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }, "Relatório de acompanhamento"),
+        bloco({ color: "#f4ad69", fontSize: 17, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" }, notaEspecifica ? "Ocorrência selecionada" : "Relatório de acompanhamento"),
         bloco({ display: "flex", alignItems: "baseline", gap: 18, marginTop: 12 },
           bloco({ color: "#ffc887", fontSize: 154, lineHeight: 1, fontWeight: 800, letterSpacing: -10 }, dias === null ? "—" : String(dias)),
           bloco({ color: "#d0c6bd", fontSize: 31, fontWeight: 600 }, dias === 1 ? "dia" : "dias")
