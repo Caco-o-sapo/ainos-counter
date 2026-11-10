@@ -11,13 +11,13 @@
   <meta property="og:description" content="Confira há quantos dias o Ainos está sem um dia bom — e leia as últimas atualizações.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ainos-counter.vercel.app/">
-  <meta property="og:image" content="https://ainos-counter.vercel.app/api/og?v=3">
-  <meta property="og:image:secure_url" content="https://ainos-counter.vercel.app/api/og?v=3">
+  <meta property="og:image" content="https://ainos-counter.vercel.app/api/og?v=4">
+  <meta property="og:image:secure_url" content="https://ainos-counter.vercel.app/api/og?v=4">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Contagem de dias desde o último dia bom do Ainos e a reclamação mais recente">
-  <meta name="twitter:image" content="https://ainos-counter.vercel.app/api/og?v=3">
+  <meta name="twitter:image" content="https://ainos-counter.vercel.app/api/og?v=4">
   <meta name="twitter:card" content="summary_large_image">
 
   <style>
@@ -928,15 +928,17 @@
     <footer class="page-footer">
       <span data-i18n="footerProject">Projeto não oficial · Humor entre amigos · Dados sujeitos a reclamação.</span>
       <span data-i18n="footerBudget">Departamento de Azar · Verba: R$ 0,00</span>
+      <a href="./admin.html" style="color:inherit;opacity:.72">Acesso da equipe</a>
     </footer>
   </div>
 
   <script type="module">
     import { notas as notasLegadas, ultimoDiaBom as ultimoDiaBomLegado } from "./notas.js";
     import { listarNotas } from "./notas-store.js";
-    let notas = notasLegadas;
     import { obterIdNota, renderizarInteracoesNota, buscarComentariosParaImagem } from "./interacoes.js";
     import { renderizarJogo } from "./jogo.js";
+
+    let notas = notasLegadas;
 
     const idiomas = {
       "pt-BR": {
