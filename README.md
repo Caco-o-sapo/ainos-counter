@@ -36,6 +36,7 @@ A interface está disponível em português e inglês, detecta a preferência de
 | **Painel** | Ver a contagem atual, estatísticas e a frase em destaque. |
 | **Ocorrências** | Buscar, filtrar e paginar relatos; consultar o calendário; destacar dias bons; comentar, reagir e salvar favoritos. |
 | **Entretenimento** | Brincar com o Bingo do Ainos, conquistas, roleta de reclamações, Oráculo do Azar e gerador de manchetes. |
+| **Mural da comunidade** | Publicar reclamações próprias em post-its coloridos, com assinatura opcional e moderação pelo painel da equipe. |
 | **Temas** | Escolher entre Dossiê, Terminal, Jornal, Maré Baixa, Neon e Plantão Claro. |
 | **Compartilhamento** | Criar imagens de ocorrências, comentários, frases e estatísticas para compartilhar. |
 | **App e avisos** | Instalar a central na tela inicial e, opcionalmente, ativar notificações de novas ocorrências. |
