@@ -1,7 +1,5 @@
-// Adicione uma nota no início da lista para que ela apareça primeiro.
-// Para marcar um dia bom, inclua diaBom: true na nota correspondente.
-// O contador usa automaticamente a data mais recente marcada assim.
-// Categoria é opcional: o site tenta identificar pelo texto. Para corrigir uma nota específica, adicione categoria: "trabalho", "jogos", "saude", "social", "cotidiano" ou "outros".
+// Arquivo histórico e fonte da importação inicial do painel administrativo.
+// Depois da migração, adicione e edite notas em /admin.html; não é preciso editar este arquivo.
 export const notas = [
   { data: "10/11/2026", texto: "To me sentindo gravido" },
   { data: "09/11/2026", texto: "mneu chefe lembrou q tem fisioterapia amanha e trocou meu dia de folga" },
