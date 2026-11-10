@@ -1,54 +1,61 @@
-# 🫡 AINOS WATCH
+<div align="center">
+  <img src="https://ainos-counter.vercel.app/icon-192.png" width="88" alt="Ícone Ainos Watch">
+  <h1>AINOS WATCH</h1>
+  <p><strong>Central comunitária de monitoramento do Ainos</strong></p>
+  <p>Contagem de dias bons, arquivo de ocorrências e entretenimento de procedência duvidosa.</p>
+  <p>
+    <a href="https://ainos-counter.vercel.app/"><strong>↗ Abrir a central</strong></a>
+    &nbsp; · &nbsp;
+    <a href="https://ainos-counter.vercel.app/admin.html">Acesso da equipe</a>
+  </p>
+  <p>
+    <img src="https://img.shields.io/badge/vers%C3%A3o-4.0-f4ad69?style=flat-square" alt="Versão 4.0">
+    <img src="https://img.shields.io/badge/idiomas-PT--BR%20%2F%20EN-a2c9a4?style=flat-square" alt="Português e inglês">
+    <img src="https://img.shields.io/badge/projeto-humor%20entre%20amigos-77757a?style=flat-square" alt="Projeto de humor">
+  </p>
+</div>
 
-### Central comunitária de monitoramento de dias bons, perrengues e ocorrências inexplicáveis.
+<br>
 
-[![Abrir a Central de Monitoramento](https://ainos-counter.vercel.app/api/og?v=4)](https://ainos-counter.vercel.app/)
+<p align="center">
+  <a href="https://ainos-counter.vercel.app/">
+    <img src="https://ainos-counter.vercel.app/api/og?v=4" width="760" alt="Prévia dinâmica da Central de Monitoramento do Ainos">
+  </a>
+</p>
 
-> **A pergunta que mobiliza a equipe:** há quantos dias o Ainos não tem um dia bom?
+## Sobre
 
-A AINOS WATCH acompanha a situação, registra os relatos recebidos e mantém a comunidade informada. O monitoramento é contínuo; a esperança, intermitente.
+A Ainos Watch acompanha os altos e baixos do Ainos com a seriedade questionável que a situação exige. O contador avança sozinho, as ocorrências ficam arquivadas e a equipe pode atualizar tudo pelo painel.
 
-## 📡 O que a Central acompanha
+A interface está disponível em português e inglês, detecta a preferência de idioma do navegador e também permite trocar de idioma manualmente. As notas aparecem no idioma em que foram registradas.
 
-- **Contador de dias bons:** calcula o tempo desde o último dia bom registrado e atualiza automaticamente.
-- **Arquivo de ocorrências:** reúne reclamações e relatos, com busca, filtros por tipo, categoria e data, além de paginação em cards.
-- **Categorias automáticas:** identifica temas pelo texto da nota e mostra o assunto mais frequente; a categoria pode ser corrigida opcionalmente no registro.
-- **Filtro por data:** o calendário destaca os dias com registros; ao selecionar uma data, o arquivo mostra as ocorrências daquele dia.
-- **Dias bons em destaque:** os registros positivos recebem um selo, e o contador considera automaticamente o dia bom mais recente.
-- **Calendário de ocorrências:** mostra em quais datas houve registros e permite abrir as notas daquele dia.
-- **Reclamação aleatória:** sorteia um relato do arquivo para relembrar os momentos mais… movimentados.
-- **Estatísticas oficiais:** contabiliza reclamações, dias bons registrados e dias desde o último dia bom.
-- **Cards para compartilhar:** gera imagens PNG de uma nota ou do resumo estatístico para compartilhar pelo menu do aparelho ou baixar como alternativa.
-- **Entretenimento:** roleta de reclamações, Oráculo do Azar, gerador de manchetes, Bingo do Ainos e conquistas em cards com progresso.
-- **Mascote do Ainos:** um agente genérico reage aos sorteios, ao oráculo e ao Bingo, e aparece nos cards PNG compartilhados.
-- **Prévia dinâmica:** ao compartilhar o link, o cartão mostra a contagem atual e a ocorrência mais recente.
-- **Interface em dois idiomas:** a página pode ser alternada entre português e inglês; as notas permanecem no idioma em que foram escritas.
-- **Navegação por abas:** separa o painel, o arquivo de ocorrências e a área de entretenimento para deixar a página mais fácil de percorrer.
+## O que tem por aqui
 
-- **Notificações push:** quem quiser pode ativar avisos neste dispositivo quando uma nova ocorrência for publicada. A configuração inicial está em [PUSH_NOTIFICATIONS_SETUP.md](./PUSH_NOTIFICATIONS_SETUP.md).
-- **Painel administrativo:** faça login para criar, editar ou apagar notas, buscar e filtrar o arquivo, marcar dias bons, moderar comentários, autorizar administradores, consultar o histórico de alterações e exportar um backup JSON. As alterações aparecem sem novo deploy.
-
-## 🔐 Acesso administrativo
-
-O painel fica em [ainos-counter.vercel.app/admin.html](https://ainos-counter.vercel.app/admin.html). A configuração inicial e a importação das notas existentes estão descritas em [ADMIN_SETUP.md](./ADMIN_SETUP.md).
-
-## 🔬 Metodologia (quase) científica
-
-A equipe considera os relatos recebidos, registra os acontecimentos e aguarda novas evidências de melhora. Os dados são atualizados com seriedade administrativa e rigor estatístico altamente discutível.
-
-## 📋 Boletim atual
-
-| Indicador | Situação |
+| Área | O que dá para fazer |
 | --- | --- |
-| Monitoramento | Ativo |
-| Previsão de melhora | Em análise |
-| Orçamento | R$ 0,00 |
-| Confiança no próximo dia | Cautelosamente baixa |
+| **Painel** | Ver a contagem atual, estatísticas e a frase em destaque. |
+| **Ocorrências** | Buscar, filtrar e paginar relatos; consultar o calendário; destacar dias bons; comentar, reagir e salvar favoritos. |
+| **Entretenimento** | Brincar com o Bingo do Ainos, conquistas, roleta de reclamações, Oráculo do Azar e gerador de manchetes. |
+| **Temas** | Escolher entre Dossiê, Terminal, Jornal, Maré Baixa, Neon e Plantão Claro. |
+| **Compartilhamento** | Criar imagens de ocorrências, comentários, frases e estatísticas para compartilhar. |
+| **App e avisos** | Instalar a central na tela inicial e, opcionalmente, ativar notificações de novas ocorrências. |
 
-## 🛡️ Transparência da Central
+## Painel da equipe
 
-Este é um projeto de humor entre amigos. Os registros são relatos informais, não são verificados e não representam diagnóstico, avaliação profissional ou retrato completo da vida do Ainos. Se alguma anotação passar do ponto, ela pode ser revista pela equipe — após uma reunião extraordinária do Departamento de Azar.
+Administradores autorizados podem criar, editar e remover ocorrências direto pelo site, marcar dias bons, moderar comentários, gerenciar acessos e consultar o histórico de alterações. Também dá para exportar um backup dos registros.
 
----
+- [Abrir o painel da equipe](https://ainos-counter.vercel.app/admin.html)
+- [Instruções de configuração administrativa](./ADMIN_SETUP.md)
+- [Configuração das notificações](./PUSH_NOTIFICATIONS_SETUP.md)
 
-<sub>Iniciativa independente, sem vínculo com instituições oficiais. Qualquer semelhança com um sistema de monitoramento competente é mera coincidência.</sub>
+## Como funciona
+
+A página é um app estático feito com HTML, CSS e JavaScript. O site é publicado pela Vercel, e o Supabase guarda as ocorrências e as interações da comunidade.
+
+O contador atualiza automaticamente à meia-noite. As categorias são sugeridas a partir do texto das notas e podem ser corrigidas pela equipe no painel.
+
+## Transparência do Departamento de Azar
+
+Este é um projeto independente de humor entre amigos. As ocorrências são relatos informais, não são verificadas e não representam diagnóstico, avaliação profissional ou retrato completo da vida do Ainos. A equipe pode revisar ou remover registros quando necessário.
+
+<sub>Monitoramento ativo · Previsão de melhora: em análise · Orçamento: R$ 0,00</sub>
