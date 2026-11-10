@@ -939,6 +939,17 @@
       .live-label .live-dot{width:8px;height:8px}
       .site-menu-toggle{gap:6px;padding:0 9px}
     }
+
+    .device-info-panel{display:flex;align-items:center;gap:18px;margin-top:18px;padding:19px 22px;border-color:rgba(var(--amber-rgb),.16);background:linear-gradient(110deg,rgba(var(--amber-rgb),.055),rgba(23,24,30,.97) 46%)}
+    .device-info-icon{display:grid;width:48px;height:48px;flex:0 0 auto;place-items:center;border:1px solid rgba(var(--amber-rgb),.22);border-radius:14px;background:rgba(var(--amber-rgb),.07);font-size:1.35rem}
+    .device-info-copy{min-width:0;flex:1}
+    .device-info-copy .extra-kicker{margin:0 0 5px}
+    .device-info-copy h2{margin:0;font-size:1rem;letter-spacing:-.015em}
+    .device-info-copy>p:last-child{max-width:670px;margin:6px 0 0;color:var(--muted);font-size:.8rem;line-height:1.5}
+    .device-info-badges{display:grid;gap:7px;flex:0 0 auto}
+    .device-info-badge{display:inline-flex;align-items:center;gap:7px;color:var(--soft);font-size:.7rem;font-weight:700;white-space:nowrap}
+    @media(max-width:720px){.device-info-panel{align-items:flex-start;flex-wrap:wrap}.device-info-icon{width:42px;height:42px}.device-info-copy{flex-basis:calc(100% - 62px)}.device-info-badges{flex-direction:row;flex-wrap:wrap;width:100%;margin-left:60px;gap:12px}}
+    @media(max-width:420px){.device-info-panel{gap:12px;padding:16px}.device-info-copy{flex-basis:calc(100% - 54px)}.device-info-badges{margin-left:54px}.device-info-copy>p:last-child{font-size:.76rem}}
   </style>
 </head>
 
@@ -1052,6 +1063,19 @@
           <article class="stat-card"><p id="statDaysLabel" class="stat-label">Dias desde o último dia bom</p><p id="statDays" class="stat-value">—</p></article>
           <article class="stat-card"><p id="statCategoryLabel" class="stat-label">Tema mais comum</p><p id="statCategory" class="stat-value category-stat">—</p></article>
         </div><p id="shareMessage" class="share-message" aria-live="polite"></p>
+      </section>
+
+      <section class="panel device-info-panel" aria-labelledby="deviceInfoTitle">
+        <div class="device-info-icon" aria-hidden="true">📲</div>
+        <div class="device-info-copy">
+          <p class="extra-kicker" data-i18n="deviceInfoKicker">No seu dispositivo</p>
+          <h2 id="deviceInfoTitle" data-i18n="deviceInfoTitle">A central vai com você</h2>
+          <p data-i18n="deviceInfoCopy">Instale o site como app para abrir direto da tela inicial, ou ative avisos para receber uma notificação quando uma reclamação nova for publicada. As opções ficam no Menu; avisos são opcionais e configurados por dispositivo.</p>
+        </div>
+        <div class="device-info-badges">
+          <span class="device-info-badge"><span aria-hidden="true">📲</span><span data-i18n="deviceAppBadge">App instalável</span></span>
+          <span class="device-info-badge"><span aria-hidden="true">🔔</span><span data-i18n="deviceAlertsBadge">Avisos opcionais</span></span>
+        </div>
       </section>
 
       <section class="panel featured-panel" aria-labelledby="featuredTitle">
@@ -1225,7 +1249,7 @@
         achievementsKicker: "Troféus de procedência duvidosa", achievementsTitle: "Conquistas duvidosas", earned: "Conquistada", locked: "Pendente",
         achievementList: [["☀️","Primeiro dia bom","Marque um registro positivo.","goodDays",1],["🗃️","Arquivo inaugurado","Registre 10 ocorrências.","notes",10],["📚","Arquivista","Chegue a 25 registros.","notes",25],["🏛️","Memória institucional","Chegue a 50 registros.","notes",50],["🎭","Mente aberta","Registre 3 categorias diferentes.","categories",3],["🧭","Dossiê completo","Registre notas em 5 categorias.","categories",5],["🔍","Uma semana sob observação","7 dias desde o último dia bom.","days",7],["⏳","Mês histórico","30 dias desde o último dia bom.","days",30],["🛰️","Missão de longa duração","100 dias desde o último dia bom.","days",100],["🎯","Bingo!","Complete uma linha na cartela.","bingo",1]],
         achievementProgress: (a,b) => a + " / " + b + " " + (idiomaAtual === "en" ? "progress" : "progresso"),
-        statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
+        statsKicker: "Indicadores do dossiê", statsTitle: "Estatísticas oficiais", deviceInfoKicker: "No seu dispositivo", deviceInfoTitle: "A central vai com você", deviceInfoCopy: "Instale o site como app para abrir direto da tela inicial, ou ative avisos para receber uma notificação quando uma reclamação nova for publicada. As opções ficam no Menu; avisos são opcionais e configurados por dispositivo.", deviceAppBadge: "App instalável", deviceAlertsBadge: "Avisos opcionais", statComplaints: "Reclamações registradas", statGoodDays: "Dias bons registrados", statDays: "Dias desde o último dia bom", shareStats: "🖼️ Compartilhar resumo", shareImage: "🖼️ Compartilhar imagem", shareStatus: "Imagem baixada; agora é só anexar no Discord.", shareOpening: "Abrindo opções de compartilhamento…", shareDone: "Compartilhamento concluído.", shareCancelled: "Compartilhamento cancelado.", shareFallback: "Este navegador não compartilha imagens direto; o PNG foi baixado.", shareNoteText: "Olha este registro do Ainos Watch:", shareSummaryText: "Resumo do monitoramento do Ainos", cardFooter: "AINOS WATCH · Central comunitária de monitoramento",
         tablistLabel: "Seções do site", tabDashboard: "Painel", tabArchive: "Ocorrências", tabEntertainment: "Entretenimento", tabGame: "Chefe final",
         adminAccess: "Painel da equipe", menuButton: "Menu", menuTitle: "Acessos e ajustes", themeLabel: "Escolher tema visual", themeButton: "Temas", themeKicker: "APARÊNCIA DA CENTRAL", themeDialogTitleText: "Escolha um tema", themeDialogIntro: "A prévia é instantânea e a escolha fica salva neste navegador.", closeThemeDialog: "Fechar seletor de temas", themeSelected: "ATUAL",
         themeDossier: "Dossiê", themeTerminal: "Terminal", themeNewspaper: "Jornal", themeCoast: "Maré baixa", themeNeon: "Neon", themeDaylight: "Plantão claro",
@@ -1288,7 +1312,7 @@
         achievementsKicker: "Questionable trophies", achievementsTitle: "Questionable achievements", earned: "Unlocked", locked: "Pending",
         achievementList: [["☀️","First good day","Mark a positive report.","goodDays",1],["🗃️","Archive opened","Record 10 reports.","notes",10],["📚","Archivist","Reach 25 reports.","notes",25],["🏛️","Institutional memory","Reach 50 reports.","notes",50],["🎭","Open-minded","Record 3 different categories.","categories",3],["🧭","Complete case file","Record notes in 5 categories.","categories",5],["🔍","One week under watch","7 days since the last good day.","days",7],["⏳","Historic month","30 days since the last good day.","days",30],["🛰️","Long-haul mission","100 days since the last good day.","days",100],["🎯","Bingo!","Complete a line on the card.","bingo",1]],
         achievementProgress: (a,b) => a + " / " + b + " progress",
-        statsKicker: "Case file metrics", statsTitle: "Official statistics", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
+        statsKicker: "Case file metrics", statsTitle: "Official statistics", deviceInfoKicker: "On your device", deviceInfoTitle: "Take the watch with you", deviceInfoCopy: "Install the site as an app for quick access from your home screen, or enable alerts for new reports. Both options are in the Menu; alerts are optional and set up separately on each device.", deviceAppBadge: "Installable app", deviceAlertsBadge: "Optional alerts", statComplaints: "Complaints recorded", statGoodDays: "Good days recorded", statDays: "Days since the last good day", shareStats: "🖼️ Share summary", shareImage: "🖼️ Share image", shareStatus: "Image downloaded; attach it to Discord.", shareOpening: "Opening sharing options…", shareDone: "Sharing finished.", shareCancelled: "Sharing cancelled.", shareFallback: "This browser cannot share images directly; the PNG was downloaded.", shareNoteText: "Check out this Ainos Watch report:", shareSummaryText: "Ainos monitoring summary", cardFooter: "AINOS WATCH · Community monitoring center",
         tablistLabel: "Site sections", tabDashboard: "Dashboard", tabArchive: "Reports", tabEntertainment: "Entertainment", tabGame: "Final boss",
         adminAccess: "Team admin", menuButton: "Menu", menuTitle: "Access and settings", themeLabel: "Choose a visual theme", themeButton: "Themes", themeKicker: "CENTER APPEARANCE", themeDialogTitleText: "Choose a theme", themeDialogIntro: "Preview instantly; your choice is saved in this browser.", closeThemeDialog: "Close theme picker", themeSelected: "CURRENT",
         themeDossier: "Dossier", themeTerminal: "Terminal", themeNewspaper: "Newspaper", themeCoast: "Deep tide", themeNeon: "Neon", themeDaylight: "Day shift",
