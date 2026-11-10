@@ -1,6 +1,10 @@
 # 🫡 AINOS WATCH
 
-### Central comunitária de monitoramento de dias bons, perrengues e ocorrências inexplicáveis.
+### 🔔 Avisos de novas ocorrências
+
+Quem quiser pode ativar notificações neste dispositivo para receber um alerta quando uma nova reclamação for publicada. A configuração inicial do Supabase está descrita em [PUSH_NOTIFICATIONS_SETUP.md](./PUSH_NOTIFICATIONS_SETUP.md).
+
+## Central comunitária de monitoramento de dias bons, perrengues e ocorrências inexplicáveis.
 
 [![Abrir a Central de Monitoramento](https://ainos-counter.vercel.app/api/og?v=4)](https://ainos-counter.vercel.app/)
 

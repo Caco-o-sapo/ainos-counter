@@ -1,4 +1,4 @@
-const CACHE_NAME = "ainos-watch-shell-v2";
+const CACHE_NAME = "ainos-watch-shell-v3";
 const SHELL_FILES = [
   "/",
   "/index.html",
@@ -10,7 +10,8 @@ const SHELL_FILES = [
   "/notas-store.js",
   "/interacoes.js",
   "/jogo.js",
-  "/supabase-config.js"
+  "/supabase-config.js",
+  "/push-notifications.js"
 ];
 
 self.addEventListener("install", (event) => {
@@ -50,4 +51,37 @@ self.addEventListener("fetch", (event) => {
       return Response.error();
     })
   );
+});
+
+
+self.addEventListener("push", (event) => {
+  event.waitUntil((async () => {
+    let payload = {};
+    try { payload = event.data ? event.data.json() : {}; } catch {}
+    const title = payload.title || "AINOS WATCH";
+    const options = {
+      body: payload.body || "Uma nova ocorrência foi registrada.",
+      icon: "/icon-192.png",
+      badge: "/icon-192.png",
+      tag: payload.tag || "ainos-watch-new-note",
+      data: { url: payload.url || "/" },
+      renotify: false
+    };
+    await self.registration.showNotification(title, options);
+  })());
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const destination = new URL(event.notification.data?.url || "/", self.location.origin).href;
+  event.waitUntil((async () => {
+    const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    for (const client of windows) {
+      if ("focus" in client && new URL(client.url).origin === self.location.origin) {
+        await client.navigate(destination);
+        return client.focus();
+      }
+    }
+    return self.clients.openWindow(destination);
+  })());
 });
