@@ -221,15 +221,20 @@ $("loginForm").addEventListener("submit", async (evento) => {
   await abrirPainel(data.user);
 });
 
+function mostrarFormularioRecuperacao() {
+  $("passwordRecoveryForm").hidden = false;
+  $("loginForm").hidden = true;
+  $("showSignup").hidden = true;
+  $("forgotPassword").hidden = true;
+  mostrarStatus(loginStatus, "Defina uma nova senha para sua conta.");
+}
+
 supabase.auth.onAuthStateChange((event) => {
-  if (event === "PASSWORD_RECOVERY") {
-    $("passwordRecoveryForm").hidden = false;
-    $("loginForm").hidden = true;
-    $("showSignup").hidden = true;
-    $("forgotPassword").hidden = true;
-    mostrarStatus(loginStatus, "Defina uma nova senha para sua conta.");
-  }
+  if (event === "PASSWORD_RECOVERY") mostrarFormularioRecuperacao();
 });
+if (new URLSearchParams(location.hash.slice(1)).get("type") === "recovery") {
+  mostrarFormularioRecuperacao();
+}
 
 $("passwordRecoveryForm").addEventListener("submit", async (evento) => {
   evento.preventDefault();
@@ -316,5 +321,6 @@ $("signOut").addEventListener("click", async () => {
 });
 $("refreshComments").addEventListener("click", carregarComentarios);
 
+const emRecuperacao = new URLSearchParams(location.hash.slice(1)).get("type") === "recovery";
 const { data: sessionData } = await supabase.auth.getSession();
-if (sessionData.session?.user) await abrirPainel(sessionData.session.user);
+if (sessionData.session?.user && !emRecuperacao) await abrirPainel(sessionData.session.user);
