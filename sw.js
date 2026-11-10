@@ -1,9 +1,11 @@
-const CACHE_NAME = "ainos-watch-shell-v1";
+const CACHE_NAME = "ainos-watch-shell-v2";
 const SHELL_FILES = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
   "/icon.svg",
+  "/icon-192.png",
+  "/icon-512.png",
   "/notas.js",
   "/notas-store.js",
   "/interacoes.js",
