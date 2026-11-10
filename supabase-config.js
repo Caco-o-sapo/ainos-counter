@@ -5,4 +5,4 @@ export const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_SEc0ZXjMFuATgskQnO5EYw_P
 
 // Chave pública VAPID para inscrição do navegador (não é uma chave privada).
 // Gere o par e cole aqui somente a chave pública; instruções em PUSH_NOTIFICATIONS_SETUP.md.
-export const PUSH_VAPID_PUBLIC_KEY = "COLE_A_CHAVE_PUBLICA_VAPID_AQUI";
+export const PUSH_VAPID_PUBLIC_KEY = "BJogxtykJTELxS9ahQQWASeaRrls59GW8Nn4LK-LHU-vvqqYYigAps0eC2fmoB8Ey5B1nfUwNLgfkyDVMNvF-zI";
