@@ -34,6 +34,10 @@
         <div class="field"><label for="password">Senha</label><input id="password" type="password" autocomplete="current-password" required minlength="8"></div>
         <div class="toolbar-actions"><button class="button primary" type="submit">Entrar</button><button class="button" id="showSignup" type="button">Criar conta</button><button class="button quiet" id="forgotPassword" type="button">Esqueci a senha</button></div>
       </form>
+      <form id="passwordRecoveryForm" class="form" hidden>
+        <div class="field"><label for="newPassword">Nova senha</label><input id="newPassword" type="password" autocomplete="new-password" required minlength="8"></div>
+        <button class="button primary" type="submit">Salvar nova senha</button>
+      </form>
       <p id="loginStatus" class="status" role="status"></p>
     </section>
 
